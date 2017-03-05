@@ -12,6 +12,7 @@ public class Team {
     @GeneratedValue
     private int id;
     private String name;
+
     @Lob
     private byte[] logo;
 
@@ -29,5 +30,13 @@ public class Team {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
     }
 }
