@@ -1,16 +1,17 @@
 package at.eischer.dao;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@ApplicationScoped
+@Stateless
 public class Repository {
 
     @PersistenceContext(unitName = "myPersistenceUnit")
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     public <T> void save(T object) {
         entityManager.persist(object);
     }
+
 }

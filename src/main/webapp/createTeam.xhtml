@@ -12,9 +12,8 @@
 <h:body>
     <h1>Grasshoppers West Wien</h1>
     <h:form>
-        <h:outputText value="Hello #{login.name}"/>
-        <h:inputText value="#{login.name}"/>
-        <h:commandButton value="Go" action="#{login.send}"/>
+        <h:inputText value="#{teamView.team.name}"/>
+        <h:commandButton value="Team anlegen" action="#{teamView.saveTeam}"/>
     </h:form>
 </h:body>
 

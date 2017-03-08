@@ -43,7 +43,7 @@
 
 	<!-- Welcome files -->
 	<welcome-file-list>
-		<welcome-file>login.xhtml</welcome-file>
+		<welcome-file>createTeam.xhtml</welcome-file>
 	</welcome-file-list>
 
 </web-app>
