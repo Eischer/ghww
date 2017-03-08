@@ -22,13 +22,13 @@ public class TeamView {
 
     public String saveTeam () {
         teamService.save(team);
+        allTeams = teamService.findAllteams();
         return "maintainTeams";
     }
 
     @PostConstruct
     public void init () {
         team = new Team();
-        allTeams = teamService.findAllteams();
     }
 
 
