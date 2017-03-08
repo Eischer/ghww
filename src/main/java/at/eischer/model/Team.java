@@ -1,11 +1,9 @@
 package at.eischer.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 
 @Entity
+@NamedQuery(name = "Team.finadAll", query = "SELECT t FROM Team t")
 public class Team {
 
     @Id
