@@ -39,6 +39,7 @@ public class TeamView {
         }
 
         teamService.save(team);
+        allTeams = teamService.findAllteams(); //Ugly - since it is called twice
         return "maintainTeams";
     }
 
