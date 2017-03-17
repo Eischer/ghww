@@ -4,13 +4,14 @@ import at.eischer.model.Team;
 import at.eischer.services.TeamService;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
 @Named
-@RequestScoped
+@ApplicationScoped
 public class DisplayAllTeamsView {
 
     private List<Team> allTeams;
@@ -18,8 +19,12 @@ public class DisplayAllTeamsView {
     @Inject
     TeamService teamService;
 
+    public byte[] getLogo(Team team) {
+        return team.getLogo();
+    }
+
     @PostConstruct
-    public void init () {
+    public void init() {
         allTeams = teamService.findAllteams();
     }
 
