@@ -42,6 +42,7 @@ public class CreateTeamView {
     @PostConstruct
     public void init () {
         team = new Team();
+        team.setSeiderlCounter(0);
     }
 
 

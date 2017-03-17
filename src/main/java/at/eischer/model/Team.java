@@ -10,6 +10,7 @@ public class Team {
     @GeneratedValue
     private int id;
     private String name;
+    private int seiderlCounter;
 
     @Lob
     private byte[] logo;
@@ -28,6 +29,14 @@ public class Team {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getSeiderlCounter() {
+        return seiderlCounter;
+    }
+
+    public void setSeiderlCounter(int seiderCounter) {
+        this.seiderlCounter = seiderCounter;
     }
 
     public byte[] getLogo() {
