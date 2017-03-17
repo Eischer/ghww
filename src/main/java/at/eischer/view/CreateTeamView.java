@@ -11,15 +11,12 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 @Named
 @RequestScoped
-public class TeamView {
+public class CreateTeamView {
 
     private Team team;
-
-    private List<Team> allTeams;
 
     private Part logo;
 
@@ -39,14 +36,12 @@ public class TeamView {
         }
 
         teamService.save(team);
-        allTeams = teamService.findAllteams(); //Ugly - since it is called twice
-        return "maintainTeams";
+        return "displayAllTeams";
     }
 
     @PostConstruct
     public void init () {
         team = new Team();
-        allTeams = teamService.findAllteams();
     }
 
 
@@ -60,14 +55,6 @@ public class TeamView {
 
     public void setTeam(Team team) {
         this.team = team;
-    }
-
-    public List<Team> getAllTeams() {
-        return allTeams;
-    }
-
-    public void setAllTeams(List<Team> allTeams) {
-        this.allTeams = allTeams;
     }
 
     public Part getLogo() {

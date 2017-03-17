@@ -12,12 +12,11 @@
 <h:body>
     <h1>Grasshoppers West Wien</h1>
     <h:form>
-        <h:dataTable value="#{teamView.allTeams}" var="oneTeam">
+        <h:dataTable value="#{displayAllTeamsView.allTeams}" var="oneTeam">
             <h:column>
                 <f:facet name="header">Mannschaft</f:facet>
                 #{oneTeam.name}
             </h:column>
-            <h:graphicImage value="#{teamView.logo}"/>
             <h:column>
                 <h:commandButton value="Bearbeiten"/>
             </h:column>

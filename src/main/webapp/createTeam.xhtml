@@ -12,9 +12,9 @@
 <h:body>
     <h1>Grasshoppers West Wien</h1>
     <h:form enctype="multipart/form-data">
-        <h:inputText value="#{teamView.team.name}"/>
-        <h:inputFile value="#{teamView.logo}"/>
-        <h:commandButton value="Team anlegen" action="#{teamView.saveTeam}"/>
+        <h:inputText value="#{createTeamView.team.name}"/>
+        <h:inputFile value="#{createTeamView.logo}"/>
+        <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}"/>
     </h:form>
 </h:body>
 
