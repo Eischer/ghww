@@ -11,7 +11,13 @@ import java.util.List;
 public class TeamService extends Repository{
 
     public List<Team> findAllteams () {
-        TypedQuery<Team> allTeams = entityManager.createNamedQuery("Team.finadAll", Team.class);
+        TypedQuery<Team> allTeams = entityManager.createNamedQuery("Team.findAll", Team.class);
         return allTeams.getResultList();
+    }
+
+    public Team findTeamById(int id) {
+        TypedQuery<Team> queryTeamById = entityManager.createNamedQuery("Team.findById", Team.class);
+        queryTeamById.setParameter("teamId", id);
+        return queryTeamById.getSingleResult();
     }
 }

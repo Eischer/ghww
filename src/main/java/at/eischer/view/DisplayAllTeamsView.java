@@ -19,7 +19,8 @@ public class DisplayAllTeamsView {
     @Inject
     TeamService teamService;
 
-    public byte[] getLogo(Team team) {
+    public byte[] getLogo(int teamId) {
+        Team team = teamService.findTeamById(teamId);
         return team.getLogo();
     }
 

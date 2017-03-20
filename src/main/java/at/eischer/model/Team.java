@@ -3,7 +3,12 @@ package at.eischer.model;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "Team.finadAll", query = "SELECT t FROM Team t")
+@NamedQueries(
+        {
+                @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
+                @NamedQuery(name = "Team.findById", query = "SELECT t FROM Team t WHERE t.id = :teamId ")
+        }
+)
 public class Team {
 
     @Id
