@@ -9,25 +9,26 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <title>Grasshoppers West Wien - Turnierunterstuetzung</title>
+    <h:outputStylesheet name="css/ghww.css"/>
 </h:head>
-
 <h:body>
     <h1>Grasshoppers West Wien</h1>
     <h:form>
-        <h:dataTable value="#{displayAllTeamsView.allTeams}" var="oneTeam">
-            <h:column>
+        <h:dataTable value="#{displayAllTeamsView.allTeams}" var="oneTeam"
+                     columnClasses="left, left, right" rowClasses="eval, odd">
+            <h:column headerClass="left">
+                <f:facet name="header">Logo</f:facet>
+                <p:graphicImage styleClass="logo" value="#{displayAllTeamsView.logo}">
+                    <f:param name="teamId" value="#{oneTeam.id}" />
+                </p:graphicImage>
+            </h:column>
+            <h:column headerClass="left">
                 <f:facet name="header">Mannschaft</f:facet>
                 #{oneTeam.name}
             </h:column>
-            <h:column>
+            <h:column headerClass="right">
                 <f:facet name="header">Seiderl</f:facet>
                 #{oneTeam.seiderlCounter}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Logo</f:facet>
-                <p:graphicImage value="#{displayAllTeamsView.logo}">
-                    <f:param name="teamId" value="#{oneTeam.id}" />
-                </p:graphicImage>
             </h:column>
             <h:column>
                 <h:commandButton value="Bearbeiten"/>
