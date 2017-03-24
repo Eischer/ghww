@@ -30,6 +30,13 @@ public class DisplayAllTeamsView {
         allTeams = teamService.findAllteams();
     }
 
+    public void increment(int teamId) {
+        teamService.incrementSeiderl(teamId);
+    }
+
+    public void decrement(int teamId) {
+        teamService.decrementSeiderl(teamId);
+    }
 
     /*******************************/
     /*** GETTER - SETTER Section ***/
