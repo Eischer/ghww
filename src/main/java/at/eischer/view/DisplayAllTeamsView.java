@@ -20,14 +20,6 @@ public class DisplayAllTeamsView {
 
     private List<Team> allTeams;
 
-    public TeamService getTeamService() {
-        return teamService;
-    }
-
-    public void setTeamService(TeamService teamService) {
-        this.teamService = teamService;
-    }
-
     private StreamedContent logo;
 
     @Inject
