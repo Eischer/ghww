@@ -11,19 +11,21 @@
 </h:head>
 
 <h:body>
-    <div id="menu">
-        <h:form>
-            <p:menu styleClass="ghwwBGColor">
-                <p:menuitem value="Neues Mannschaft anlegen" url="createTeam.xhtml"/>
-                <p:separator/>
-                <p:menuitem value="Alle Mannschaften anzeigen" url="displayAllTeams.xhtml"/>
-                <p:separator/>
-                <p:menuitem value="Seiderl Management" url="seiderl.xhtml"/>
-            </p:menu>
-        </h:form>
-    </div>
-    <div id="content">
-        <ui:insert name="content"/>
+    <div id="container">
+        <div id="menu">
+            <h:form>
+                <p:menu styleClass="ghwwBGColor">
+                    <p:menuitem value="Neues Mannschaft anlegen" url="createTeam.xhtml"/>
+                    <p:separator/>
+                    <p:menuitem value="Alle Mannschaften anzeigen" url="displayAllTeams.xhtml"/>
+                    <p:separator/>
+                    <p:menuitem value="Seiderl Management" url="seiderl.xhtml"/>
+                </p:menu>
+            </h:form>
+        </div>
+        <div id="content">
+            <ui:insert name="content"/>
+        </div>
     </div>
 </h:body>
 

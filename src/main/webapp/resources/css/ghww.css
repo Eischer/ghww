@@ -22,6 +22,25 @@
 .odd {
     background-color: white;
 }
+
 .ghwwBGColor {
     background-color: lightgreen;
+}
+
+div#container{
+     width: 800px;
+ }
+
+div#menu{
+    width: 250px;
+    height: 400px;
+    background: red;
+    float: left;
+}
+
+div#content{
+    width: 600px;
+    height: 400px;
+    margin-left: 200px;
+    background: blue;
 }
