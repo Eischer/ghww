@@ -28,19 +28,16 @@
 }
 
 div#container{
-     width: 800px;
- }
+    width: 100%;
+    overflow: hidden;
+}
 
 div#menu{
-    width: 250px;
-    height: 400px;
-    background: red;
     float: left;
+    overflow: hidden;
 }
 
 div#content{
-    width: 600px;
-    height: 400px;
-    margin-left: 200px;
-    background: blue;
+    float: left;
+    padding-left: 1cm;
 }
