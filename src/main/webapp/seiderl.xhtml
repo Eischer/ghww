@@ -8,11 +8,12 @@
     <ui:define name="content">
         <h1>Seiderl Management</h1>
         <h:form enctype="multipart/form-data">
-            <h:dataTable id="seiderlTable" value="#{displayAllTeamsView.allTeams}" var="oneTeam"
+            <h:dataTable id="seiderlTable" value="#{displayAllTeamsView.allTeams}" var="oneTeam" rowClasses="even, odd"
                 columnClasses="center">
-                <h:column><h2 id="notRendered">#{oneTeam.seiderlCounter}</h2></h:column>
                 <h:column>
-                    <h:commandButton value="+" action="#{displayAllTeamsView.increment(oneTeam.id)}"/>
+                    <h:commandButton value="+" action="#{displayAllTeamsView.increment(oneTeam.id)}">
+                        <f:ajax execute="@form" render="@form"/>
+                    </h:commandButton>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Mannschaft</f:facet>
@@ -23,9 +24,9 @@
                     <h:outputText id = "seiderlCount" value ="#{oneTeam.seiderlCounter}"/>
                 </h:column>
                 <h:column>
-                    <h:commandButton value="-">
-                        <f:ajax event="click" listener="#{displayAllTeamsView.decrement(oneTeam.id)}" render="seiderlCount"/>
-                </h:commandButton>
+                    <h:commandButton value="-" action="#{displayAllTeamsView.decrement(oneTeam.id)}">
+                        <f:ajax execute="@form"  render="@form"/>
+                    </h:commandButton>
                 </h:column>
             </h:dataTable>
         </h:form>

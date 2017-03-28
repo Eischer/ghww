@@ -32,10 +32,12 @@ public class DisplayAllTeamsView {
 
     public void increment(int teamId) {
         teamService.incrementSeiderl(teamId);
+        allTeams = teamService.findAllteams();
     }
 
     public void decrement(int teamId) {
         teamService.decrementSeiderl(teamId);
+        allTeams = teamService.findAllteams();
     }
 
     /*******************************/
