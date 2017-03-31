@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Login</title>
+    <h:outputStylesheet name="css/ghww.css"/>
+</h:head>
+
+<h:body>
+    <h:form>
+        <div class="CenterWrapper">
+            <div id="loginDiv">
+                <h1>Grasshoppers West Wien <br/>Turnierunterstützung</h1>
+                <table id="login">
+                    <tr class="left">
+                        <td><h:outputLabel for="userName" value="Benutzername: "/></td>
+                        <td><h:inputText id="userName" value=""/></td>
+                    </tr>
+                    <tr class="left">
+                        <td><h:outputLabel for="password" value="Passwort: "/></td>
+                        <td><h:inputSecret id="password" value=""/></td>
+                    </tr>
+                    <tr class="right">
+                        <td colspan="2">
+                            <h:commandButton value="Login"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </h:form>
+</h:body>
+</html>

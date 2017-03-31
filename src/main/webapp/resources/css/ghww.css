@@ -1,3 +1,7 @@
+h1{
+    color: green;
+}
+
 .logo{
     height: 50px;
     width: 50px;
@@ -40,4 +44,26 @@ div#menu{
 div#content{
     float: left;
     padding-left: 1cm;
+}
+
+div#loginDiv{
+    height: 500px;
+    width: 500px;
+    text-align: center;
+}
+
+div.CenterWrapper {
+    width: 600px;           /* Set this to your convenience */
+    height: 500px;          /* Set this to your convenience */
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    margin-top: -100px;     /* Half of height */
+    margin-left: -150px;
+}
+
+table#login{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightgreen;
 }
