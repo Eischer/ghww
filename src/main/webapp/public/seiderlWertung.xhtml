@@ -1,20 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-<ui:composition template="templates/template.xhtml">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
-        <h1>Seiderl Management</h1>
         <h:form enctype="multipart/form-data">
             <h:dataTable id="seiderlTable" value="#{displayAllTeamsView.allTeams}" var="oneTeam" rowClasses="even, odd"
-                columnClasses="center">
-                <h:column>
-                    <h:commandButton value="+" action="#{displayAllTeamsView.increment(oneTeam.id)}">
-                        <f:ajax execute="@form" render="@form"/>
-                    </h:commandButton>
-                </h:column>
+                         columnClasses="center">
                 <h:column>
                     <f:facet name="header">Mannschaft</f:facet>
                     #{oneTeam.name}
@@ -23,13 +19,9 @@
                     <f:facet name="header">Seiderl</f:facet>
                     <h:outputText id = "seiderlCount" value ="#{oneTeam.seiderlCounter}"/>
                 </h:column>
-                <h:column>
-                    <h:commandButton value="-" action="#{displayAllTeamsView.decrement(oneTeam.id)}">
-                        <f:ajax execute="@form"  render="@form"/>
-                    </h:commandButton>
-                </h:column>
             </h:dataTable>
         </h:form>
+        <p:chart type="line" model="#{chartView.lineModel1}" style="height:300px;"/>
     </ui:define>
 </ui:composition>
 </html>

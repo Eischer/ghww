@@ -36,7 +36,7 @@ public class CreateTeamView {
         }
 
         teamService.save(team);
-        return "displayAllTeams";
+        return "/public/displayAllTeams";
     }
 
     @PostConstruct
