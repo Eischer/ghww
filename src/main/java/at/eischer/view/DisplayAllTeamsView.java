@@ -20,8 +20,6 @@ public class DisplayAllTeamsView {
 
     private List<Team> allTeams;
 
-    private StreamedContent logo;
-
     @Inject
     TeamService teamService;
 
@@ -40,9 +38,7 @@ public class DisplayAllTeamsView {
         allTeams = teamService.findAllteams();
     }
 
-    /*******************************/
-    /*** GETTER - SETTER Section ***/
-    /*******************************/
+    // GETTER - SETTER Section
 
     public List<Team> getAllTeams() {
         return allTeams;
@@ -63,16 +59,8 @@ public class DisplayAllTeamsView {
             String id = context.getExternalContext().getRequestParameterMap()
                     .get("teamId");
             Team team = teamService.findTeamById(Integer.parseInt(id));
-
             byte[] image = team.getLogo();
-
-            return new DefaultStreamedContent(new ByteArrayInputStream(image));
-
+            return image != null ? new DefaultStreamedContent(new ByteArrayInputStream(image)) : null;
         }
     }
-
-    public void setLogo(StreamedContent logo) {
-        this.logo = logo;
-    }
-
 }
