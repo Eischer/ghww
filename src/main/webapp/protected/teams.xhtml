@@ -1,13 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:composition template="../templates/template.xhtml">
-        <ui:define name="content">
-            <h1>Grasshoppers West Wien</h1>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../templates/template.xhtml">
+    <ui:define name="content">
+        <h1>Manschaftsübersicht</h1>
+        <h:form enctype="multipart/form-data">
             <h:form>
                 <h:dataTable value="#{displayAllTeamsView.allTeams}" var="oneTeam"
                              columnClasses="left, left, right" rowClasses="even, odd">
@@ -30,6 +30,10 @@
                     </h:column>
                 </h:dataTable>
             </h:form>
-        </ui:define>
-    </ui:composition>
+            <h:inputText value="#{createTeamView.team.name}"/>
+            <h:inputFile value="#{createTeamView.logo}"/>
+            <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
 </html>
