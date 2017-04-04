@@ -2,13 +2,17 @@ package at.eischer.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "TheUser")
-@NamedQuery(name= "User.validateUser",
-query = "SELECT username FROM User u WHERE u.username=:username AND u.password=:password")
+@NamedQueries({
+        @NamedQuery(name = "User.validateUser",
+                query = "SELECT username FROM User u WHERE u.username=:username AND u.password=:password"),
+        @NamedQuery(name = "User.getUserByName", query = "SELECT u FROM User u WHERE u.username = :username")
+})
 public class User {
 
     @Id

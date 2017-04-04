@@ -1,5 +1,7 @@
 package at.eischer.services;
 
+import at.eischer.model.User;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,5 +24,10 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public User getUserByName (String username) {
+        Query geUserByNameQuery = entityManager.createNamedQuery("User.getUserByName").setParameter("username", username);
+        return (User) geUserByNameQuery.getSingleResult();
     }
 }
