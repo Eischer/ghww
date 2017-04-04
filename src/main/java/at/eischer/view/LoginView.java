@@ -23,7 +23,7 @@ public class LoginView {
         if (userService.validateUser(this.username, this.password) != null) {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("userName", username);
-            return "/protected/createTeam";
+            return "/protected/createTeam.xhtml";
         } else {
             return "/public/login.xhtml";
         }

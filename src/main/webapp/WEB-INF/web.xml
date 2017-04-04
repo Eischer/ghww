@@ -48,7 +48,7 @@
 
 	<filter-mapping>
 		<filter-name>AuthentificationFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/protected/*</url-pattern>
 	</filter-mapping>
 	<filter>
 		<filter-name>AuthentificationFilter</filter-name>
