@@ -9,30 +9,34 @@
         <h1>Manschaftsübersicht</h1>
         <h:form enctype="multipart/form-data">
             <h:form>
-                <h:dataTable value="#{displayAllTeamsView.allTeams}" var="oneTeam"
-                             columnClasses="left, left, right" rowClasses="even, odd">
-                    <h:column headerClass="left">
-                        <f:facet name="header">Logo</f:facet>
-                        <p:graphicImage styleClass="logo" value="#{displayAllTeamsView.logo}">
-                            <f:param name="teamId" value="#{oneTeam.id}"/>
-                        </p:graphicImage>
-                    </h:column>
-                    <h:column headerClass="left">
-                        <f:facet name="header">Mannschaft</f:facet>
-                        #{oneTeam.name}
-                    </h:column>
-                    <h:column headerClass="right">
-                        <f:facet name="header">Seiderl</f:facet>
-                        #{oneTeam.seiderlCounter}
-                    </h:column>
-                    <h:column>
-                        <h:commandButton value="Bearbeiten"/>
-                    </h:column>
-                </h:dataTable>
+                <p>
+                    <h:inputText value="#{createTeamView.team.name}"/>
+                    <h:inputFile value="#{createTeamView.logo}"/>
+                    <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}"/>
+                </p>
+                <p>
+                    <h:dataTable value="#{displayAllTeamsView.allTeams}" var="oneTeam"
+                                 columnClasses="left, left, right" rowClasses="even, odd">
+                        <h:column headerClass="left">
+                            <f:facet name="header">Logo</f:facet>
+                            <p:graphicImage styleClass="logo" value="#{displayAllTeamsView.logo}">
+                                <f:param name="teamId" value="#{oneTeam.id}"/>
+                            </p:graphicImage>
+                        </h:column>
+                        <h:column headerClass="left">
+                            <f:facet name="header">Mannschaft</f:facet>
+                            #{oneTeam.name}
+                        </h:column>
+                        <h:column headerClass="right">
+                            <f:facet name="header">Seiderl</f:facet>
+                            #{oneTeam.seiderlCounter}
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="Bearbeiten"/>
+                        </h:column>
+                    </h:dataTable>
+                </p>
             </h:form>
-            <h:inputText value="#{createTeamView.team.name}"/>
-            <h:inputFile value="#{createTeamView.logo}"/>
-            <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}"/>
         </h:form>
     </ui:define>
 </ui:composition>

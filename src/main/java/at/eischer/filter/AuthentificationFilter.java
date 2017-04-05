@@ -19,6 +19,9 @@ public class AuthentificationFilter implements javax.servlet.Filter {
     @Inject
     CurrentUser currentUser;
 
+    private static final String AJAX_REDIRECT_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+            + "<partial-response><redirect url=\"%s\"></redirect></partial-response>";
+
     @Override
     public void destroy() {
         //Nothing to do here
@@ -26,16 +29,24 @@ public class AuthentificationFilter implements javax.servlet.Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) req;
+        HttpServletRequest httpRequest = (HttpServletRequest) req;
         HttpServletResponse httpResponse = (HttpServletResponse) resp;
 
-        String reqURI = httpServletRequest.getRequestURI();
+        String reqURI = httpRequest.getRequestURI();
 
         if (reqURI.startsWith("/ghww/protected") && currentUser.getUser() == null) {
-            httpResponse.sendRedirect(httpServletRequest.getContextPath() + "/public/login.xhtml");
-        } else{
+            if ("partial/ajax".equals(httpRequest.getHeader("Faces-Request"))) {
+                httpResponse.setContentType("text/xml");
+                httpResponse.setCharacterEncoding("UTF-8");
+                httpResponse.getWriter().printf(AJAX_REDIRECT_XML, httpRequest.getContextPath() + "/public/login.xhtml");
+            } else {
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/public/login.xhtml");
+            }
+        } else {
             chain.doFilter(req, resp);
         }
+
+
     }
 
     @Override
