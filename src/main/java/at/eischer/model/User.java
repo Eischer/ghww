@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "TheUser")
@@ -13,7 +14,7 @@ import javax.persistence.Table;
                 query = "SELECT username FROM User u WHERE u.username=:username AND u.password=:password"),
         @NamedQuery(name = "User.getUserByName", query = "SELECT u FROM User u WHERE u.username = :username")
 })
-public class User {
+public class User{
 
     @Id
     private int id;

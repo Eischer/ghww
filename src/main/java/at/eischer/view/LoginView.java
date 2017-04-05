@@ -1,16 +1,18 @@
 package at.eischer.view;
 
 import at.eischer.services.UserService;
+import at.eischer.session.CurrentUser;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 @Named
 @RequestScoped
 public class LoginView {
+
+    @Inject
+    CurrentUser currentUser;
 
     @Inject
     UserService userService;
@@ -21,8 +23,7 @@ public class LoginView {
 
     public String validateLogin() {
         if (userService.validateUser(this.username, this.password) != null) {
-            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-            session.setAttribute("userName", username);
+            this.currentUser.setUser(userService.getUserByName(this.username));
             return "/protected/teams.xhtml";
         } else {
             return "/public/login.xhtml";

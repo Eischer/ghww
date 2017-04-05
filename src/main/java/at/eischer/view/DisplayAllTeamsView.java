@@ -2,6 +2,7 @@ package at.eischer.view;
 
 import at.eischer.model.Team;
 import at.eischer.services.TeamService;
+import at.eischer.session.CurrentUser;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -19,6 +20,9 @@ import java.util.List;
 public class DisplayAllTeamsView {
 
     private List<Team> allTeams;
+
+    @Inject
+    CurrentUser currentUser;
 
     @Inject
     TeamService teamService;
