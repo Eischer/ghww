@@ -1,6 +1,7 @@
 package at.eischer.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NamedQueries(
@@ -16,6 +17,8 @@ public class Team {
     private int id;
     private String name;
     private int seiderlCounter;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
+    private List<SeiderlHistory> history;
 
     @Lob
     private byte[] logo;
@@ -50,5 +53,13 @@ public class Team {
 
     public void setLogo(byte[] logo) {
         this.logo = logo;
+    }
+
+    public List<SeiderlHistory> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<SeiderlHistory> history) {
+        this.history = history;
     }
 }
