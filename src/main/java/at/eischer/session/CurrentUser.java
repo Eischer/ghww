@@ -15,7 +15,7 @@ public class CurrentUser implements Serializable{
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/public/login.xhtml";
+        return "/public/login?faces-redirect=true";
     }
 
     public User getUser() {
