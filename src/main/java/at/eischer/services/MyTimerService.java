@@ -1,12 +1,29 @@
 package at.eischer.services;
 
-import javax.ejb.Schedule;
-import javax.ejb.Stateless;
+import at.eischer.model.SeiderlHistory;
+import at.eischer.model.Team;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.List;
+
+@Named
 @Stateless
 public class MyTimerService {
-    @Schedule(second="0", minute="0/1",hour="*", persistent=false)
+
+    @Inject
+    TeamService teamService;
+
+    @Inject
+    SeiderHistoryService seiderHistoryService;
+
+//    @Schedule(second="0", minute="0/1",hour="*", persistent=false)
     public void log () {
+        List<Team> teams = teamService.findAllteams();
+        for (Team team : teams) {
+            seiderHistoryService.insertSeiderlHistory(new SeiderlHistory(team));
+        }
         System.out.println("TIMER SERVICE");
     }
 }

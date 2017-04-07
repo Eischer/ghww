@@ -22,6 +22,8 @@
                     <p:menuitem value="Seiderl-Wertung" url="/public/seiderlWertung.xhtml"/>
                     <p:separator/>
                     <p:menuitem value="Logout" action="#{currentUser.logout}"/>
+                    <p:separator/>
+                    <p:menuitem value="Mock History" action="#{myTimerService.log}"/>
                 </p:menu>
             </h:form>
         </div>
