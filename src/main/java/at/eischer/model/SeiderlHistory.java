@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name = "SeiderlHistory.getHistoryFor", query = "SELECT t.id, t.name, h.seiderlCounter FROM Team t JOIN t.history h")
 public class SeiderlHistory {
 
     @Id

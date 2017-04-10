@@ -1,11 +1,13 @@
 package at.eischer.view;
 
+import at.eischer.services.SeiderHistoryService;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -13,14 +15,18 @@ public class ChartView {
 
     private LineChartModel lineModel1;
 
+    @Inject
+    SeiderHistoryService seiderHistoryService;
+
     @PostConstruct
     public void init() {
+        seiderHistoryService.getSeiderHistoryByTeam();
         createLineModels();
     }
 
     private void createLineModels() {
         lineModel1 = initLinearModel();
-        lineModel1.setTitle("Linear Chart");
+        lineModel1.setTitle("Seiderl Wertung");
         lineModel1.setLegendPosition("e");
         Axis yAxis = lineModel1.getAxis(AxisType.Y);
         yAxis.setMin(0);
