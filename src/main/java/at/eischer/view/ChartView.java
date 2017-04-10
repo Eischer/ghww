@@ -1,5 +1,6 @@
 package at.eischer.view;
 
+import at.eischer.model.SeiderlHistory;
 import at.eischer.services.SeiderHistoryService;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -10,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 @Named
 @RequestScoped
@@ -22,7 +24,7 @@ public class ChartView {
 
     @PostConstruct
     public void init() {
-        seiderHistoryService.getSeiderHistoryByTeam();
+        List<SeiderlHistory> historyList = seiderHistoryService.getSeiderHistoryByTeam();
         createLineModels();
     }
 

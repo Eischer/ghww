@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "SeiderlHistory.getHistoryFor", query = "SELECT t.id, t.name, h.seiderlCounter FROM Team t JOIN t.history h")
+@NamedQuery(name = "SeiderlHistory.getHistory", query = "SELECT h FROM SeiderlHistory h")
 public class SeiderlHistory {
 
     @Id
