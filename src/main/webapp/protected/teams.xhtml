@@ -3,16 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../templates/template.xhtml">
-    <ui:define name="content">
+    <ui:define id="" name="content">
         <h1>Manschaftsübersicht</h1>
-        <h:form enctype="multipart/form-data">
+        <h:form id="teamManagementForm" enctype="multipart/form-data">
             <p>
-                <h:inputText value="#{createTeamView.team.name}"/>
-                <h:inputFile value="#{createTeamView.logo}"/>
+                <h:inputText id="teamName" value="#{createTeamView.team.name}"/>
+                <h:inputFile id="teamLogo" value="#{createTeamView.logo}"/>
                 <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}">
-                    <f:ajax execute="@form" render="@form"/>
+                    <f:ajax execute="teamManagementForm:teamName teamManagementForm:teamLogo" render="teamManagementForm:teamTable"/>
                 </h:commandButton>
             </p>
             <p>
@@ -33,7 +34,9 @@
                         #{oneTeam.seiderlCounter}
                     </h:column>
                     <h:column>
-                        <h:commandButton value="Löschen" action="#{displayAllTeamsView.remove(oneTeam.id)}"/>
+                        <h:commandButton value="Löschen" action="#{displayAllTeamsView.remove(oneTeam.id)}">
+                            <f:ajax render="teamManagementForm:teamTable"/>
+                        </h:commandButton>
                     </h:column>
                 </h:dataTable>
             </p>
