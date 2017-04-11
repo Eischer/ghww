@@ -16,13 +16,13 @@ public class MyTimerService {
     TeamService teamService;
 
     @Inject
-    SeiderHistoryService seiderHistoryService;
+    SeiderlHistoryService seiderlHistoryService;
 
 //    @Schedule(second="0", minute="0/1",hour="*", persistent=false)
     public void log () {
         List<Team> teams = teamService.findAllteams();
         for (Team team : teams) {
-            seiderHistoryService.insertSeiderlHistory(new SeiderlHistory(team));
+            seiderlHistoryService.insertSeiderlHistory(new SeiderlHistory(team));
         }
         System.out.println("TIMER SERVICE");
     }

@@ -1,6 +1,7 @@
 package at.eischer.services;
 
 import at.eischer.model.SeiderlHistory;
+import at.eischer.model.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,7 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class SeiderHistoryService {
+public class SeiderlHistoryService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -17,8 +18,12 @@ public class SeiderHistoryService {
         entityManager.persist(seiderlHistory);
     }
 
-    public List<SeiderlHistory> getSeiderHistoryByTeam() {
-        TypedQuery<SeiderlHistory> getHistoryQuery = entityManager.createNamedQuery("SeiderlHistory.getHistory", SeiderlHistory.class);
+    public List<SeiderlHistory> getSeiderHistoryByTeam(Team team) {
+        TypedQuery<SeiderlHistory> getHistoryQuery = entityManager.createNamedQuery("SeiderlHistory.getHistory", SeiderlHistory.class).setParameter("team", team);
         return getHistoryQuery.getResultList();
+    }
+
+    public int getMaxSeiderlCounter() {
+        return (int) entityManager.createNamedQuery("SeiderlHistory.getMaxSeiderlCounter").getSingleResult();
     }
 }

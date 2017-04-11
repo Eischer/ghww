@@ -5,10 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "SeiderlHistory.getHistory", query = "SELECT h FROM SeiderlHistory h")
+@NamedQueries({
+        @NamedQuery(name = "SeiderlHistory.getHistory", query = "SELECT h FROM SeiderlHistory h WHERE h.team = :team"),
+        @NamedQuery(name = "SeiderlHistory.getMaxSeiderlCounter", query = "SELECT MAX(h.seiderlCounter) FROM SeiderlHistory h")
+})
 public class SeiderlHistory {
 
     @Id

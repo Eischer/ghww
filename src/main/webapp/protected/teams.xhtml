@@ -11,10 +11,12 @@
             <p>
                 <h:inputText value="#{createTeamView.team.name}"/>
                 <h:inputFile value="#{createTeamView.logo}"/>
-                <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}"/>
+                <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandButton>
             </p>
             <p>
-                <h:dataTable value="#{displayAllTeamsView.allTeams}" var="oneTeam"
+                <h:dataTable id="teamTable" value="#{displayAllTeamsView.allTeams}" var="oneTeam"
                              columnClasses="left, left, right" rowClasses="even, odd">
                     <h:column headerClass="left">
                         <f:facet name="header">Logo</f:facet>

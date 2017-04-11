@@ -1,7 +1,9 @@
 package at.eischer.view;
 
 import at.eischer.model.SeiderlHistory;
-import at.eischer.services.SeiderHistoryService;
+import at.eischer.model.Team;
+import at.eischer.services.SeiderlHistoryService;
+import at.eischer.services.TeamService;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
@@ -20,11 +22,13 @@ public class ChartView {
     private LineChartModel lineModel1;
 
     @Inject
-    SeiderHistoryService seiderHistoryService;
+    SeiderlHistoryService seiderlHistoryService;
+
+    @Inject
+    TeamService teamService;
 
     @PostConstruct
     public void init() {
-        List<SeiderlHistory> historyList = seiderHistoryService.getSeiderHistoryByTeam();
         createLineModels();
     }
 
@@ -34,33 +38,23 @@ public class ChartView {
         lineModel1.setLegendPosition("e");
         Axis yAxis = lineModel1.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(10);
+        yAxis.setMax(seiderlHistoryService.getMaxSeiderlCounter()+1);
     }
 
     private LineChartModel initLinearModel() {
         LineChartModel model = new LineChartModel();
 
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
-
-        series1.set(1, 2);
-        series1.set(2, 1);
-        series1.set(3, 3);
-        series1.set(4, 6);
-        series1.set(5, 8);
-
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
-
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
-
-        model.addSeries(series1);
-        model.addSeries(series2);
-
+        for (Team team : teamService.findAllteams()) {
+            List<SeiderlHistory> historyPerTeam = seiderlHistoryService.getSeiderHistoryByTeam(team);
+            LineChartSeries seiderlSeries = new LineChartSeries();
+            seiderlSeries.setLabel(team.getName());
+            int counter = 0;
+            for (SeiderlHistory historyEntry : historyPerTeam) {
+                seiderlSeries.set(counter, historyEntry.getSeiderlCounter());
+                counter++;
+            }
+            model.addSeries(seiderlSeries);
+        }
         return model;
     }
 
