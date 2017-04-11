@@ -33,7 +33,7 @@
                         #{oneTeam.seiderlCounter}
                     </h:column>
                     <h:column>
-                        <h:commandButton value="Bearbeiten"/>
+                        <h:commandButton value="Löschen" action="#{displayAllTeamsView.remove(oneTeam.id)}"/>
                     </h:column>
                 </h:dataTable>
             </p>

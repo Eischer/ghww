@@ -17,9 +17,7 @@ public class TeamService extends Repository{
     }
 
     public Team findTeamById(int id) {
-        TypedQuery<Team> queryTeamById = entityManager.createNamedQuery("Team.findById", Team.class);
-        queryTeamById.setParameter("teamId", id);
-        return queryTeamById.getSingleResult();
+        return entityManager.find(Team.class, id);
     }
 
     public void incrementSeiderl(int id) {
@@ -32,5 +30,10 @@ public class TeamService extends Repository{
         Query decrementSeiderlQuery = entityManager.createQuery("UPDATE Team t SET t.seiderlCounter=t.seiderlCounter - 1 WHERE t.id = :teamId");
         decrementSeiderlQuery.setParameter("teamId", id);
         decrementSeiderlQuery.executeUpdate();
+    }
+
+    public void removeTeam(int teamId) {
+        Team teamToRemove =  entityManager.find(Team.class, teamId);
+        entityManager.remove(teamToRemove);
     }
 }

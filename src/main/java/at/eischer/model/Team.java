@@ -4,12 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@NamedQueries(
-        {
-                @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t ORDER BY t.name"),
-                @NamedQuery(name = "Team.findById", query = "SELECT t FROM Team t WHERE t.id = :teamId ")
-        }
-)
+@NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t ORDER BY t.name")
 public class Team {
 
     @Id

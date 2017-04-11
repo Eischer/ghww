@@ -42,6 +42,11 @@ public class DisplayAllTeamsView {
         allTeams = teamService.findAllteams();
     }
 
+    public void remove(int teamId) {
+        teamService.removeTeam(teamId);
+        allTeams = teamService.findAllteams();
+    }
+
     // GETTER - SETTER Section
 
     public List<Team> getAllTeams() {
