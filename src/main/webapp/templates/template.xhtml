@@ -14,17 +14,13 @@
     <div id="container">
         <div id="menu">
             <h:form>
-                <p:menu styleClass="ghwwBGColor">
+                <p:menubar styleClass="ghwwBGColor">
                     <p:menuitem value="Manschaftsverwaltung" url="/protected/teams.xhtml"/>
-                    <p:separator/>
                     <p:menuitem value="Seiderl Management" url="/protected/seiderl.xhtml"/>
-                    <p:separator/>
                     <p:menuitem value="Seiderl-Wertung" url="/public/seiderlWertung.xhtml"/>
-                    <p:separator/>
                     <p:menuitem value="Logout" action="#{currentUser.logout}"/>
-                    <p:separator/>
                     <p:menuitem value="Mock History" action="#{myTimerService.log}"/>
-                </p:menu>
+                </p:menubar>
             </h:form>
         </div>
         <div id="content">
