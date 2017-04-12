@@ -27,7 +27,7 @@
                 </h:column>
             </h:dataTable>
         </h:form>
-        <p:chart type="line" model="#{chartView.lineModel1}" style="height:300px;"/>
+        <p:chart type="line" model="#{chartView.lineModel}" style="height:300px;" rendered="#{chartView.lineModel!=null}"/>
     </ui:define>
 </ui:composition>
 </html>

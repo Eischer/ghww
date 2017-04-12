@@ -12,9 +12,7 @@
             <p>
                 <h:inputText id="teamName" value="#{createTeamView.team.name}"/>
                 <h:inputFile id="teamLogo" value="#{createTeamView.logo}"/>
-                <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}">
-                    <f:ajax execute="teamManagementForm:teamName teamManagementForm:teamLogo" render="teamManagementForm:teamTable"/>
-                </h:commandButton>
+                <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}"/>
             </p>
             <p>
                 <h:dataTable id="teamTable" value="#{displayAllTeamsView.allTeams}" var="oneTeam"

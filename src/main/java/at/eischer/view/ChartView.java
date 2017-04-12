@@ -19,7 +19,7 @@ import java.util.List;
 @RequestScoped
 public class ChartView {
 
-    private LineChartModel lineModel1;
+    private LineChartModel lineModel;
 
     @Inject
     SeiderlHistoryService seiderlHistoryService;
@@ -29,16 +29,23 @@ public class ChartView {
 
     @PostConstruct
     public void init() {
-        createLineModels();
+        if (!teamService.findAllteams().isEmpty()) {
+            createLineModels();
+        }
     }
 
     private void createLineModels() {
-        lineModel1 = initLinearModel();
-        lineModel1.setTitle("Seiderl Wertung");
-        lineModel1.setLegendPosition("e");
-        Axis yAxis = lineModel1.getAxis(AxisType.Y);
+        lineModel = initLinearModel();
+        lineModel.setTitle("Seiderl Wertung");
+        lineModel.setLegendPosition("e");
+
+        lineModel.getAxis(AxisType.X).setTickFormat("%.0f");
+
+        Axis yAxis = lineModel.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setMax(teamService.getMaxCountOfSeiderl()+1);
+        yAxis.setTickFormat("%.0f");
+        yAxis.setTickInterval("2");
     }
 
     private LineChartModel initLinearModel() {
@@ -65,11 +72,11 @@ public class ChartView {
     /**
      * GETTER and SETTERS
      */
-    public LineChartModel getLineModel1() {
-        return lineModel1;
+    public LineChartModel getLineModel() {
+        return lineModel;
     }
 
-    public void setLineModel1(LineChartModel lineModel1) {
-        this.lineModel1 = lineModel1;
+    public void setLineModel(LineChartModel lineModel) {
+        this.lineModel = lineModel;
     }
 }
