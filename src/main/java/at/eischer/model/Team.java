@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t ORDER BY t.name")
+@NamedQueries({
+        @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t ORDER BY t.name"),
+        @NamedQuery(name = "Team.getMaxSeiderlCount", query = "SELECT MAX (t.seiderlCounter) FROM Team t")
+})
 public class Team {
 
     @Id

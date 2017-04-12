@@ -38,21 +38,25 @@ public class ChartView {
         lineModel1.setLegendPosition("e");
         Axis yAxis = lineModel1.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(seiderlHistoryService.getMaxSeiderlCounter()+1);
+        yAxis.setMax(teamService.getMaxCountOfSeiderl()+1);
     }
 
     private LineChartModel initLinearModel() {
         LineChartModel model = new LineChartModel();
 
         for (Team team : teamService.findAllteams()) {
-            List<SeiderlHistory> historyPerTeam = seiderlHistoryService.getSeiderHistoryByTeam(team);
             LineChartSeries seiderlSeries = new LineChartSeries();
             seiderlSeries.setLabel(team.getName());
+            List<SeiderlHistory> historyPerTeam = seiderlHistoryService.getSeiderHistoryByTeam(team);
             int counter = 0;
-            for (SeiderlHistory historyEntry : historyPerTeam) {
-                seiderlSeries.set(counter, historyEntry.getSeiderlCounter());
-                counter++;
+            if (!historyPerTeam.isEmpty()) {
+                for (SeiderlHistory historyEntry : historyPerTeam) {
+                    seiderlSeries.set(counter, historyEntry.getSeiderlCounter());
+                    counter++;
+                }
             }
+            // Now also add the current value to the series
+            seiderlSeries.set(counter, team.getSeiderlCounter());
             model.addSeries(seiderlSeries);
         }
         return model;

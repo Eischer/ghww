@@ -32,6 +32,11 @@ public class TeamService extends Repository{
         decrementSeiderlQuery.executeUpdate();
     }
 
+    public int getMaxCountOfSeiderl() {
+        Query maxSeiderQuery = entityManager.createNamedQuery("Team.getMaxSeiderlCount");
+        return (int) maxSeiderQuery.getSingleResult();
+    }
+
     public void removeTeam(int teamId) {
         Team teamToRemove =  entityManager.find(Team.class, teamId);
         entityManager.remove(teamToRemove);

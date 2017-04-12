@@ -22,8 +22,4 @@ public class SeiderlHistoryService {
         TypedQuery<SeiderlHistory> getHistoryQuery = entityManager.createNamedQuery("SeiderlHistory.getHistory", SeiderlHistory.class).setParameter("team", team);
         return getHistoryQuery.getResultList();
     }
-
-    public int getMaxSeiderlCounter() {
-        return (int) entityManager.createNamedQuery("SeiderlHistory.getMaxSeiderlCounter").getSingleResult();
-    }
 }
