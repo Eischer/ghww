@@ -10,16 +10,16 @@
         <h1>Manschaftsübersicht</h1>
         <h:form id="teamManagementForm" enctype="multipart/form-data">
             <p>
-                <h:inputText id="teamName" value="#{createTeamView.team.name}"/>
-                <h:inputFile id="teamLogo" value="#{createTeamView.logo}"/>
-                <h:commandButton value="Team anlegen" action="#{createTeamView.saveTeam}"/>
+                <h:inputText id="teamName" value="#{teamView.teamViewBean.teamName}"/>
+                <h:inputFile id="teamLogo" value="#{teamView.teamViewBean.logo}"/>
+                <h:commandButton value="Team anlegen" action="#{teamView.teamViewBean.saveTeam}"/>
             </p>
             <p>
-                <h:dataTable id="teamTable" value="#{displayAllTeamsView.allTeams}" var="oneTeam"
+                <h:dataTable id="teamTable" value="#{teamView.allTeams}" var="oneTeam"
                              columnClasses="left, left, right" rowClasses="even, odd">
                     <h:column headerClass="left">
                         <f:facet name="header">Logo</f:facet>
-                        <p:graphicImage styleClass="logo" value="#{displayAllTeamsView.logo}">
+                        <p:graphicImage styleClass="logo" value="#{teamView.logo}">
                             <f:param name="teamId" value="#{oneTeam.id}"/>
                         </p:graphicImage>
                     </h:column>
@@ -32,7 +32,7 @@
                         #{oneTeam.seiderlCounter}
                     </h:column>
                     <h:column>
-                        <h:commandButton value="Löschen" action="#{displayAllTeamsView.remove(oneTeam.id)}">
+                        <h:commandButton value="Löschen" action="#{teamView.remove(oneTeam.id)}">
                             <f:ajax render="teamManagementForm:teamTable"/>
                         </h:commandButton>
                     </h:column>

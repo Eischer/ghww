@@ -4,19 +4,15 @@ import at.eischer.model.Team;
 import at.eischer.services.TeamService;
 import org.apache.commons.io.IOUtils;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Named
-@RequestScoped
-public class CreateTeamView {
-
-    private Team team;
+@Dependent
+public class TeamViewBean {
+    private String teamName;
 
     private Part logo;
 
@@ -24,6 +20,9 @@ public class CreateTeamView {
     TeamService teamService;
 
     public String saveTeam () {
+        Team team = new Team();
+        team.setName(this.teamName);
+        team.setSeiderlCounter(0);
         try {
             byte [] logoAsByteArray;
             if (logo != null) {
@@ -36,26 +35,15 @@ public class CreateTeamView {
         }
 
         teamService.save(team);
-        return "/public/displayAllTeams";
+        return "/public/displayAllTeams?faces-redirect=true";
     }
 
-    @PostConstruct
-    public void init () {
-        team = new Team();
-        team.setSeiderlCounter(0);
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
-
-    /*******************************/
-    /*** GETTER - SETTER Section ***/
-    /*******************************/
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
+    public String getTeamName() {
+        return this.teamName;
     }
 
     public Part getLogo() {

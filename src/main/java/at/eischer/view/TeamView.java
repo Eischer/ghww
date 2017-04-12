@@ -17,7 +17,7 @@ import java.util.List;
 
 @Named
 @RequestScoped
-public class DisplayAllTeamsView {
+public class TeamView {
 
     private List<Team> allTeams;
 
@@ -26,6 +26,9 @@ public class DisplayAllTeamsView {
 
     @Inject
     TeamService teamService;
+
+    @Inject
+    private TeamViewBean teamViewBean;
 
     @PostConstruct
     public void init() {
@@ -71,5 +74,13 @@ public class DisplayAllTeamsView {
             byte[] image = team.getLogo();
             return image != null ? new DefaultStreamedContent(new ByteArrayInputStream(image)) : null;
         }
+    }
+
+    public TeamViewBean getTeamViewBean() {
+        return teamViewBean;
+    }
+
+    public void setTeamViewBean(TeamViewBean teamViewBean) {
+        this.teamViewBean = teamViewBean;
     }
 }

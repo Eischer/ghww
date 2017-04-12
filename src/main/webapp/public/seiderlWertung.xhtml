@@ -10,10 +10,10 @@
     <ui:define name="content">
         <h1>Seiderl Wertung</h1>
         <h:form enctype="multipart/form-data">
-            <h:dataTable id="seiderlTable" value="#{displayAllTeamsView.allTeams}" var="oneTeam" rowClasses="even, odd"
+            <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
                          columnClasses="center">
                 <h:column>
-                    <p:graphicImage styleClass="logo" value="#{displayAllTeamsView.logo}">
+                    <p:graphicImage styleClass="logo" value="#{teamView.logo}">
                         <f:param name="teamId" value="#{oneTeam.id}"/>
                     </p:graphicImage>
                 </h:column>
