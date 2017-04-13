@@ -42,12 +42,10 @@ div#container{
 }
 
 div#menu{
-    float: left;
     overflow: hidden;
 }
 
 div#content{
-    float: left;
     padding-left: 1cm;
 }
 
