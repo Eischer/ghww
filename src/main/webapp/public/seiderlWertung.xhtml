@@ -9,25 +9,29 @@
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
         <h1>Seiderl Wertung</h1>
-        <h:form enctype="multipart/form-data">
-            <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
-                         columnClasses="center">
-                <h:column>
-                    <p:graphicImage styleClass="logo" value="#{teamView.logo}">
-                        <f:param name="teamId" value="#{oneTeam.id}"/>
-                    </p:graphicImage>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Mannschaft</f:facet>
-                    #{oneTeam.name}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Seiderl</f:facet>
-                    <h:outputText id = "seiderlCount" value ="#{oneTeam.seiderlCounter}"/>
-                </h:column>
-            </h:dataTable>
-        </h:form>
-        <p:chart type="line" model="#{chartView.lineModel}" style="height:100vh;width: 100vw;" rendered="#{chartView.lineModel!=null}"/>
+        <div id="seiderlTableDiv">
+            <h:form enctype="multipart/form-data">
+                    <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
+                                 columnClasses="logo, teamName, seiderlCount">
+                        <h:column headerClass="logo">
+                            <p:graphicImage styleClass="logoImg" value="#{teamView.logo}">
+                                <f:param name="teamId" value="#{oneTeam.id}"/>
+                            </p:graphicImage>
+                        </h:column>
+                        <h:column headerClass="teamName">
+                            <f:facet name="header">Mannschaft</f:facet>
+                            #{oneTeam.name}
+                        </h:column>
+                        <h:column headerClass="seiderlCount">
+                            <f:facet name="header">#</f:facet>
+                            #{oneTeam.seiderlCounter}
+                        </h:column>
+                    </h:dataTable>
+            </h:form>
+        </div>
+        <div id="chartDiv">
+            <p:chart type="line" model="#{chartView.lineModel}" style="height:50vh;width: 50vw;" rendered="#{chartView.lineModel!=null}"/>
+        </div>
     </ui:define>
 </ui:composition>
 </html>

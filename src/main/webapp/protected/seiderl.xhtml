@@ -10,27 +10,29 @@
         <h1>Seiderl Management</h1>
         <h:form id="seiderlManagementForm" enctype="multipart/form-data">
             <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
-                         columnClasses="center">
-                <h:column>
+                         columnClasses="button, logo, teamName, seiderlCount, button">
+                <h:column headerClass="button">
                     <h:commandButton value="+" action="#{teamView.increment(oneTeam.id)}">
+                        <f:facet name="header"/>
                         <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
                 </h:column>
-                <h:column headerClass="left">
+                <h:column headerClass="logo">
                     <f:facet name="header">Logo</f:facet>
-                    <p:graphicImage styleClass="logo" value="#{teamView.logo}">
+                    <p:graphicImage styleClass="logoImg" value="#{teamView.logo}">
                         <f:param name="teamId" value="#{oneTeam.id}"/>
                     </p:graphicImage>
                 </h:column>
-                <h:column>
+                <h:column headerClass="teamName">
                     <f:facet name="header">Mannschaft</f:facet>
                     #{oneTeam.name}
                 </h:column>
-                <h:column>
+                <h:column headerClass="seiderlCount">
                     <f:facet name="header">Seiderl</f:facet>
-                    <h:outputText id = "seiderlCount" value ="#{oneTeam.seiderlCounter}"/>
+                    #{oneTeam.seiderlCounter}
                 </h:column>
-                <h:column>
+                <h:column headerClass="button">
+                    <f:facet name="header"/>
                     <h:commandButton value="-" action="#{teamView.decrement(oneTeam.id)}">
                         <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>

@@ -7,7 +7,7 @@ h1{
     color: green;
 }
 
-.logo{
+.logoImg{
     height: 50px;
     width: 50px;
 }
@@ -47,6 +47,54 @@ div#menu{
 
 div#content{
     padding-left: 1cm;
+}
+
+div#seiderlTableDiv{
+    float: left;
+}
+
+td.button {
+    text-align: center;
+    width: 50px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.logo {
+    text-align: center;
+    width: 50px;
+    overflow: inherit;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.logo {
+    text-align: center;
+    width: 50px;
+    overflow: inherit;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.teamName {
+    text-align: center;
+    width: 150px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: normal;
+}
+
+.seiderlCount {
+    text-align: center;
+    width: 30px;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+div#chartDiv {
+    float: left;
 }
 
 div#loginDiv{
