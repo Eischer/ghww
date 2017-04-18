@@ -1,3 +1,61 @@
+/* Template Page */
+div#menu{
+    overflow: hidden;
+}
+
+div#content{
+    padding-left: 1cm;
+}
+
+/* Team/Seiderl Tables*/
+.logoCol {
+    text-align: center;
+    width: 50px;
+    overflow: inherit;
+}
+
+.teamNameCol {
+    text-align: left;
+    width: 150px;
+    overflow: inherit;
+}
+
+.seiderlCountCol {
+    text-align: right;
+    width: 30px;
+    overflow: inherit;
+}
+
+/* Login Page */
+div#loginDiv{
+    top: 10%;
+    margin:0 auto;
+    text-align: center;
+}
+
+table#login{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightgreen;
+}
+
+.grasshopperslogo {
+    margin-top: 75px;
+    height: 150px;
+    width: 150px;
+    padding-bottom: 50px;
+}
+
+/* SeiderWertung page */
+div#seiderlTableDiv{
+    float: left;
+}
+
+div#chartDiv {
+    float: left;
+}
+
+/* General Stylings */
 body {
     padding: 0;
     margin: 0;
@@ -34,78 +92,4 @@ h1{
 
 .ghwwBGColor {
     background-color: lightgreen;
-}
-
-div#container{
-    width: 100%;
-    overflow: hidden;
-}
-
-div#menu{
-    overflow: hidden;
-}
-
-div#content{
-    padding-left: 1cm;
-}
-
-div#seiderlTableDiv{
-    float: left;
-}
-
-
-td.button {
-    text-align: center;
-    width: 50px;
-    overflow: hidden;
-    display: inline-block;
-    white-space: nowrap;
-}
-
-.logo {
-    text-align: center;
-    width: 50px;
-    overflow: inherit;
-    display: inline-block;
-    white-space: nowrap;
-}
-
-.logo {
-    text-align: center;
-    width: 50px;
-    overflow: inherit;
-}
-
-.teamName {
-    width: 150px;
-    overflow: inherit;
-}
-
-.seiderlCount {
-    text-align: right;
-    width: 30px;
-    overflow: hidden;
-}
-
-div#chartDiv {
-    float: left;
-}
-
-div#loginDiv{
-    top: 10%;
-    margin:0 auto;
-    text-align: center;
-}
-
-table#login{
-    margin-left: auto;
-    margin-right: auto;
-    background-color: lightgreen;
-}
-
-.grasshopperslogo {
-    margin-top: 75px;
-    height: 150px;
-    width: 150px;
-    padding-bottom: 50px;
 }

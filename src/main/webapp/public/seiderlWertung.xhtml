@@ -12,17 +12,17 @@
         <div id="seiderlTableDiv">
             <h:form enctype="multipart/form-data">
                     <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
-                                 columnClasses="logo, teamName, seiderlCount">
-                        <h:column headerClass="logo">
+                                 columnClasses="logoCol, teamNameCol, seiderlCountCol">
+                        <h:column headerClass="logoCol">
                             <p:graphicImage styleClass="logoImg" value="#{teamView.logo}">
                                 <f:param name="teamId" value="#{oneTeam.id}"/>
                             </p:graphicImage>
                         </h:column>
-                        <h:column headerClass="teamName">
+                        <h:column headerClass="teamNameCol">
                             <f:facet name="header">Mannschaft</f:facet>
                             #{oneTeam.name}
                         </h:column>
-                        <h:column headerClass="seiderlCount">
+                        <h:column headerClass="seiderlCountCol">
                             <f:facet name="header">#</f:facet>
                             #{oneTeam.seiderlCounter}
                         </h:column>

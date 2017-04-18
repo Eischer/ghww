@@ -16,18 +16,18 @@
             </p>
             <p>
                 <h:dataTable id="teamTable" value="#{teamView.allTeams}" var="oneTeam"
-                             columnClasses="logo, teamName, seiderlCount" rowClasses="even, odd">
-                    <h:column headerClass="logo">
+                             columnClasses="logoCol, teamNameCol, seiderlCountCol" rowClasses="even, odd">
+                    <h:column headerClass="logoCol">
                         <f:facet name="header">Logo</f:facet>
-                        <p:graphicImage styleClass="logo" value="#{teamView.logo}">
+                        <p:graphicImage styleClass="logoCol" value="#{teamView.logo}">
                             <f:param name="teamId" value="#{oneTeam.id}"/>
                         </p:graphicImage>
                     </h:column>
-                    <h:column headerClass="teamName">
+                    <h:column headerClass="teamNameCol">
                         <f:facet name="header">Mannschaft</f:facet>
                         #{oneTeam.name}
                     </h:column>
-                    <h:column headerClass="seiderlCount">
+                    <h:column headerClass="seiderlCountCol">
                         <f:facet name="header">Seiderl</f:facet>
                         #{oneTeam.seiderlCounter}
                     </h:column>
