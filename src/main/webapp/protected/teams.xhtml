@@ -16,22 +16,23 @@
             </p>
             <p>
                 <h:dataTable id="teamTable" value="#{teamView.allTeams}" var="oneTeam"
-                             columnClasses="left, left, right" rowClasses="even, odd">
-                    <h:column headerClass="left">
+                             columnClasses="logo, teamName, seiderlCount" rowClasses="even, odd">
+                    <h:column headerClass="logo">
                         <f:facet name="header">Logo</f:facet>
                         <p:graphicImage styleClass="logo" value="#{teamView.logo}">
                             <f:param name="teamId" value="#{oneTeam.id}"/>
                         </p:graphicImage>
                     </h:column>
-                    <h:column headerClass="left">
+                    <h:column headerClass="teamName">
                         <f:facet name="header">Mannschaft</f:facet>
                         #{oneTeam.name}
                     </h:column>
-                    <h:column headerClass="right">
+                    <h:column headerClass="seiderlCount">
                         <f:facet name="header">Seiderl</f:facet>
                         #{oneTeam.seiderlCounter}
                     </h:column>
                     <h:column>
+                        <f:facet name="header">Button</f:facet>
                         <h:commandButton value="Löschen" action="#{teamView.remove(oneTeam.id)}">
                             <f:ajax render="teamManagementForm:teamTable"/>
                         </h:commandButton>

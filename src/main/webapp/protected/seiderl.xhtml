@@ -12,8 +12,8 @@
             <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
                          columnClasses="button, logo, teamName, seiderlCount, button">
                 <h:column headerClass="button">
+                    <f:facet name="header">Button</f:facet>
                     <h:commandButton value="+" action="#{teamView.increment(oneTeam.id)}">
-                        <f:facet name="header"/>
                         <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
                 </h:column>
@@ -32,7 +32,7 @@
                     #{oneTeam.seiderlCounter}
                 </h:column>
                 <h:column headerClass="button">
-                    <f:facet name="header"/>
+                    <f:facet name="header">Button</f:facet>
                     <h:commandButton value="-" action="#{teamView.decrement(oneTeam.id)}">
                         <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>

@@ -53,6 +53,7 @@ div#seiderlTableDiv{
     float: left;
 }
 
+
 td.button {
     text-align: center;
     width: 50px;
@@ -73,24 +74,17 @@ td.button {
     text-align: center;
     width: 50px;
     overflow: inherit;
-    display: inline-block;
-    white-space: nowrap;
 }
 
 .teamName {
-    text-align: center;
     width: 150px;
-    overflow: hidden;
-    display: inline-block;
-    white-space: normal;
+    overflow: inherit;
 }
 
 .seiderlCount {
-    text-align: center;
+    text-align: right;
     width: 30px;
     overflow: hidden;
-    display: inline-block;
-    white-space: nowrap;
 }
 
 div#chartDiv {
