@@ -53,13 +53,19 @@ table#login{
 }
 
 /* SeiderWertung page */
+div#containerDiv {
+    white-space: nowrap;
+}
+
 div#seiderlTableDiv{
-    float: left;
+    vertical-align: top;
+    display:inline-block;
 }
 
 div#chartDiv {
     padding-left: 30px;
-    float: left;
+    display:inline-block;
+    white-space: normal;
 }
 
 /* General Stylings */

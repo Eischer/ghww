@@ -9,8 +9,9 @@
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
         <h1>Seiderl Wertung</h1>
-        <div id="seiderlTableDiv">
-            <h:form enctype="multipart/form-data">
+        <div id="containerDiv">
+            <div id="seiderlTableDiv">
+                <h:form enctype="multipart/form-data">
                     <h:dataTable id="seiderlTable" value="#{teamView.teamsOrderedBySeiderl}" var="oneTeam" rowClasses="even, odd"
                                  columnClasses="logoCol, teamNameCol, seiderlCountCol">
                         <h:column headerClass="logoCol">
@@ -25,10 +26,11 @@
                             #{oneTeam.seiderlCounter}
                         </h:column>
                     </h:dataTable>
-            </h:form>
-        </div>
-        <div id="chartDiv">
-            <p:chart type="line" model="#{chartView.lineModel}" style="height:50vh;width: 50vw;" rendered="#{chartView.lineModel!=null}"/>
+                </h:form>
+            </div>
+            <div id="chartDiv">
+                <p:chart type="line" model="#{chartView.lineModel}" style="height:50vh;width: 50vw;" rendered="#{chartView.lineModel!=null}"/>
+            </div>
         </div>
     </ui:define>
 </ui:composition>
