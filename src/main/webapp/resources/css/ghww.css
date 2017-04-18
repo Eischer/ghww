@@ -98,20 +98,9 @@ div#chartDiv {
 }
 
 div#loginDiv{
-    height: 500px;
-    width: 500px;
+    top: 10%;
+    margin:0 auto;
     text-align: center;
-}
-
-div.CenterWrapper {
-    padding-right: 175px;
-    width: 500px;           /* Set this to your convenience */
-    height: 500px;          /* Set this to your convenience */
-    position: absolute;
-    top: 400px;
-    left: 45%;
-    margin-top: -100px;     /* Half of height */
-    margin-left: -150px;
 }
 
 table#login{
@@ -124,9 +113,5 @@ table#login{
     margin-top: 75px;
     height: 150px;
     width: 150px;
+    padding-bottom: 50px;
 }
-
-.fullWidth {
-    width: 100%;
-}
-
