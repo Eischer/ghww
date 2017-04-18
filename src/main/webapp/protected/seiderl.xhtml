@@ -10,13 +10,7 @@
         <h1>Seiderl Management</h1>
         <h:form id="seiderlManagementForm" enctype="multipart/form-data">
             <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
-                         columnClasses="button, logoCol, teamNameCol, seiderlCountCol, button">
-                <h:column headerClass="button">
-                    <f:facet name="header">Button</f:facet>
-                    <h:commandButton value="+" action="#{teamView.increment(oneTeam.id)}">
-                        <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
-                    </h:commandButton>
-                </h:column>
+                         columnClasses="logoCol, teamNameCol, seiderlCountCol">
                 <h:column headerClass="logoCol">
                     <f:facet name="header">Logo</f:facet>
                     <p:graphicImage styleClass="logoImg" value="#{teamView.logo}">
@@ -31,9 +25,13 @@
                     <f:facet name="header">Seiderl</f:facet>
                     #{oneTeam.seiderlCounter}
                 </h:column>
-                <h:column headerClass="button">
-                    <f:facet name="header">Button</f:facet>
-                    <h:commandButton value="-" action="#{teamView.decrement(oneTeam.id)}">
+                <h:column>
+                    <h:commandButton class="button" value="+" action="#{teamView.increment(oneTeam.id)}">
+                        <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
+                    </h:commandButton>
+                </h:column>
+                <h:column>
+                    <h:commandButton class="button" value="-" action="#{teamView.decrement(oneTeam.id)}">
                         <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
                 </h:column>

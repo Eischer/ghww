@@ -46,12 +46,19 @@ table#login{
     padding-bottom: 50px;
 }
 
+/* Seiderl Management page */
+.button  {
+    height: 50px;
+    width: 50px;
+}
+
 /* SeiderWertung page */
 div#seiderlTableDiv{
     float: left;
 }
 
 div#chartDiv {
+    padding-left: 30px;
     float: left;
 }
 

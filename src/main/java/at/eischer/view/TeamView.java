@@ -21,6 +21,8 @@ public class TeamView {
 
     private List<Team> allTeams;
 
+    private List<Team> teamsOrderedBySeiderl;
+
     @Inject
     CurrentUser currentUser;
 
@@ -33,6 +35,7 @@ public class TeamView {
     @PostConstruct
     public void init() {
         allTeams = teamService.findAllteams();
+        teamsOrderedBySeiderl = teamService.findAllteamsOrderBySeiderl();
     }
 
     public void increment(int teamId) {
@@ -58,6 +61,14 @@ public class TeamView {
 
     public void setAllTeams(List<Team> allTeams) {
         this.allTeams = allTeams;
+    }
+
+    public List<Team> getTeamsOrderedBySeiderl() {
+        return teamsOrderedBySeiderl;
+    }
+
+    public void setTeamsOrderedBySeiderl(List<Team> teamsOrderedBySeiderl) {
+        this.teamsOrderedBySeiderl = teamsOrderedBySeiderl;
     }
 
     public StreamedContent getLogo() {

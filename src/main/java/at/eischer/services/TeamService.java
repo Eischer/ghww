@@ -41,4 +41,9 @@ public class TeamService extends Repository{
         Team teamToRemove =  entityManager.find(Team.class, teamId);
         entityManager.remove(teamToRemove);
     }
+
+    public List<Team> findAllteamsOrderBySeiderl() {
+        TypedQuery<Team> allTeams = entityManager.createNamedQuery("Team.findAllOrderBySeiderl", Team.class);
+        return allTeams.getResultList();
+    }
 }

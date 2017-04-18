@@ -11,7 +11,7 @@
         <h1>Seiderl Wertung</h1>
         <div id="seiderlTableDiv">
             <h:form enctype="multipart/form-data">
-                    <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
+                    <h:dataTable id="seiderlTable" value="#{teamView.teamsOrderedBySeiderl}" var="oneTeam" rowClasses="even, odd"
                                  columnClasses="logoCol, teamNameCol, seiderlCountCol">
                         <h:column headerClass="logoCol">
                             <p:graphicImage styleClass="logoImg" value="#{teamView.logo}">
@@ -19,11 +19,9 @@
                             </p:graphicImage>
                         </h:column>
                         <h:column headerClass="teamNameCol">
-                            <f:facet name="header">Mannschaft</f:facet>
                             #{oneTeam.name}
                         </h:column>
                         <h:column headerClass="seiderlCountCol">
-                            <f:facet name="header">#</f:facet>
                             #{oneTeam.seiderlCounter}
                         </h:column>
                     </h:dataTable>
