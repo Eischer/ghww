@@ -12,18 +12,21 @@
         <div id="containerDiv">
             <div id="seiderlTableDiv">
                 <h:form enctype="multipart/form-data">
-                    <h:dataTable id="seiderlTable" value="#{teamView.teamsOrderedBySeiderl}" var="oneTeam" rowClasses="even, odd"
-                                 columnClasses="logoCol, teamNameCol, seiderlCountCol">
+                    <h:dataTable id="seiderlTable" value="#{teamView.ranking}" var="teamRank" rowClasses="even, odd"
+                                 columnClasses="logoCol,seiderlCountCol, teamNameCol, seiderlCountCol">
                         <h:column headerClass="logoCol">
                             <p:graphicImage styleClass="logoImg" value="#{teamView.logo}">
-                                <f:param name="teamId" value="#{oneTeam.id}"/>
+                                <f:param name="teamId" value="#{teamRank.team.id}"/>
                             </p:graphicImage>
                         </h:column>
+                        <h:column>
+                            #{teamRank.rank}
+                        </h:column>
                         <h:column headerClass="teamNameCol">
-                            #{oneTeam.name}
+                            #{teamRank.team.name}
                         </h:column>
                         <h:column headerClass="seiderlCountCol">
-                            #{oneTeam.seiderlCounter}
+                            #{teamRank.team.seiderlCounter}
                         </h:column>
                     </h:dataTable>
                 </h:form>

@@ -13,6 +13,7 @@ import javax.faces.event.PhaseId;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -21,7 +22,7 @@ public class TeamView {
 
     private List<Team> allTeams;
 
-    private List<Team> teamsOrderedBySeiderl;
+    private List<SeiderRanking> ranking;
 
     @Inject
     CurrentUser currentUser;
@@ -34,8 +35,20 @@ public class TeamView {
 
     @PostConstruct
     public void init() {
+        ranking = new ArrayList<>();
         allTeams = teamService.findAllteams();
-        teamsOrderedBySeiderl = teamService.findAllteamsOrderBySeiderl();
+        int rank = 1;
+        for (Team team : teamService.findAllteamsOrderBySeiderl()) {
+            if (ranking.isEmpty()) {
+                ranking.add(new SeiderRanking(rank, team));
+            } else {
+                if (ranking.get(ranking.size()-1).getTeam().getSeiderlCounter() == team.getSeiderlCounter()) {
+                    ranking.add(new SeiderRanking(rank, team));
+                } else {
+                    ranking.add(new SeiderRanking(++rank, team));
+                }
+            }
+        }
     }
 
     public void increment(int teamId) {
@@ -63,14 +76,6 @@ public class TeamView {
         this.allTeams = allTeams;
     }
 
-    public List<Team> getTeamsOrderedBySeiderl() {
-        return teamsOrderedBySeiderl;
-    }
-
-    public void setTeamsOrderedBySeiderl(List<Team> teamsOrderedBySeiderl) {
-        this.teamsOrderedBySeiderl = teamsOrderedBySeiderl;
-    }
-
     public StreamedContent getLogo() {
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -93,5 +98,13 @@ public class TeamView {
 
     public void setTeamViewBean(TeamViewBean teamViewBean) {
         this.teamViewBean = teamViewBean;
+    }
+
+    public List<SeiderRanking> getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(List<SeiderRanking> ranking) {
+        this.ranking = ranking;
     }
 }
