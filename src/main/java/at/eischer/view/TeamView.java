@@ -22,7 +22,7 @@ public class TeamView {
 
     private List<Team> allTeams;
 
-    private List<SeiderRanking> ranking;
+    private List<SeiderlRanking> ranking;
 
     @Inject
     CurrentUser currentUser;
@@ -35,19 +35,23 @@ public class TeamView {
 
     @PostConstruct
     public void init() {
-        ranking = new ArrayList<>();
         allTeams = teamService.findAllteams();
-        int rank = 1;
+
+        ranking = new ArrayList<>();
+        int currentRank = 1;
+        int rankCounter = 1;
         for (Team team : teamService.findAllteamsOrderBySeiderl()) {
             if (ranking.isEmpty()) {
-                ranking.add(new SeiderRanking(rank, team));
+                ranking.add(new SeiderlRanking(currentRank, team));
             } else {
                 if (ranking.get(ranking.size()-1).getTeam().getSeiderlCounter() == team.getSeiderlCounter()) {
-                    ranking.add(new SeiderRanking(rank, team));
+                    ranking.add(new SeiderlRanking(currentRank, team));
                 } else {
-                    ranking.add(new SeiderRanking(++rank, team));
+                    currentRank = rankCounter;
+                    ranking.add(new SeiderlRanking(currentRank, team));
                 }
             }
+            rankCounter++;
         }
     }
 
@@ -100,11 +104,11 @@ public class TeamView {
         this.teamViewBean = teamViewBean;
     }
 
-    public List<SeiderRanking> getRanking() {
+    public List<SeiderlRanking> getRanking() {
         return ranking;
     }
 
-    public void setRanking(List<SeiderRanking> ranking) {
+    public void setRanking(List<SeiderlRanking> ranking) {
         this.ranking = ranking;
     }
 }
