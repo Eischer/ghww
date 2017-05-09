@@ -12,7 +12,7 @@
             <p>
                 <h:inputText id="teamName" value="#{teamView.teamViewBean.teamName}"/>
                 <h:inputFile id="teamLogo" value="#{teamView.teamViewBean.logo}"/>
-                <h:commandButton value="Team anlegen" action="#{teamView.teamViewBean.saveTeam}"/>
+                <h:commandButton value="Team anlegen" action="#{teamView.saveTeam}"/>
             </p>
             <p>
                 <h:dataTable id="teamTable" value="#{teamView.allTeams}" var="oneTeam"

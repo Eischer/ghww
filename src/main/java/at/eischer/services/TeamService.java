@@ -16,17 +16,17 @@ public class TeamService extends Repository{
         return allTeams.getResultList();
     }
 
-    public Team findTeamById(int id) {
+    public Team findTeamById(long id) {
         return entityManager.find(Team.class, id);
     }
 
-    public void incrementSeiderl(int id) {
+    public void incrementSeiderl(long id) {
         Query incrementSeiderlQuery = entityManager.createQuery("UPDATE Team t SET t.seiderlCounter=t.seiderlCounter + 1 WHERE t.id = :teamId");
         incrementSeiderlQuery.setParameter("teamId", id);
         incrementSeiderlQuery.executeUpdate();
     }
 
-    public void decrementSeiderl(int id) {
+    public void decrementSeiderl(long id) {
         Query decrementSeiderlQuery = entityManager.createQuery("UPDATE Team t SET t.seiderlCounter=t.seiderlCounter - 1 WHERE t.id = :teamId");
         decrementSeiderlQuery.setParameter("teamId", id);
         decrementSeiderlQuery.executeUpdate();
@@ -37,7 +37,7 @@ public class TeamService extends Repository{
         return (int) maxSeiderQuery.getSingleResult();
     }
 
-    public void removeTeam(int teamId) {
+    public void removeTeam(long teamId) {
         Team teamToRemove =  entityManager.find(Team.class, teamId);
         entityManager.remove(teamToRemove);
     }

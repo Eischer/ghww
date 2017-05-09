@@ -55,17 +55,23 @@ public class TeamView {
         }
     }
 
-    public void increment(int teamId) {
+    public String saveTeam () {
+        teamViewBean.saveTeam();
+        allTeams = teamService.findAllteams();
+        return "/public/displayAllTeams?faces-redirect=true";
+    }
+
+    public void increment(long teamId) {
         teamService.incrementSeiderl(teamId);
         allTeams = teamService.findAllteams();
     }
 
-    public void decrement(int teamId) {
+    public void decrement(long teamId) {
         teamService.decrementSeiderl(teamId);
         allTeams = teamService.findAllteams();
     }
 
-    public void remove(int teamId) {
+    public void remove(long teamId) {
         teamService.removeTeam(teamId);
         allTeams = teamService.findAllteams();
     }
@@ -90,7 +96,7 @@ public class TeamView {
         else {
             String id = context.getExternalContext().getRequestParameterMap()
                     .get("teamId");
-            Team team = teamService.findTeamById(Integer.parseInt(id));
+            Team team = teamService.findTeamById(Long.parseLong(id));
             byte[] image = team.getLogo();
             return image != null ? new DefaultStreamedContent(new ByteArrayInputStream(image)) : null;
         }

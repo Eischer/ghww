@@ -19,7 +19,7 @@ public class TeamViewBean {
     @Inject
     TeamService teamService;
 
-    public String saveTeam () {
+    public void saveTeam () {
         Team team = new Team();
         team.setName(this.teamName);
         team.setSeiderlCounter(0);
@@ -35,7 +35,6 @@ public class TeamViewBean {
         }
 
         teamService.save(team);
-        return "/public/displayAllTeams?faces-redirect=true";
     }
 
     public void setTeamName(String teamName) {
