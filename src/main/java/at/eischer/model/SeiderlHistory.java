@@ -7,9 +7,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@NamedQuery(name = "SeiderlHistory.getHistory", query = "SELECT h FROM SeiderlHistory h WHERE h.team = :team")
+@NamedQuery(name = "SeiderlHistory.getHistory", query = "SELECT h FROM SeiderlHistory h WHERE h.team = :team And h.localDateTime > :currentTime")
 public class SeiderlHistory {
 
     @Id
@@ -18,7 +19,7 @@ public class SeiderlHistory {
 
     private int seiderlCounter;
 
-    private LocalDate localDate;
+    private LocalDateTime localDateTime;
 
     @ManyToOne
     @JoinColumn(name = "team_fk")
@@ -30,7 +31,7 @@ public class SeiderlHistory {
 
     public SeiderlHistory(Team team) {
         this.seiderlCounter = team.getSeiderlCounter();
-        this.localDate = LocalDate.now();
+        this.localDateTime = LocalDateTime.now();
         this.team = team;
     }
 
@@ -58,11 +59,11 @@ public class SeiderlHistory {
         this.team = team;
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    public LocalDateTime getLocalDate() {
+        return localDateTime;
     }
 
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setLocalDate(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }

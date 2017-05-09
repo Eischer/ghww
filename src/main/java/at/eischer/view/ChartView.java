@@ -4,15 +4,14 @@ import at.eischer.model.SeiderlHistory;
 import at.eischer.model.Team;
 import at.eischer.services.SeiderlHistoryService;
 import at.eischer.services.TeamService;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.*;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Named
@@ -35,35 +34,46 @@ public class ChartView {
     }
 
     private void createLineModels() {
-        lineModel = initLinearModel();
+        String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        lineModel = initLinearModel(currentDateTime);
         lineModel.setTitle("Seiderl Wertung");
         lineModel.setLegendPosition("e");
 
-        lineModel.getAxis(AxisType.X).setTickFormat("%.0f");
+        configureAxes(currentDateTime);
+    }
+
+    private void configureAxes(String currentDateTime) {
+        DateAxis xAxis = new DateAxis("Letzten 12 Stunden");
+        xAxis.setTickAngle(-50);
+        xAxis.setMax(currentDateTime);
+        xAxis.setTickFormat("%H:%#M");
+        lineModel.getAxes().put(AxisType.X, xAxis);
+
 
         Axis yAxis = lineModel.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setMax(teamService.getMaxCountOfSeiderl()+1);
         yAxis.setTickFormat("%.0f");
         yAxis.setTickInterval("2");
+        yAxis.setLabel("Seiderlanzahl");
     }
 
-    private LineChartModel initLinearModel() {
+    private LineChartModel initLinearModel(String currentDateTime) {
         LineChartModel model = new LineChartModel();
+
 
         for (Team team : teamService.findAllteams()) {
             LineChartSeries seiderlSeries = new LineChartSeries();
             seiderlSeries.setLabel(team.getName());
             List<SeiderlHistory> historyPerTeam = seiderlHistoryService.getSeiderHistoryByTeam(team);
-            int counter = 0;
             if (!historyPerTeam.isEmpty()) {
                 for (SeiderlHistory historyEntry : historyPerTeam) {
-                    seiderlSeries.set(counter, historyEntry.getSeiderlCounter());
-                    counter++;
+                    String localDateTime = historyEntry.getLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    seiderlSeries.set(localDateTime, historyEntry.getSeiderlCounter());
                 }
             }
             // Now also add the current value to the series
-            seiderlSeries.set(counter, team.getSeiderlCounter());
+            seiderlSeries.set(currentDateTime, team.getSeiderlCounter());
             model.addSeries(seiderlSeries);
         }
         return model;

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class SeiderlHistoryService {
@@ -19,7 +20,11 @@ public class SeiderlHistoryService {
     }
 
     public List<SeiderlHistory> getSeiderHistoryByTeam(Team team) {
-        TypedQuery<SeiderlHistory> getHistoryQuery = entityManager.createNamedQuery("SeiderlHistory.getHistory", SeiderlHistory.class).setParameter("team", team);
+        LocalDateTime yesterday = LocalDateTime.now().minusHours(24);
+
+        TypedQuery<SeiderlHistory> getHistoryQuery = entityManager.createNamedQuery("SeiderlHistory.getHistory", SeiderlHistory.class).
+                setParameter("team", team).
+                setParameter("currentTime", yesterday);
         return getHistoryQuery.getResultList();
     }
 }
