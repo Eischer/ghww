@@ -3,6 +3,7 @@ package at.eischer.services;
 import at.eischer.model.SeiderlHistory;
 import at.eischer.model.Team;
 
+import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,7 +19,7 @@ public class MyTimerService {
     @Inject
     SeiderlHistoryService seiderlHistoryService;
 
-//    @Schedule(second="0", minute="0/1",hour="*", persistent=false)
+    @Schedule(second="0", minute="0/30",hour="*", persistent=false)
     public void log () {
         List<Team> teams = teamService.findAllteams();
         for (Team team : teams) {

@@ -36,24 +36,23 @@ public class ChartView {
     private void createLineModels() {
         String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         lineModel = initLinearModel(currentDateTime);
-        lineModel.setTitle("Seiderl Wertung");
+        configureAxes(currentDateTime);
         lineModel.setLegendPosition("e");
 
-        configureAxes(currentDateTime);
     }
 
     private void configureAxes(String currentDateTime) {
         DateAxis xAxis = new DateAxis("Letzten 12 Stunden");
         xAxis.setTickAngle(-50);
         xAxis.setMax(currentDateTime);
-        xAxis.setTickFormat("%H:%#M");
+        xAxis.setTickFormat("%H:%M");
+        xAxis.setTickInterval("1 hour");
         lineModel.getAxes().put(AxisType.X, xAxis);
 
 
         Axis yAxis = lineModel.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setMax(teamService.getMaxCountOfSeiderl()+1);
-        yAxis.setTickFormat("%.0f");
         yAxis.setTickInterval("2");
         yAxis.setLabel("Seiderlanzahl");
     }

@@ -19,7 +19,7 @@ public class SeiderlHistoryService {
     }
 
     public List<SeiderlHistory> getSeiderHistoryByTeam(Team team) {
-        LocalDateTime yesterday = LocalDateTime.now().minusHours(24);
+        LocalDateTime yesterday = LocalDateTime.now().minusHours(12);
 
         TypedQuery<SeiderlHistory> getHistoryQuery = entityManager.createNamedQuery("SeiderlHistory.getHistory", SeiderlHistory.class).
                 setParameter("team", team).
