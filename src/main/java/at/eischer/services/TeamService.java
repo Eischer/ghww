@@ -20,21 +20,23 @@ public class TeamService extends Repository{
         return entityManager.find(Team.class, id);
     }
 
-    public void incrementSeiderl(long id) {
-        Query incrementSeiderlQuery = entityManager.createQuery("UPDATE Team t SET t.seiderlCounter=t.seiderlCounter + 1 WHERE t.id = :teamId");
-        incrementSeiderlQuery.setParameter("teamId", id);
+    public void incrementSeiderl(long id, float seidlCount) {
+        Query incrementSeiderlQuery = entityManager.createNamedQuery("Team.incrementSeidlCount")
+                .setParameter("teamId", id)
+                .setParameter("seidlCount", seidlCount);
         incrementSeiderlQuery.executeUpdate();
     }
 
-    public void decrementSeiderl(long id) {
-        Query decrementSeiderlQuery = entityManager.createQuery("UPDATE Team t SET t.seiderlCounter=t.seiderlCounter - 1 WHERE t.id = :teamId");
-        decrementSeiderlQuery.setParameter("teamId", id);
+    public void decrementSeiderl(long id, float seidlCount) {
+        Query decrementSeiderlQuery = entityManager.createNamedQuery("Team.decrementSeidlCount")
+                .setParameter("teamId", id)
+                .setParameter("seidlCount", seidlCount);
         decrementSeiderlQuery.executeUpdate();
     }
 
-    public int getMaxCountOfSeiderl() {
+    public float getMaxCountOfSeiderl() {
         Query maxSeiderQuery = entityManager.createNamedQuery("Team.getMaxSeiderlCount");
-        return (int) maxSeiderQuery.getSingleResult();
+        return (float) maxSeiderQuery.getSingleResult();
     }
 
     public void removeTeam(long teamId) {

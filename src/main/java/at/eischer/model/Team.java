@@ -7,7 +7,9 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t ORDER BY t.name"),
         @NamedQuery(name = "Team.findAllOrderBySeiderl", query = "SELECT t FROM Team t ORDER BY t.seiderlCounter DESC"),
-        @NamedQuery(name = "Team.getMaxSeiderlCount", query = "SELECT MAX (t.seiderlCounter) FROM Team t")
+        @NamedQuery(name = "Team.getMaxSeiderlCount", query = "SELECT MAX (t.seiderlCounter) FROM Team t"),
+        @NamedQuery(name = "Team.incrementSeidlCount", query = "UPDATE Team t SET t.seiderlCounter=t.seiderlCounter + :seidlCount WHERE t.id = :teamId"),
+        @NamedQuery(name = "Team.decrementSeidlCount", query = "UPDATE Team t SET t.seiderlCounter=t.seiderlCounter - :seidlCount WHERE t.id = :teamId")
 })
 public class Team {
 
@@ -17,7 +19,7 @@ public class Team {
 
     private String name;
 
-    private int seiderlCounter;
+    private float seiderlCounter;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
     private List<SeiderlHistory> history;
@@ -41,11 +43,11 @@ public class Team {
         this.id = id;
     }
 
-    public int getSeiderlCounter() {
+    public float getSeiderlCounter() {
         return seiderlCounter;
     }
 
-    public void setSeiderlCounter(int seiderCounter) {
+    public void setSeiderlCounter(float seiderCounter) {
         this.seiderlCounter = seiderCounter;
     }
 

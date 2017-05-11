@@ -14,7 +14,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @RequestScoped
@@ -33,11 +35,15 @@ public class TeamView {
     @Inject
     private TeamViewBean teamViewBean;
 
+    private Map<Long, Integer> beerCountForTeamId;
+
     @PostConstruct
     public void init() {
         allTeams = teamService.findAllteams();
+        beerCountForTeamId = new HashMap<>();
 
         ranking = new ArrayList<>();
+
         int currentRank = 1;
         int rankCounter = 1;
         for (Team team : teamService.findAllteamsOrderBySeiderl()) {
@@ -61,13 +67,24 @@ public class TeamView {
         return "/public/displayAllTeams?faces-redirect=true";
     }
 
-    public void increment(long teamId) {
-        teamService.incrementSeiderl(teamId);
+    public void incrementSeidl(long teamId) {
+        teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId));
         allTeams = teamService.findAllteams();
     }
 
-    public void decrement(long teamId) {
-        teamService.decrementSeiderl(teamId);
+    public void decrementSeidl(long teamId) {
+        teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId));
+        allTeams = teamService.findAllteams();
+    }
+
+
+    public void incrementKruegerl(long teamId) {
+        teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
+        allTeams = teamService.findAllteams();
+    }
+
+    public void decrementKruegerl(long teamId) {
+        teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
         allTeams = teamService.findAllteams();
     }
 
@@ -116,5 +133,13 @@ public class TeamView {
 
     public void setRanking(List<SeiderlRanking> ranking) {
         this.ranking = ranking;
+    }
+
+    public Map<Long, Integer> getBeerCount() {
+        return beerCountForTeamId;
+    }
+
+    public void setBeerCount(Map<Long, Integer> beerCount) {
+        this.beerCountForTeamId = beerCount;
     }
 }

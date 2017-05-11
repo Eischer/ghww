@@ -11,7 +11,7 @@ public class SeiderlHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int seiderlCounter;
+    private float seiderlCounter;
 
     private LocalDateTime localDateTime;
 
@@ -37,11 +37,11 @@ public class SeiderlHistory {
         this.id = id;
     }
 
-    public int getSeiderlCounter() {
+    public float getSeiderlCounter() {
         return seiderlCounter;
     }
 
-    public void setSeiderlCounter(int seiderlCounter) {
+    public void setSeiderlCounter(float seiderlCounter) {
         this.seiderlCounter = seiderlCounter;
     }
 
