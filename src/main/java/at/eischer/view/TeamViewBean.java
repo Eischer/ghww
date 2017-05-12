@@ -17,7 +17,7 @@ public class TeamViewBean {
     private Part logo;
 
     @Inject
-    TeamService teamService;
+    private TeamService teamService;
 
     public void saveTeam () {
         Team team = new Team();

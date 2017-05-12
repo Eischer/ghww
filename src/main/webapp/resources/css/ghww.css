@@ -26,6 +26,11 @@ div#content{
     overflow: inherit;
 }
 
+.seperatorCol {
+    width: 30px;
+    background-color: white;
+}
+
 /* Login Page */
 div#loginDiv{
     top: 10%;

@@ -70,22 +70,26 @@ public class TeamView {
     public void incrementSeidl(long teamId) {
         teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId));
         allTeams = teamService.findAllteams();
+        beerCountForTeamId.put(teamId, 1);
     }
 
     public void decrementSeidl(long teamId) {
         teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId));
         allTeams = teamService.findAllteams();
+        beerCountForTeamId.put(teamId, 1);
     }
 
 
     public void incrementKruegerl(long teamId) {
         teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
         allTeams = teamService.findAllteams();
+        beerCountForTeamId.put(teamId, 1);
     }
 
     public void decrementKruegerl(long teamId) {
         teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
         allTeams = teamService.findAllteams();
+        beerCountForTeamId.put(teamId, 1);
     }
 
     public void remove(long teamId) {
