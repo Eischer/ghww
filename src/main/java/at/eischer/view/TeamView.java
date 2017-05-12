@@ -3,16 +3,11 @@ package at.eischer.view;
 import at.eischer.model.Team;
 import at.eischer.services.TeamService;
 import at.eischer.session.CurrentUser;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +45,7 @@ public class TeamView {
             if (ranking.isEmpty()) {
                 ranking.add(new SeiderlRanking(currentRank, team));
             } else {
-                if (ranking.get(ranking.size()-1).getTeam().getSeiderlCounter() == team.getSeiderlCounter()) {
+                if (ranking.get(ranking.size() - 1).getTeam().getSeiderlCounter() == team.getSeiderlCounter()) {
                     ranking.add(new SeiderlRanking(currentRank, team));
                 } else {
                     currentRank = rankCounter;
@@ -107,20 +102,9 @@ public class TeamView {
         this.allTeams = allTeams;
     }
 
-    public StreamedContent getLogo() {
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-            return new DefaultStreamedContent();
-        }
-
-        else {
-            String id = context.getExternalContext().getRequestParameterMap()
-                    .get("teamId");
-            Team team = teamService.findTeamById(Long.parseLong(id));
-            byte[] image = team.getLogo();
-            return image != null ? new DefaultStreamedContent(new ByteArrayInputStream(image)) : null;
-        }
+    public String getLogo(long teamId) {
+            Team team = teamService.findTeamById(teamId);
+            return "/logos/" + team.getLogo();
     }
 
     public TeamViewBean getTeamViewBean() {

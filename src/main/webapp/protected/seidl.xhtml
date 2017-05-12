@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition template="../templates/template.xhtml">
     <ui:define id="" name="content">
@@ -12,10 +11,10 @@
             <h:dataTable id="seiderlTable" value="#{teamView.allTeams}" var="oneTeam" rowClasses="even, odd"
                          columnClasses="logoCol, teamNameCol, seiderlCountCol, seperatorCol">
                 <h:column headerClass="logoCol">
-                    <f:facet name="header">Logo</f:facet>
-                    <p:graphicImage styleClass="logoImg" value="#{teamView.logo}">
-                        <f:param name="teamId" value="#{oneTeam.id}"/>
-                    </p:graphicImage>
+                    <h:column headerClass="logoCol">
+                        <f:facet name="header">Logo</f:facet>
+                        <img src="#{teamView.getLogo(oneTeam.id)}" class="logoCol" alt="Logo"/>
+                    </h:column>
                 </h:column>
                 <h:column headerClass="teamNameCol">
                     <f:facet name="header">Mannschaft</f:facet>

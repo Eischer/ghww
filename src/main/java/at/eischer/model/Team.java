@@ -24,8 +24,7 @@ public class Team {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
     private List<SeiderlHistory> history;
 
-    @Lob
-    private byte[] logo;
+    private String logoPath;
 
     public String getName() {
         return name;
@@ -51,12 +50,12 @@ public class Team {
         this.seiderlCounter = seiderCounter;
     }
 
-    public byte[] getLogo() {
-        return logo;
+    public String getLogo() {
+        return logoPath;
     }
 
-    public void setLogo(byte[] logo) {
-        this.logo = logo;
+    public void setLogo(String logoPath) {
+        this.logoPath = logoPath;
     }
 
     public List<SeiderlHistory> getHistory() {

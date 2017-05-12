@@ -2,7 +2,6 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../templates/template.xhtml">
@@ -19,9 +18,7 @@
                              columnClasses="logoCol, teamNameCol, seiderlCountCol" rowClasses="even, odd">
                     <h:column headerClass="logoCol">
                         <f:facet name="header">Logo</f:facet>
-                        <p:graphicImage styleClass="logoCol" value="#{teamView.logo}">
-                            <f:param name="teamId" value="#{oneTeam.id}"/>
-                        </p:graphicImage>
+                        <img src="#{teamView.getLogo(oneTeam.id)}" class="logoCol" alt="Logo"/>
                     </h:column>
                     <h:column headerClass="teamNameCol">
                         <f:facet name="header">Mannschaft</f:facet>

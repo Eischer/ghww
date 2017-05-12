@@ -2,13 +2,17 @@ package at.eischer.view;
 
 import at.eischer.model.Team;
 import at.eischer.services.TeamService;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FilenameUtils;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Dependent
 public class TeamViewBean {
@@ -24,16 +28,23 @@ public class TeamViewBean {
         team.setName(this.teamName);
         team.setSeiderlCounter(0);
         try {
-            byte [] logoAsByteArray;
             if (logo != null) {
-                InputStream logoAsStream = logo.getInputStream();
-                logoAsByteArray = IOUtils.toByteArray(logoAsStream);
-                team.setLogo(logoAsByteArray);
+                Path folder = Paths.get(System.getProperty("jboss.server.data.dir") + "/logos");
+                if (!Files.exists(folder)) {
+                    Files.createDirectories(folder);
+                }
+                String filename = FilenameUtils.getBaseName(logo.getSubmittedFileName());
+                String extension = FilenameUtils.getExtension(logo.getSubmittedFileName());
+                Path filePath = Files.createTempFile(folder, filename + "-", "." + extension);
+
+                try (InputStream input = logo.getInputStream()) {
+                    Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
+                    team.setLogo(filePath.toString().substring(filePath.toString().lastIndexOf("/") + 1));
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         teamService.save(team);
     }
 
