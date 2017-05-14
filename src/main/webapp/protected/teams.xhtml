@@ -9,8 +9,10 @@
         <h1>Manschaftsübersicht</h1>
         <h:form id="teamManagementForm" enctype="multipart/form-data">
             <p>
-                <h:inputText id="teamName" value="#{teamView.teamViewBean.teamName}"/>
-                <h:inputFile id="teamLogo" value="#{teamView.teamViewBean.logo}"/>
+                <h:outputLabel for="teamName" value="Teamname: "/>
+                <h:inputText id="teamName" styleClass="tabStopLike" value="#{teamView.teamViewBean.teamName}"/>
+                <h:outputLabel for="teamLogo" value="Logo: "/>
+                <h:inputFile id="teamLogo" styleClass="tabStopLike" value="#{teamView.teamViewBean.logo}"/>
                 <h:commandButton value="Team anlegen" action="#{teamView.saveTeam}"/>
             </p>
             <p>

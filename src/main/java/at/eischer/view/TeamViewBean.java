@@ -16,6 +16,7 @@ import java.nio.file.StandardCopyOption;
 
 @Dependent
 public class TeamViewBean {
+
     private String teamName;
 
     private Part logo;
@@ -39,7 +40,7 @@ public class TeamViewBean {
 
                 try (InputStream input = logo.getInputStream()) {
                     Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
-                    team.setLogo(filePath.toString().substring(filePath.toString().lastIndexOf("/") + 1));
+                    team.setLogoPath(filePath.toString().substring(filePath.toString().lastIndexOf("/") + 1));
                 }
             }
         } catch (IOException e) {

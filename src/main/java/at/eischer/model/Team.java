@@ -50,11 +50,11 @@ public class Team {
         this.seiderlCounter = seiderCounter;
     }
 
-    public String getLogo() {
+    public String getLogoPath() {
         return logoPath;
     }
 
-    public void setLogo(String logoPath) {
+    public void setLogoPath(String logoPath) {
         this.logoPath = logoPath;
     }
 

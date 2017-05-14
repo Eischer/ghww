@@ -7,7 +7,10 @@ div#content{
     padding-left: 1cm;
 }
 
-/* Team/Seiderl Tables*/
+/* Team/Seidl Tables*/
+table {
+    margin-left: 0em;
+}
 .logoCol {
     text-align: center;
     width: 50px;
@@ -110,4 +113,8 @@ h1{
 
 .ghwwBGColor {
     background-color: lightgreen;
+}
+
+.tabStopLike {
+    margin-right: 3em;
 }

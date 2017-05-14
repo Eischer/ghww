@@ -8,6 +8,10 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +92,14 @@ public class TeamView {
     }
 
     public void remove(long teamId) {
+        Team teamToRemove = teamService.findTeamById(teamId);
+        try {
+            Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
+            Files.delete(pathToLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         teamService.removeTeam(teamId);
         allTeams = teamService.findAllteams();
     }
@@ -104,7 +116,7 @@ public class TeamView {
 
     public String getLogo(long teamId) {
             Team team = teamService.findTeamById(teamId);
-            return "/logos/" + team.getLogo();
+            return "/logos/" + team.getLogoPath();
     }
 
     public TeamViewBean getTeamViewBean() {
