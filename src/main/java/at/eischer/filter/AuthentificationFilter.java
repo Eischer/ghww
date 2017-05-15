@@ -34,13 +34,13 @@ public class AuthentificationFilter implements javax.servlet.Filter {
 
         String reqURI = httpRequest.getRequestURI();
 
-        if (reqURI.startsWith("/ghww/protected") && currentUser.getUser() == null) {
+        if (reqURI.startsWith("/admin") && currentUser.getUser() == null) {
             if ("partial/ajax".equals(httpRequest.getHeader("Faces-Request"))) {
                 httpResponse.setContentType("text/xml");
                 httpResponse.setCharacterEncoding("UTF-8");
-                httpResponse.getWriter().printf(AJAX_REDIRECT_XML, httpRequest.getContextPath() + "/public/login.xhtml");
+                httpResponse.getWriter().printf(AJAX_REDIRECT_XML, httpRequest.getContextPath() + "/login.xhtml");
             } else {
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/public/login.xhtml");
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.xhtml");
             }
         } else {
             chain.doFilter(req, resp);

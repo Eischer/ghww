@@ -63,7 +63,7 @@ public class TeamView {
     public String saveTeam () {
         teamViewBean.saveTeam();
         allTeams = teamService.findAllteams();
-        return "/public/displayAllTeams?faces-redirect=true";
+        return "/teams?faces-redirect=true";
     }
 
     public void incrementSeidl(long teamId) {
@@ -94,8 +94,10 @@ public class TeamView {
     public void remove(long teamId) {
         Team teamToRemove = teamService.findTeamById(teamId);
         try {
-            Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
-            Files.delete(pathToLogo);
+            if(teamToRemove.getLogoPath() != null) {
+                Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
+                Files.delete(pathToLogo);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

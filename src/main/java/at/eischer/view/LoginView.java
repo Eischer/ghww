@@ -24,9 +24,9 @@ public class LoginView {
     public String validateLogin() {
         if (userService.validateUser(this.username, this.password) != null) {
             this.currentUser.setUser(userService.getUserByName(this.username));
-            return "/protected/teams.xhtml";
+            return "/admin/teams.xhtml";
         } else {
-            return "/public/login.xhtml";
+            return "/login.xhtml";
         }
     }
 
