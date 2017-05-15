@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -34,9 +35,8 @@ public class ChartView {
     }
 
     private void createLineModels() {
-        String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        lineModel = initLinearModel(currentDateTime);
-        configureAxes(currentDateTime);
+        lineModel = initLinearModel(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        configureAxes(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         lineModel.setLegendPosition("e");
 
     }
@@ -44,9 +44,11 @@ public class ChartView {
     private void configureAxes(String currentDateTime) {
         DateAxis xAxis = new DateAxis("Letzten 12 Stunden");
         xAxis.setTickAngle(-50);
-        xAxis.setMax(currentDateTime);
+        xAxis.setMax(currentDateTime + " 19:00:00");
         xAxis.setTickFormat("%H:%M");
         xAxis.setTickInterval("1 hour");
+        xAxis.setMin(currentDateTime + " 09:00:00");
+        xAxis.setMax(currentDateTime + " 19:00:00");
         lineModel.getAxes().put(AxisType.X, xAxis);
 
 
