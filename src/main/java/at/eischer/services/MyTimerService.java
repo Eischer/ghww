@@ -19,12 +19,11 @@ public class MyTimerService {
     @Inject
     SeiderlHistoryService seiderlHistoryService;
 
-    @Schedule(second="0", minute="0/30",hour="*", persistent=false)
+    @Schedule(hour="9-19", persistent=false)
     public void log () {
         List<Team> teams = teamService.findAllteams();
         for (Team team : teams) {
             seiderlHistoryService.insertSeiderlHistory(new SeiderlHistory(team));
         }
-        System.out.println("TIMER SERVICE");
     }
 }
