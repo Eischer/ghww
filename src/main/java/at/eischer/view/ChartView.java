@@ -56,7 +56,7 @@ public class ChartView {
         yAxis.setMin(0);
         yAxis.setMax(teamService.getMaxCountOfSeiderl()+1);
         yAxis.setTickInterval("2");
-        yAxis.setLabel("Seiderlanzahl");
+        yAxis.setLabel("Seidlanzahl");
     }
 
     private LineChartModel initLinearModel(String currentDateTime) {
