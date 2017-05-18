@@ -20,7 +20,6 @@
                 <h:dataTable id="seiderlTable" value="#{teamView.ranking}" var="teamRank" rowClasses="even, odd"
                              columnClasses="logoCol,seiderlCountCol, teamNameCol, seiderlCountCol">
                     <h:column headerClass="logoCol">
-                        <f:facet name="header">Logo</f:facet>
                         <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt="Logo"/>
                     </h:column>
                     <h:column>

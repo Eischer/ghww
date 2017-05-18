@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,27 +68,35 @@ public class TeamView {
     }
 
     public void incrementSeidl(long teamId) {
-        teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId));
-        allTeams = teamService.findAllteams();
+        if (checkIfTimeIsValid()) {
+            teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId));
+            allTeams = teamService.findAllteams();
+        }
         beerCountForTeamId.put(teamId, 1);
     }
 
     public void decrementSeidl(long teamId) {
-        teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId));
-        allTeams = teamService.findAllteams();
+        if (checkIfTimeIsValid()) {
+            teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId));
+            allTeams = teamService.findAllteams();
+        }
         beerCountForTeamId.put(teamId, 1);
     }
 
 
     public void incrementKruegerl(long teamId) {
-        teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
-        allTeams = teamService.findAllteams();
+        if (checkIfTimeIsValid()) {
+            teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
+            allTeams = teamService.findAllteams();
+        }
         beerCountForTeamId.put(teamId, 1);
     }
 
     public void decrementKruegerl(long teamId) {
-        teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
-        allTeams = teamService.findAllteams();
+        if (checkIfTimeIsValid()) {
+            teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
+            allTeams = teamService.findAllteams();
+        }
         beerCountForTeamId.put(teamId, 1);
     }
 
@@ -104,6 +113,10 @@ public class TeamView {
 
         teamService.removeTeam(teamId);
         allTeams = teamService.findAllteams();
+    }
+
+    public boolean checkIfTimeIsValid() {
+        return LocalTime.now().getHour() < 19 && LocalTime.now().getHour() >= 9;
     }
 
     // GETTER - SETTER Section

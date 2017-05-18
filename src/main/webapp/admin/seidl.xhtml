@@ -44,19 +44,19 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Seidl</f:facet>
-                    <h:commandButton class="button" value="+" action="#{teamView.incrementSeidl(oneTeam.id)}">
+                    <h:commandButton class="button" value="+" action="#{teamView.incrementSeidl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
-                    <h:commandButton class="button" value="-" action="#{teamView.decrementSeidl(oneTeam.id)}">
+                    <h:commandButton class="button" value="-" action="#{teamView.decrementSeidl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Krügl</f:facet>
-                    <h:commandButton class="button" value="+" action="#{teamView.incrementKruegerl(oneTeam.id)}">
+                    <h:commandButton class="button" value="+" action="#{teamView.incrementKruegerl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
-                    <h:commandButton class="button" value="-" action="#{teamView.decrementKruegerl(oneTeam.id)}">
+                    <h:commandButton class="button" value="-" action="#{teamView.decrementKruegerl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
                 </h:column>
