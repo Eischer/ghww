@@ -26,4 +26,8 @@ public class SeiderlHistoryService {
                 setParameter("currentTime", yesterday);
         return getHistoryQuery.getResultList();
     }
+
+    public void deleteHistory() {
+        entityManager.createNamedQuery("SeiderlHistory.deleteWholeHistory").executeUpdate();
+    }
 }

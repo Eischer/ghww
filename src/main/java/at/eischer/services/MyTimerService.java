@@ -26,4 +26,10 @@ public class MyTimerService {
             seiderlHistoryService.insertSeiderlHistory(new SeiderlHistory(team));
         }
     }
+
+    @Schedule(second = "0", minute = "0", hour = "0")
+    public void deleteSeidlHistoryAndResetCounter() {
+        seiderlHistoryService.deleteHistory();
+        teamService.resetSeidlCounter();
+    }
 }

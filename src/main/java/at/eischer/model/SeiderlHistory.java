@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NamedQuery(name = "SeiderlHistory.getHistory", query = "SELECT h FROM SeiderlHistory h WHERE h.team = :team And h.localDateTime > :currentTime")
+@NamedQueries({
+        @NamedQuery(name = "SeiderlHistory.getHistory", query = "SELECT h FROM SeiderlHistory h WHERE h.team = :team And h.localDateTime > :currentTime"),
+        @NamedQuery(name = "SeiderlHistory.deleteWholeHistory", query = "DELETE FROM SeiderlHistory")
+})
 public class SeiderlHistory {
 
     @Id

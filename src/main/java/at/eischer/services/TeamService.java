@@ -48,4 +48,9 @@ public class TeamService extends Repository{
         TypedQuery<Team> allTeams = entityManager.createNamedQuery("Team.findAllOrderBySeiderl", Team.class);
         return allTeams.getResultList();
     }
+
+    public void resetSeidlCounter() {
+        List<Team> allTeams = findAllteams();
+        allTeams.forEach(t -> t.setSeiderlCounter(0));
+    }
 }
