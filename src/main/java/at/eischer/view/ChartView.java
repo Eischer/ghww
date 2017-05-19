@@ -37,7 +37,8 @@ public class ChartView {
     private void createLineModels() {
         lineModel = initLinearModel(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         configureAxes(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        lineModel.setLegendPosition("e");
+        lineModel.setLegendPosition("nw");
+        lineModel.setLegendPlacement(LegendPlacement.INSIDE);
 
     }
 
@@ -55,7 +56,7 @@ public class ChartView {
         Axis yAxis = lineModel.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setMax(teamService.getMaxCountOfSeiderl()+1);
-        yAxis.setTickInterval("2");
+        yAxis.setTickInterval("5");
         yAxis.setLabel("Seidlanzahl");
     }
 

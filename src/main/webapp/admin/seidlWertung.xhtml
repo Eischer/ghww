@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <ui:composition template="../templates/template.xhtml">
     <ui:define name="content">
@@ -15,7 +14,7 @@
                     <h:dataTable id="seiderlTable" value="#{teamView.ranking}" var="teamRank" rowClasses="even, odd"
                                  columnClasses="logoCol,seiderlCountCol, teamNameCol, seiderlCountCol">
                         <h:column headerClass="logoCol">
-                            <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt="Logo"/>
+                            <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt=""/>
                         </h:column>
                         <h:column>
                             #{teamRank.rank}.
@@ -30,7 +29,7 @@
                 </h:form>
             </div>
             <div id="chartDiv">
-                <p:chart type="line" model="#{chartView.lineModel}" style="height: 600px;width: 1000px;" rendered="#{chartView.lineModel!=null}"/>
+                <p:chart type="line" model="#{chartView.lineModel}" style="height: 550px;width: 950px;" rendered="#{chartView.lineModel!=null}"/>
             </div>
         </div>
     </ui:define>
