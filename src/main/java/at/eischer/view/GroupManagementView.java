@@ -30,4 +30,8 @@ public class GroupManagementView {
     public void setAllTeams(List<Team> allTeams) {
         this.allTeams = allTeams;
     }
+
+    public void save() {
+        allTeams.forEach(t -> teamService.update(t));
+    }
 }

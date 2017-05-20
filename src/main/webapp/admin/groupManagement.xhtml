@@ -7,7 +7,7 @@
 <ui:composition template="../templates/template.xhtml">
     <ui:define id="" name="content">
         <h1>Mannschaften - Gruppenzuweisung</h1>
-        <h:form id="teamManagementForm" enctype="multipart/form-data">
+        <h:form id="teamManagementForm">
             <p>
                 <h:dataTable id="teamTable" value="#{groupManagementView.allTeams}" var="oneTeam"
                              columnClasses="logoCol, teamNameCol" rowClasses="even, odd">
@@ -20,13 +20,16 @@
                         #{oneTeam.name}
                     </h:column>
                     <h:column>
-                        <h:selectOneRadio>
+                        <h:selectOneRadio value="#{oneTeam.gruppe}">
                             <f:selectItem itemValue="A" itemLabel="Gruppe A"/>
                             <f:selectItem itemValue="B" itemLabel="Gruppe B"/>
                         </h:selectOneRadio>
                     </h:column>
                 </h:dataTable>
             </p>
+            <h:commandButton value="Speichern" action="#{groupManagementView.save}">
+                <f:ajax execute="@form" render="@form"/>
+            </h:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>

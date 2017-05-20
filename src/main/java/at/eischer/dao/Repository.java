@@ -14,4 +14,8 @@ public class Repository {
         entityManager.persist(object);
     }
 
+    public <T> void update(T object) {
+        entityManager.merge(object);
+    }
+
 }

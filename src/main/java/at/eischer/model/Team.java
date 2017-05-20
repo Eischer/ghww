@@ -21,6 +21,8 @@ public class Team {
 
     private float seiderlCounter;
 
+    private String gruppe;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
     private List<SeiderlHistory> history;
 
@@ -65,4 +67,13 @@ public class Team {
     public void setHistory(List<SeiderlHistory> history) {
         this.history = history;
     }
+
+    public String getGruppe() {
+        return gruppe;
+    }
+
+    public void setGruppe(String gruppe) {
+        this.gruppe = gruppe;
+    }
+
 }
