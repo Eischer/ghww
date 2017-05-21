@@ -21,6 +21,11 @@ public class TeamService extends Repository implements Serializable{
         return entityManager.find(Team.class, id);
     }
 
+    public List<Team> findTeamsForGruppe(String gruppe) {
+        TypedQuery<Team> teamsForGroupQuery = entityManager.createNamedQuery("Team.findForGruppe", Team.class).setParameter("gruppe", gruppe);
+        return teamsForGroupQuery.getResultList();
+    }
+
     public void incrementSeiderl(long id, float seidlCount) {
         Query incrementSeiderlQuery = entityManager.createNamedQuery("Team.incrementSeidlCount")
                 .setParameter("teamId", id)

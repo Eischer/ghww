@@ -6,6 +6,7 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t ORDER BY t.name"),
+        @NamedQuery(name = "Team.findForGruppe", query = "SELECT t from Team t WHERE t.gruppe = :gruppe"),
         @NamedQuery(name = "Team.findAllOrderBySeiderl", query = "SELECT t FROM Team t ORDER BY t.seiderlCounter DESC"),
         @NamedQuery(name = "Team.getMaxSeiderlCount", query = "SELECT MAX (t.seiderlCounter) FROM Team t"),
         @NamedQuery(name = "Team.incrementSeidlCount", query = "UPDATE Team t SET t.seiderlCounter=t.seiderlCounter + :seidlCount WHERE t.id = :teamId"),
