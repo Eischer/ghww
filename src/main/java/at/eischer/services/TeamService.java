@@ -6,10 +6,11 @@ import at.eischer.model.Team;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-public class TeamService extends Repository{
+public class TeamService extends Repository implements Serializable{
 
     public List<Team> findAllteams () {
         TypedQuery<Team> allTeams = entityManager.createNamedQuery("Team.findAll", Team.class);
@@ -39,9 +40,8 @@ public class TeamService extends Repository{
         return (float) maxSeiderQuery.getSingleResult();
     }
 
-    public void removeTeam(long teamId) {
-        Team teamToRemove =  entityManager.find(Team.class, teamId);
-        entityManager.remove(teamToRemove);
+    public void removeTeam(Team teamToRemove) {
+        entityManager.remove(entityManager.contains(teamToRemove) ? teamToRemove : entityManager.merge(teamToRemove));
     }
 
     public List<Team> findAllteamsOrderBySeiderl() {

@@ -31,7 +31,7 @@
                         #{oneTeam.seiderlCounter}
                     </h:column>
                     <h:column>
-                        <h:commandButton value="Löschen" action="#{teamView.remove(oneTeam.id)}">
+                        <h:commandButton value="Löschen" action="#{teamView.remove(oneTeam)}">
                             <f:ajax render="teamManagementForm:teamTable"/>
                         </h:commandButton>
                     </h:column>

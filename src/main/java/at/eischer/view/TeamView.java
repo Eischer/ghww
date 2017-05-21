@@ -5,10 +5,11 @@ import at.eischer.services.TeamService;
 import at.eischer.session.CurrentUser;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@RequestScoped
-public class TeamView {
+@SessionScoped
+public class TeamView implements Serializable {
 
     private List<Team> allTeams;
 
@@ -100,8 +101,7 @@ public class TeamView {
         beerCountForTeamId.put(teamId, 1);
     }
 
-    public void remove(long teamId) {
-        Team teamToRemove = teamService.findTeamById(teamId);
+    public void remove(Team teamToRemove) {
         try {
             if(teamToRemove.getLogoPath() != null) {
                 Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
@@ -111,7 +111,7 @@ public class TeamView {
             e.printStackTrace();
         }
 
-        teamService.removeTeam(teamId);
+        teamService.removeTeam(teamToRemove);
         allTeams = teamService.findAllteams();
     }
 

@@ -9,13 +9,14 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Dependent
-public class TeamViewBean {
+public class TeamViewBean implements Serializable{
 
     private String teamName;
 

@@ -9,8 +9,10 @@
         <h1>Spiele</h1>
         <h:form id="teamManagementForm">
             <p>
+                <h:commandLink value="Gruppe A" action="#{spielManagementView.gruppe = 'A'}"/>
+                <h:commandLink value="Gruppe B" action="#{spielManagementView.gruppe = 'B'}"/>
             </p>
-            <h:commandButton value="Speichern" action="#{groupManagementView.save}">
+            <h:commandButton value="Speichern" action="<">
                 <f:ajax execute="@form" render="@form"/>
             </h:commandButton>
         </h:form>
