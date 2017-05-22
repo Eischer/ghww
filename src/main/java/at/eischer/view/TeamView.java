@@ -6,6 +6,7 @@ import at.eischer.session.CurrentUser;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -62,55 +63,79 @@ public class TeamView implements Serializable {
         }
     }
 
-    public String saveTeam () {
+    public String saveTeam() {
         teamViewBean.saveTeam();
         return "/teams?faces-redirect=true";
     }
 
-    public void incrementSeidl(long teamId) {
+    public void incrementSeidl() {
         if (checkIfTimeIsValid()) {
-            teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId));
-            allTeams = teamService.findAllteams();
-        }
-        beerCountForTeamId.put(teamId, 1);
-    }
-
-    public void decrementSeidl(long teamId) {
-        if (checkIfTimeIsValid()) {
-            teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId));
-            allTeams = teamService.findAllteams();
-        }
-        beerCountForTeamId.put(teamId, 1);
-    }
-
-
-    public void incrementKruegerl(long teamId) {
-        if (checkIfTimeIsValid()) {
-            teamService.incrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
-            allTeams = teamService.findAllteams();
-        }
-        beerCountForTeamId.put(teamId, 1);
-    }
-
-    public void decrementKruegerl(long teamId) {
-        if (checkIfTimeIsValid()) {
-            teamService.decrementSeiderl(teamId, beerCountForTeamId.get(teamId) * 1.5F);
-            allTeams = teamService.findAllteams();
-        }
-        beerCountForTeamId.put(teamId, 1);
-    }
-
-    public void remove(Team teamToRemove) {
-        try {
-            if(teamToRemove.getLogoPath() != null) {
-                Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
-                Files.delete(pathToLogo);
+            String tIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
+            long tId = Long.parseLong(tIdString);
+            Team teamToRefreshSeidl = teamService.findTeamById(tId);
+            if (teamToRefreshSeidl != null) {
+                teamService.incrementSeiderl(teamToRefreshSeidl.getId(), beerCountForTeamId.get(teamToRefreshSeidl.getId()));
+                allTeams = teamService.findAllteams();
+                beerCountForTeamId.put(teamToRefreshSeidl.getId(), 1);
             }
-        } catch (IOException e) {
+        }
+    }
+
+    public void decrementSeidl() {
+        if (checkIfTimeIsValid()) {
+            String tIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
+            long tId = Long.parseLong(tIdString);
+            Team teamToRefreshSeidl = teamService.findTeamById(tId);
+            if (teamToRefreshSeidl != null) {
+                teamService.decrementSeiderl(teamToRefreshSeidl.getId(), beerCountForTeamId.get(teamToRefreshSeidl.getId()));
+                allTeams = teamService.findAllteams();
+                beerCountForTeamId.put(teamToRefreshSeidl.getId(), 1);
+            }
+        }
+    }
+
+
+    public void incrementKruegerl() {
+        if (checkIfTimeIsValid()) {
+            String tIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
+            long tId = Long.parseLong(tIdString);
+            Team teamToRefreshKruegl = teamService.findTeamById(tId);
+            if (teamToRefreshKruegl != null) {
+                teamService.incrementSeiderl(teamToRefreshKruegl.getId(), beerCountForTeamId.get(teamToRefreshKruegl.getId()) * 1.5F);
+                allTeams = teamService.findAllteams();
+                beerCountForTeamId.put(teamToRefreshKruegl.getId(), 1);
+            }
+        }
+    }
+
+    public void decrementKruegerl() {
+        if (checkIfTimeIsValid()) {
+            String tIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
+            long tId = Long.parseLong(tIdString);
+            Team teamToRefreshKruegl = teamService.findTeamById(tId);
+            if (teamToRefreshKruegl != null) {
+                teamService.decrementSeiderl(teamToRefreshKruegl.getId(), beerCountForTeamId.get(teamToRefreshKruegl.getId()) * 1.5F);
+                allTeams = teamService.findAllteams();
+                beerCountForTeamId.put(teamToRefreshKruegl.getId(), 1);
+            }
+        }
+    }
+
+    public void remove() {
+        String teamToRemovId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
+        try {
+            long tid = Long.parseLong(teamToRemovId);
+            Team teamToRemove = teamService.findTeamById(tid);
+            if (teamToRemove != null) {
+                if (teamToRemove.getLogoPath() != null) {
+                    Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
+                    Files.delete(pathToLogo);
+                }
+                teamService.removeTeam(teamToRemove);
+            }
+        } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
-
-        teamService.removeTeam(teamToRemove);
     }
 
     public boolean checkIfTimeIsValid() {
@@ -129,8 +154,8 @@ public class TeamView implements Serializable {
     }
 
     public String getLogo(long teamId) {
-            Team team = teamService.findTeamById(teamId);
-            return "/logos/" + team.getLogoPath();
+        Team team = teamService.findTeamById(teamId);
+        return "/logos/" + team.getLogoPath();
     }
 
     public TeamViewBean getTeamViewBean() {

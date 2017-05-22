@@ -44,19 +44,23 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Seidl</f:facet>
-                    <h:commandButton class="button" value="+" action="#{teamView.incrementSeidl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                    <h:commandButton class="button" value="+" action="#{teamView.incrementSeidl}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                        <f:param name="tid" value="#{oneTeam.id}"/>
                         <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
-                    <h:commandButton class="button" value="-" action="#{teamView.decrementSeidl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                    <h:commandButton class="button" value="-" action="#{teamView.decrementSeidl}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                        <f:param name="tid" value="#{oneTeam.id}"/>
                         <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Krügl</f:facet>
-                    <h:commandButton class="button" value="+" action="#{teamView.incrementKruegerl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                    <h:commandButton class="button" value="+" action="#{teamView.incrementKruegerl}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                        <f:param name="tid" value="#{oneTeam.id}"/>
                         <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
-                    <h:commandButton class="button" value="-" action="#{teamView.decrementKruegerl(oneTeam.id)}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                    <h:commandButton class="button" value="-" action="#{teamView.decrementKruegerl}" disabled="#{!teamView.checkIfTimeIsValid()}">
+                        <f:param name="tid" value="#{oneTeam.id}"/>
                         <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
                     </h:commandButton>
                 </h:column>
