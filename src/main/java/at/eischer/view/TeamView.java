@@ -64,7 +64,6 @@ public class TeamView implements Serializable {
 
     public String saveTeam () {
         teamViewBean.saveTeam();
-        allTeams = teamService.findAllteams();
         return "/teams?faces-redirect=true";
     }
 
@@ -112,7 +111,6 @@ public class TeamView implements Serializable {
         }
 
         teamService.removeTeam(teamToRemove);
-        allTeams = teamService.findAllteams();
     }
 
     public boolean checkIfTimeIsValid() {
@@ -122,6 +120,7 @@ public class TeamView implements Serializable {
     // GETTER - SETTER Section
 
     public List<Team> getAllTeams() {
+        this.allTeams = teamService.findAllteams();
         return allTeams;
     }
 
@@ -143,6 +142,7 @@ public class TeamView implements Serializable {
     }
 
     public List<SeiderlRanking> getRanking() {
+        init();
         return ranking;
     }
 
