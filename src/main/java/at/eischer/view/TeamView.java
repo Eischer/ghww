@@ -5,12 +5,11 @@ import at.eischer.services.TeamService;
 import at.eischer.session.CurrentUser;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 @Named
-@SessionScoped
-public class TeamView implements Serializable {
+@RequestScoped
+public class TeamView {
 
     private List<Team> allTeams;
 
@@ -167,7 +166,6 @@ public class TeamView implements Serializable {
     }
 
     public List<SeiderlRanking> getRanking() {
-        init();
         return ranking;
     }
 

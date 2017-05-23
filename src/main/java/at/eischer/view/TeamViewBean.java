@@ -9,14 +9,13 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Dependent
-public class TeamViewBean implements Serializable{
+public class TeamViewBean{
 
     private String teamName;
 
@@ -32,7 +31,7 @@ public class TeamViewBean implements Serializable{
         try {
             if (logo != null) {
                 Path folder = Paths.get(System.getProperty("jboss.server.data.dir") + "/logos");
-                if (!Files.exists(folder)) {
+                if (!folder.toFile().exists()) {
                     Files.createDirectories(folder);
                 }
                 String filename = FilenameUtils.getBaseName(logo.getSubmittedFileName());
@@ -41,7 +40,7 @@ public class TeamViewBean implements Serializable{
 
                 try (InputStream input = logo.getInputStream()) {
                     Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
-                    team.setLogoPath(filePath.toString().substring(filePath.toString().lastIndexOf("/") + 1));
+                    team.setLogoPath(filePath.toString().substring(filePath.toString().lastIndexOf('/') + 1));
                 }
             }
         } catch (IOException e) {
