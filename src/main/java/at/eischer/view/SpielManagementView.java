@@ -3,6 +3,7 @@ package at.eischer.view;
 import at.eischer.model.Team;
 import at.eischer.services.TeamService;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,8 +20,16 @@ public class SpielManagementView {
     @Inject
     TeamService teamService;
 
-    public void setTeamsDependingOnGroup (String gruppe) {
+    @PostConstruct
+    public void init() {
+        if (this.gruppe == null) {
+            this.gruppe = "A";
+        }
         teamPerGruppe = teamService.findTeamsForGruppe(gruppe);
+    }
+
+    public void setTeamsDependingOnGroup (String gruppe) {
+        this.gruppe = gruppe;
     }
 
     public String getGruppe() {
