@@ -17,19 +17,43 @@ public class SpielManagementView {
 
     private List<Team> teamPerGruppe;
 
+    private Team homeTeam;
+
+    private Team awayTeam;
+
     @Inject
-    TeamService teamService;
+    private TeamService teamService;
 
     @PostConstruct
     public void init() {
         if (this.gruppe == null) {
             this.gruppe = "A";
         }
-        teamPerGruppe = teamService.findTeamsForGruppe(gruppe);
+        this.teamPerGruppe = teamService.findTeamsForGruppe(gruppe);
     }
 
     public void setTeamsDependingOnGroup (String gruppe) {
         this.gruppe = gruppe;
+        this.teamPerGruppe = teamService.findTeamsForGruppe(gruppe);
+    }
+
+    public String saveGame() {
+        System.out.println("Hallo");
+        return "/spielManagement?faces-redirect=true";
+
+    }
+
+    public Team getHomeTeamById(Long teamId) {
+        if (teamId == null) {
+            throw new IllegalArgumentException("no id");
+        } else {
+            for(Team team : teamPerGruppe) {
+                if (teamId.equals(team.getId())) {
+                    return team;
+                }
+            }
+            return null;
+        }
     }
 
     public String getGruppe() {
@@ -50,5 +74,21 @@ public class SpielManagementView {
 
     public void setTeamPerGruppe(List<Team> teamPerGruppe) {
         this.teamPerGruppe = teamPerGruppe;
+    }
+
+    public Team getHomeTeam() {
+        return homeTeam;
+    }
+
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public Team getAwayTeam() {
+        return awayTeam;
+    }
+
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeam = awayTeam;
     }
 }
