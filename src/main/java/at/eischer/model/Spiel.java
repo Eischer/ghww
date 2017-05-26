@@ -12,14 +12,23 @@ public class Spiel {
     private LocalTime zeit;
 
     @OneToOne
-    private Team team1;
+    private Team homeTeam;
 
     @OneToOne
-    private Team team2;
+    private Team awayTeam;
 
     private int toreTeam1;
 
     private int toreTeam2;
+
+    public Spiel () {
+        //empty constructor for JPA
+    }
+
+    public Spiel (Team homeTeam, Team awayTeam) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+    }
 
     public LocalTime getZeit() {
         return zeit;
@@ -37,20 +46,20 @@ public class Spiel {
         this.spielId = spielId;
     }
 
-    public Team getTeam1() {
-        return team1;
+    public Team getHomeTeam() {
+        return homeTeam;
     }
 
-    public void setTeam1(Team team1) {
-        this.team1 = team1;
+    public void setHomeTeam(Team team1) {
+        this.homeTeam = team1;
     }
 
-    public Team getTeam2() {
-        return team2;
+    public Team getAwayTeam() {
+        return awayTeam;
     }
 
-    public void setTeam2(Team team2) {
-        this.team2 = team2;
+    public void setAwayTeam(Team team2) {
+        this.awayTeam = team2;
     }
 
     public int getToreTeam1() {

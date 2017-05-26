@@ -1,10 +1,13 @@
 package at.eischer.view;
 
+import at.eischer.model.Spiel;
 import at.eischer.model.Team;
+import at.eischer.services.SpielService;
 import at.eischer.services.TeamService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
@@ -22,10 +25,14 @@ public class SpielManagementView {
     private Team awayTeam;
 
     @Inject
+    private SpielService spielService;
+
+    @Inject
     private TeamService teamService;
 
     @PostConstruct
     public void init() {
+        this.gruppe = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("currentGruppe");
         if (this.gruppe == null) {
             this.gruppe = "A";
         }
@@ -38,12 +45,12 @@ public class SpielManagementView {
     }
 
     public String saveGame() {
-        System.out.println("Hallo");
+        spielService.save(new Spiel(this.homeTeam, this.awayTeam));
         return "/spielManagement?faces-redirect=true";
 
     }
 
-    public Team getTeamById(Long teamId, boolean isHomeTeam) {
+    public Team getTeamById(Long teamId) {
         if (teamId == null) {
             throw new IllegalArgumentException("no id");
         } else {

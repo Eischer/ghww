@@ -14,14 +14,12 @@ import javax.faces.convert.FacesConverter;
 public class TeamConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String teamId) {
-        boolean isHomeTeam = (Boolean) uiComponent.getAttributes().get("isHomeTeam");
         ValueExpression vex =
                 facesContext.getApplication().getExpressionFactory()
                         .createValueExpression(facesContext.getELContext(),
                                 "#{spielManagementView}", SpielManagementView.class);
-
         SpielManagementView spielManagementView = (SpielManagementView) vex.getValue(facesContext.getELContext());
-        return spielManagementView.getTeamById(Long.valueOf(teamId), isHomeTeam);
+        return spielManagementView.getTeamById(Long.valueOf(teamId));
     }
 
     @Override
