@@ -18,6 +18,7 @@
                 <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
             </p>
             <h:panelGroup id="spielTableau">
+                <h:inputText id="hour" styleClass="twoDigits"/>:<h:inputText id="minute" styleClass="twoDigits"/>
                 <h:selectOneMenu id="homeTeam" value="#{spielManagementView.homeTeam}" converter="teamConverter">
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>

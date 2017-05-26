@@ -76,6 +76,11 @@ div#chartDiv {
     white-space: normal;
 }
 
+/* SpielManagement */
+.twoDigits {
+    width: 2em;
+}
+
 /* General Stylings */
 body {
     padding: 0;
