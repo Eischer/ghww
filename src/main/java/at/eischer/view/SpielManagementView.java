@@ -24,6 +24,8 @@ public class SpielManagementView {
 
     private Team awayTeam;
 
+    private List<Spiel> spielePerGruppe;
+
     @Inject
     private SpielService spielService;
 
@@ -36,16 +38,18 @@ public class SpielManagementView {
         if (this.gruppe == null) {
             this.gruppe = "A";
         }
-        this.teamPerGruppe = teamService.findTeamsForGruppe(gruppe);
+        this.teamPerGruppe = teamService.findTeamsForGruppe(this.gruppe);
+        this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
     }
 
     public void setTeamsDependingOnGroup (String gruppe) {
         this.gruppe = gruppe;
-        this.teamPerGruppe = teamService.findTeamsForGruppe(gruppe);
+        this.teamPerGruppe = teamService.findTeamsForGruppe(this.gruppe);
+        this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
     }
 
     public String saveGame() {
-        spielService.save(new Spiel(this.homeTeam, this.awayTeam));
+        spielService.save(new Spiel(this.gruppe, this.homeTeam, this.awayTeam));
         return "/spielManagement?faces-redirect=true";
 
     }
@@ -97,5 +101,13 @@ public class SpielManagementView {
 
     public void setAwayTeam(Team awayTeam) {
         this.awayTeam = awayTeam;
+    }
+
+    public List<Spiel> getSpielePerGruppe() {
+        return spielePerGruppe;
+    }
+
+    public void setSpielePerGruppe(List<Spiel> spielePerGruppe) {
+        this.spielePerGruppe = spielePerGruppe;
     }
 }

@@ -4,10 +4,13 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
+@NamedQuery(name = "Spiel.getSpielePerGruppe", query = "SELECT s FROM Spiel s WHERE s.gruppe = :gruppe")
 public class Spiel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long spielId;
+
+    private String gruppe;
 
     private LocalTime zeit;
 
@@ -25,7 +28,8 @@ public class Spiel {
         //empty constructor for JPA
     }
 
-    public Spiel (Team homeTeam, Team awayTeam) {
+    public Spiel (String gruppe, Team homeTeam, Team awayTeam) {
+        this.gruppe = gruppe;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
     }
@@ -76,6 +80,14 @@ public class Spiel {
 
     public void setToreTeam2(int toreTeam2) {
         this.toreTeam2 = toreTeam2;
+    }
+
+    public String getGruppe() {
+        return gruppe;
+    }
+
+    public void setGruppe(String gruppe) {
+        this.gruppe = gruppe;
     }
 
 }

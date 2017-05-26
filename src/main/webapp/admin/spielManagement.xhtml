@@ -8,14 +8,15 @@
     <ui:define id="" name="content">
         <h:form>
             <h1>Spiele - Gruppe #{spielManagementView.gruppe}</h1>
-            <h:commandLink value="Gruppe A" action="#{spielManagementView.setTeamsDependingOnGroup('A')}">
-                <f:ajax execute="@form" render="@form spielManagement"/>
-            </h:commandLink>
-            <h:commandLink value="Gruppe B" action="#{spielManagementView.setTeamsDependingOnGroup('B')}">
-                <f:ajax execute="@form" render="@form spielManagement"/>
-            </h:commandLink>
-            <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
-
+            <p>
+                <h:commandLink value="Gruppe A " action="#{spielManagementView.setTeamsDependingOnGroup('A')}">
+                    <f:ajax execute="@form" render="@form spielManagement"/>
+                </h:commandLink>
+                <h:commandLink value="Gruppe B" action="#{spielManagementView.setTeamsDependingOnGroup('B')}">
+                    <f:ajax execute="@form" render="@form spielManagement"/>
+                </h:commandLink>
+                <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
+            </p>
             <h:panelGroup id="spielTableau">
                 <h:selectOneMenu id="homeTeam" value="#{spielManagementView.homeTeam}" converter="teamConverter">
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
@@ -26,9 +27,16 @@
                 <h:commandButton value="Speichern" action="#{spielManagementView.saveGame}">
                     <f:ajax execute="spielTableau" render="spielTableau"/>
                 </h:commandButton>
-                <h:outputText value="#{spielManagementView.homeTeam.name}"/>
-                <h:outputText value="#{spielManagementView.awayTeam.name}"/>
             </h:panelGroup>
+
+            <h:dataTable id="spielTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel">
+                <h:column id="spielHomeTeam">
+                    #{oneSpiel.homeTeam.name}
+                </h:column>
+                <h:column id="spielAwayTeam">
+                    #{oneSpiel.awayTeam.name}
+                </h:column>
+            </h:dataTable>
 
         </h:form>
     </ui:define>
