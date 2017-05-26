@@ -11,20 +11,21 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter(value = "teamConverter")
-public class TeamConverter implements Converter{
+public class TeamConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String teamId) {
+        boolean isHomeTeam = (Boolean) uiComponent.getAttributes().get("isHomeTeam");
         ValueExpression vex =
                 facesContext.getApplication().getExpressionFactory()
                         .createValueExpression(facesContext.getELContext(),
                                 "#{spielManagementView}", SpielManagementView.class);
 
-        SpielManagementView spielManagementView = (SpielManagementView)vex.getValue(facesContext.getELContext());
-        return spielManagementView.getHomeTeamById(Long.valueOf(teamId));
+        SpielManagementView spielManagementView = (SpielManagementView) vex.getValue(facesContext.getELContext());
+        return spielManagementView.getTeamById(Long.valueOf(teamId), isHomeTeam);
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object team) {
-        return Long.toString(((Team)team).getId());
+        return Long.toString(((Team) team).getId());
     }
 }

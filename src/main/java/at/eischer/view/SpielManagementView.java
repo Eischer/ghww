@@ -43,7 +43,7 @@ public class SpielManagementView {
 
     }
 
-    public Team getHomeTeamById(Long teamId) {
+    public Team getTeamById(Long teamId, boolean isHomeTeam) {
         if (teamId == null) {
             throw new IllegalArgumentException("no id");
         } else {

@@ -18,13 +18,18 @@
         <h:form id="spielManagement">
             <h:selectOneMenu id="homeTeam" value="#{spielManagementView.homeTeam}" converter="teamConverter">
                 <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
+                <f:attribute name ="isHomeTeam" value="#{true}"/>
             </h:selectOneMenu>
-            <!--<h:selectOneMenu id="awayTeam" value="#{spielManagementView.awayTeam}">-->
-                <!--<f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>-->
-            <!--</h:selectOneMenu>-->
+            <h:selectOneMenu id="awayTeam" value="#{spielManagementView.awayTeam}" converter="teamConverter">
+                <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
+                <f:attribute name ="isHomeTeam" value="#{false}"/>
+            </h:selectOneMenu>
             <h:commandButton value="Speichern" action="#{spielManagementView.saveGame}">
-                <!--<f:ajax execute="@form" render="@form"/>-->
+                <f:ajax execute="@form" render="@form"/>
             </h:commandButton>
+            <h:outputText value="#{spielManagementView.homeTeam.name}"/>
+            <h:outputText value="#{spielManagementView.awayTeam.name}"/>
+
         </h:form>
     </ui:define>
 </ui:composition>
