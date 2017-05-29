@@ -18,17 +18,17 @@
                 <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
             </p>
             <h:panelGroup id="spielTableau">
-                <h:selectOneMenu value="#{spielManagementView.hour}">
-                    <f:selectItems value="#{spielManagementView.hours}" var="theHour" itemValue="#{theHour}"/>
+                <h:selectOneMenu value="#{spielManagementView.spielInput.hour}">
+                    <f:selectItems value="#{spielManagementView.spielInput.hours}" var="theHour" itemValue="#{theHour}"/>
                 </h:selectOneMenu>
                 :
-                <h:selectOneMenu value="#{spielManagementView.minute}">
-                    <f:selectItems value="#{spielManagementView.minutes}" var="theMinute" itemValue="#{theMinute}"/>
+                <h:selectOneMenu value="#{spielManagementView.spielInput.minute}">
+                    <f:selectItems value="#{spielManagementView.spielInput.minutes}" var="theMinute" itemValue="#{theMinute}"/>
                 </h:selectOneMenu>
-                <h:selectOneMenu id="homeTeam" value="#{spielManagementView.homeTeam}" converter="teamConverter">
+                <h:selectOneMenu id="homeTeam" value="#{spielManagementView.spielInput.homeTeam}" converter="teamConverter">
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>
-                <h:selectOneMenu id="awayTeam" value="#{spielManagementView.awayTeam}" converter="teamConverter">
+                <h:selectOneMenu id="awayTeam" value="#{spielManagementView.spielInput.awayTeam}" converter="teamConverter">
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>
                 <h:commandButton value="Speichern" action="#{spielManagementView.saveGame}">

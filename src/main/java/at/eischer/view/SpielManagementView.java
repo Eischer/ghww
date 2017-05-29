@@ -22,19 +22,9 @@ public class SpielManagementView {
 
     private List<Team> teamPerGruppe;
 
-    private int hour;
-
-    private int minute;
-
-    private Team homeTeam;
-
-    private Team awayTeam;
-
-    private List<Integer> hours;
-
-    private List<Integer> minutes;
-
     private List<Spiel> spielePerGruppe;
+
+    private SpielInput spielInput;
 
     @Inject
     private SpielService spielService;
@@ -44,14 +34,7 @@ public class SpielManagementView {
 
     @PostConstruct
     public void init() {
-        this.hours = new ArrayList<>();
-        for (int i=0; i<24; i++) {
-            this.hours.add(i);
-        }
-        this.minutes = new ArrayList<>();
-        for (int i=0; i<60; i++) {
-            this.minutes.add(i);
-        }
+        spielInput = new SpielInput();
         this.gruppe = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("currentGruppe");
         if (this.gruppe == null) {
             this.gruppe = "A";
@@ -67,8 +50,8 @@ public class SpielManagementView {
     }
 
     public String saveGame() {
-        LocalTime zeit = LocalTime.of(this.hour, this.minute);
-        spielService.save(new Spiel(zeit, this.gruppe, this.homeTeam, this.awayTeam));
+        LocalTime zeit = LocalTime.of(spielInput.getHour(), spielInput.getMinute());
+        spielService.save(new Spiel(zeit, this.gruppe, spielInput.getHomeTeam(), spielInput.getAwayTeam()));
         return "/spielManagement?faces-redirect=true";
 
     }
@@ -84,6 +67,10 @@ public class SpielManagementView {
             }
             return null;
         }
+    }
+
+    public SpielInput getSpielInput() {
+        return spielInput;
     }
 
     public String getGruppe() {
@@ -106,22 +93,6 @@ public class SpielManagementView {
         this.teamPerGruppe = teamPerGruppe;
     }
 
-    public Team getHomeTeam() {
-        return homeTeam;
-    }
-
-    public void setHomeTeam(Team homeTeam) {
-        this.homeTeam = homeTeam;
-    }
-
-    public Team getAwayTeam() {
-        return awayTeam;
-    }
-
-    public void setAwayTeam(Team awayTeam) {
-        this.awayTeam = awayTeam;
-    }
-
     public List<Spiel> getSpielePerGruppe() {
         return spielePerGruppe;
     }
@@ -130,27 +101,4 @@ public class SpielManagementView {
         this.spielePerGruppe = spielePerGruppe;
     }
 
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public List<Integer> getHours() {
-        return hours;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-    public List<Integer> getMinutes() {
-        return minutes;
-    }
 }
