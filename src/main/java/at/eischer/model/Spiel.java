@@ -20,9 +20,9 @@ public class Spiel {
     @OneToOne
     private Team awayTeam;
 
-    private int toreTeam1;
+    private Integer toreHomeTeam;
 
-    private int toreTeam2;
+    private Integer toreAwayTeam;
 
     public Spiel () {
         //empty constructor for JPA
@@ -67,20 +67,20 @@ public class Spiel {
         this.awayTeam = team2;
     }
 
-    public int getToreTeam1() {
-        return toreTeam1;
+    public Integer getToreHomeTeam() {
+        return toreHomeTeam;
     }
 
-    public void setToreTeam1(int toreTeam1) {
-        this.toreTeam1 = toreTeam1;
+    public void setToreHomeTeam(Integer toreTeam1) {
+        this.toreHomeTeam = toreTeam1;
     }
 
-    public int getToreTeam2() {
-        return toreTeam2;
+    public Integer getToreAwayTeam() {
+        return toreAwayTeam;
     }
 
-    public void setToreTeam2(int toreTeam2) {
-        this.toreTeam2 = toreTeam2;
+    public void setToreAwayTeam(Integer toreTeam2) {
+        this.toreAwayTeam = toreTeam2;
     }
 
     public String getGruppe() {

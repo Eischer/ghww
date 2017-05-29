@@ -56,6 +56,11 @@ public class SpielManagementView {
 
     }
 
+    public Object saveResult(Spiel spiel) {
+        spielService.update(spiel);
+        return "/spielManagement?faces-redirect=true";
+    }
+
     public Team getTeamById(Long teamId) {
         if (teamId == null) {
             throw new IllegalArgumentException("no id");

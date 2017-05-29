@@ -6,14 +6,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../templates/template.xhtml">
     <ui:define id="" name="content">
-        <h:form>
+        <h:form id="spielManagementForm">
             <h1>Spiele - Gruppe #{spielManagementView.gruppe}</h1>
             <p>
                 <h:commandLink value="Gruppe A " action="#{spielManagementView.setTeamsDependingOnGroup('A')}">
-                    <f:ajax execute="@form" render="@form spielManagement"/>
+                    <f:ajax execute="@form" render="@form"/>
                 </h:commandLink>
                 <h:commandLink value="Gruppe B" action="#{spielManagementView.setTeamsDependingOnGroup('B')}">
-                    <f:ajax execute="@form" render="@form spielManagement"/>
+                    <f:ajax execute="@form" render="@form"/>
                 </h:commandLink>
                 <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
             </p>
@@ -36,7 +36,7 @@
                 </h:commandButton>
             </h:panelGroup>
 
-            <h:dataTable id="spielTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel">
+            <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel">
                 <h:column>
                     #{oneSpiel.zeit}
                 </h:column>
@@ -45,6 +45,16 @@
                 </h:column>
                 <h:column id="spielAwayTeam">
                     #{oneSpiel.awayTeam.name}
+                </h:column>
+                <h:column>
+                    <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreHomeTeam}"/>
+                    :
+                    <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreAwayTeam}"/>
+                </h:column>
+                <h:column>
+                    <h:commandButton value="Ergebnis Speichern" action="#{spielManagementView.saveResult(oneSpiel)}">
+                            <f:ajax execute="spielManagementForm:spielOverviewTable" render="spielManagementForm:spielOverviewTable"/>
+                    </h:commandButton>
                 </h:column>
             </h:dataTable>
 
