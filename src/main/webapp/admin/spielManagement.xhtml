@@ -18,7 +18,13 @@
                 <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
             </p>
             <h:panelGroup id="spielTableau">
-                <h:inputText id="hour" styleClass="twoDigits"/>:<h:inputText id="minute" styleClass="twoDigits"/>
+                <h:selectOneMenu value="#{spielManagementView.hour}">
+                    <f:selectItems value="#{spielManagementView.hours}" var="theHour" itemValue="#{theHour}"/>
+                </h:selectOneMenu>
+                :
+                <h:selectOneMenu value="#{spielManagementView.minute}">
+                    <f:selectItems value="#{spielManagementView.minutes}" var="theMinute" itemValue="#{theMinute}"/>
+                </h:selectOneMenu>
                 <h:selectOneMenu id="homeTeam" value="#{spielManagementView.homeTeam}" converter="teamConverter">
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>
@@ -31,6 +37,9 @@
             </h:panelGroup>
 
             <h:dataTable id="spielTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel">
+                <h:column>
+                    #{oneSpiel.zeit}
+                </h:column>
                 <h:column id="spielHomeTeam">
                     #{oneSpiel.homeTeam.name}
                 </h:column>

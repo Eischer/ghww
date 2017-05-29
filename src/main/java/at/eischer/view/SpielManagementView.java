@@ -10,6 +10,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -20,9 +22,17 @@ public class SpielManagementView {
 
     private List<Team> teamPerGruppe;
 
+    private int hour;
+
+    private int minute;
+
     private Team homeTeam;
 
     private Team awayTeam;
+
+    private List<Integer> hours;
+
+    private List<Integer> minutes;
 
     private List<Spiel> spielePerGruppe;
 
@@ -34,6 +44,14 @@ public class SpielManagementView {
 
     @PostConstruct
     public void init() {
+        this.hours = new ArrayList<>();
+        for (int i=0; i<24; i++) {
+            this.hours.add(i);
+        }
+        this.minutes = new ArrayList<>();
+        for (int i=0; i<60; i++) {
+            this.minutes.add(i);
+        }
         this.gruppe = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("currentGruppe");
         if (this.gruppe == null) {
             this.gruppe = "A";
@@ -49,7 +67,8 @@ public class SpielManagementView {
     }
 
     public String saveGame() {
-        spielService.save(new Spiel(this.gruppe, this.homeTeam, this.awayTeam));
+        LocalTime zeit = LocalTime.of(this.hour, this.minute);
+        spielService.save(new Spiel(zeit, this.gruppe, this.homeTeam, this.awayTeam));
         return "/spielManagement?faces-redirect=true";
 
     }
@@ -109,5 +128,29 @@ public class SpielManagementView {
 
     public void setSpielePerGruppe(List<Spiel> spielePerGruppe) {
         this.spielePerGruppe = spielePerGruppe;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public List<Integer> getHours() {
+        return hours;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    public List<Integer> getMinutes() {
+        return minutes;
     }
 }

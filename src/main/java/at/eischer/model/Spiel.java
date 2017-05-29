@@ -28,7 +28,8 @@ public class Spiel {
         //empty constructor for JPA
     }
 
-    public Spiel (String gruppe, Team homeTeam, Team awayTeam) {
+    public Spiel (LocalTime zeit, String gruppe, Team homeTeam, Team awayTeam) {
+        this.zeit = zeit;
         this.gruppe = gruppe;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
