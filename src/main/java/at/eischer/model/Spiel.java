@@ -14,10 +14,12 @@ public class Spiel {
 
     private LocalTime zeit;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "awayTeamFk")
     private Team homeTeam;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "homeTeamFk")
     private Team awayTeam;
 
     private Integer toreHomeTeam;

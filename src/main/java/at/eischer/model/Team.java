@@ -29,6 +29,12 @@ public class Team {
 
     private String logoPath;
 
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "homeTeam", orphanRemoval = true)
+    private List<Spiel> homeSpiele;
+
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "awayTeam", orphanRemoval = true)
+    private List<Spiel> awaySpiele;
+
     public String getName() {
         return name;
     }
@@ -75,6 +81,22 @@ public class Team {
 
     public void setGruppe(String gruppe) {
         this.gruppe = gruppe;
+    }
+
+    public List<Spiel> getHomeSpiele() {
+        return homeSpiele;
+    }
+
+    public void setHomeSpiele(List<Spiel> homeSpiele) {
+        this.homeSpiele = homeSpiele;
+    }
+
+    public List<Spiel> getAwaySpiele() {
+        return awaySpiele;
+    }
+
+    public void setAwaySpiele(List<Spiel> awaySpiele) {
+        this.awaySpiele = awaySpiele;
     }
 
 }
