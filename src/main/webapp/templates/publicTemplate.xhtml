@@ -14,7 +14,12 @@
 <h:body>
     <div id="menu">
         <h:form>
-            <p:menubar style="width: 320px" styleClass="ghwwBGColor">
+            <p:menubar style="width: 400px; height: 50px;" styleClass="ghwwBGColor">
+                <p:menuitem>
+                    <h:link outcome="/seidlWertung.xhmtl">
+                        <h:graphicImage url="/resources/grasshoppers-westwien.png" class="headerLogo" alt=""/>
+                    </h:link>
+                </p:menuitem>
                 <p:menuitem value="Seidl-Wertung" url="/seidlWertung.xhtml"/>
                 <p:menuitem value="Gruppe A" url="/seidlWertung.xhtml"/>
                 <p:menuitem value="Gruppe B" url="/seidlWertung.xhtml"/>

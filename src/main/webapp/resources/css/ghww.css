@@ -5,6 +5,12 @@ div#menu{
 
 div#content{
     padding-left: 1cm;
+    position: relative;
+}
+
+.headerLogo {
+    height: 50px;
+    width: 50px;
 }
 
 /* Team/Seidl Tables*/
