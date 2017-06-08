@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <title>Grasshoppers West Wien - Turnierunterstuetzung</title>
@@ -13,11 +13,10 @@
 <h:body>
     <div id="menu">
         <h:form>
-            <p:menubar style="width: 580px" styleClass="ghwwBGColor">
-                <p:menuitem value="Manschaftsverwaltung" url="/admin/teams.xhtml"/>
-                <p:menuitem value="Seidl Management" url="/admin/seidl.xhtml"/>
-                <p:menuitem value="Seidl-Wertung" url="/admin/seidlWertung.xhtml"/>
-                <p:menuitem value="Logout" action="#{currentUser.logout}"/>
+            <p:menubar style="width: 320px" styleClass="ghwwBGColor">
+                <p:menuitem value="Seidl-Wertung" url="/seidlWertung.xhtml"/>
+                <p:menuitem value="Gruppe A" url="/seidlWertung.xhtml"/>
+                <p:menuitem value="Gruppe B" url="/seidlWertung.xhtml"/>
             </p:menubar>
         </h:form>
     </div>

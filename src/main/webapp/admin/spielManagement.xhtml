@@ -2,10 +2,10 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<ui:composition template="../templates/template.xhtml">
-    <ui:define id="" name="content">
+<ui:composition template="../templates/adminTemplate.xhtml">
+    <ui:define name="content">
         <h:form id="spielManagementForm">
             <h1>Spiele - Gruppe #{spielManagementView.gruppe}</h1>
             <p>
@@ -32,32 +32,33 @@
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>
                 <h:commandButton value="Speichern" action="#{spielManagementView.saveGame}">
-                    <f:ajax execute="spielTableau" render="spielTableau"/>
+                    <f:ajax execute="spielTableau" render="spielTableau, spielManagementForm:spielOverviewTable"/>
                 </h:commandButton>
             </h:panelGroup>
-
-            <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel">
-                <h:column>
-                    #{oneSpiel.zeit}
-                </h:column>
-                <h:column id="spielHomeTeam">
-                    #{oneSpiel.homeTeam.name}
-                </h:column>
-                <h:column id="spielAwayTeam">
-                    #{oneSpiel.awayTeam.name}
-                </h:column>
-                <h:column>
-                    <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreHomeTeam}"/>
-                    :
-                    <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreAwayTeam}"/>
-                </h:column>
-                <h:column>
-                    <h:commandButton value="Ergebnis Speichern" action="#{spielManagementView.saveResult(oneSpiel)}">
+            <p>
+                <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
+                             columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
+                    <h:column>
+                        #{oneSpiel.zeit}
+                    </h:column>
+                    <h:column id="spielHomeTeam">
+                        #{oneSpiel.homeTeam.name}
+                    </h:column>
+                    <h:column id="spielAwayTeam">
+                        #{oneSpiel.awayTeam.name}
+                    </h:column>
+                    <h:column>
+                        <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreHomeTeam}"/>
+                        :
+                        <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreAwayTeam}"/>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Save" action="#{spielManagementView.saveResult(oneSpiel)}">
                             <f:ajax execute="spielManagementForm:spielOverviewTable" render="spielManagementForm:spielOverviewTable"/>
-                    </h:commandButton>
-                </h:column>
-            </h:dataTable>
-
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+            </p>
         </h:form>
     </ui:define>
 </ui:composition>

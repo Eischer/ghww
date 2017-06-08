@@ -1,0 +1,29 @@
+<ui:composition xmlns:ui ="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <h1>Seiderl Wertung (9:00 - 19:00)</h1>
+    <div id="containerDiv">
+        <div id="seiderlTableDiv">
+            <h:form enctype="multipart/form-data">
+                <h:dataTable id="seiderlTable" value="#{teamView.ranking}" var="teamRank" rowClasses="even, odd"
+                             columnClasses="logoCol,seiderlCountCol, teamNameCol, seiderlCountCol">
+                    <h:column headerClass="logoCol">
+                        <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt=""/>
+                    </h:column>
+                    <h:column>
+                        #{teamRank.rank}.
+                    </h:column>
+                    <h:column headerClass="teamNameCol">
+                        #{teamRank.team.name}
+                    </h:column>
+                    <h:column headerClass="seiderlCountCol">
+                        #{teamRank.team.seiderlCounter}
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+        <div id="chartDiv">
+            <p:chart type="line" model="#{chartView.lineModel}" style="height: 550px;width: 950px;" rendered="#{chartView.lineModel!=null}"/>
+        </div>
+    </div>
+</ui:composition>
