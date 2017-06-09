@@ -93,6 +93,14 @@ div#chartDiv {
     width: 2ch;
 }
 
+.sideBySide {
+    display: flex;
+}
+
+.gruppeTabelle {
+    margin-left: 50px;
+}
+
 /* General Stylings */
 body {
     padding: 0;

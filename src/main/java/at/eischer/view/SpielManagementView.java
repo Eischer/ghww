@@ -12,7 +12,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @RequestScoped
@@ -25,6 +27,8 @@ public class SpielManagementView {
     private List<Spiel> spielePerGruppe;
 
     private SpielInput spielInput;
+
+    private List<TeamRank> standings;
 
     @Inject
     private SpielService spielService;
@@ -41,6 +45,38 @@ public class SpielManagementView {
         }
         this.teamPerGruppe = teamService.findTeamsForGruppe(this.gruppe);
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
+        this.standings = calculateStandings();
+    }
+
+    private List<TeamRank> calculateStandings() {
+        List<Team> allTeamsForGroup = teamService.findTeamsForGruppe(this.gruppe);
+        Map<Long, TeamRank> standingsAsMap = new HashMap<>();
+        for (Team team : allTeamsForGroup) {
+            standingsAsMap.put(team.getId(), new TeamRank(team));
+        }
+
+        List<Spiel> allSpieleForGroup = spielService.getAllSpielePerGruppe(this.gruppe);
+        for (Spiel spiel : allSpieleForGroup) {
+            TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
+            teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam());
+            standingsAsMap.put(spiel.getHomeTeam().getId(), teamRankForHomeTeam);
+
+            TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
+            teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam());
+            standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
+        }
+        return new ArrayList<>(standingsAsMap.values());
+    }
+
+    private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore) {
+        teamRank.plusGoals += ownTore;
+        teamRank.minusGoals += foreignTore;
+        if (ownTore > foreignTore) {
+            teamRank.points += 3;
+        } else if (ownTore == foreignTore) {
+            teamRank.points++;
+        }
+        return teamRank;
     }
 
     public void setTeamsDependingOnGroup (String gruppe) {
@@ -106,4 +142,11 @@ public class SpielManagementView {
         this.spielePerGruppe = spielePerGruppe;
     }
 
+    public List<TeamRank> getStandings() {
+        return standings;
+    }
+
+    public void setStandings(List<TeamRank> standings) {
+        this.standings = standings;
+    }
 }

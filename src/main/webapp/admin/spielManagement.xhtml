@@ -17,7 +17,7 @@
                 </h:commandLink>
                 <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
             </p>
-            <h:panelGroup id="spielTableau">
+            <h:panelGroup id="createSpielPanel" layout="block">
                 <h:selectOneMenu value="#{spielManagementView.spielInput.hour}">
                     <f:selectItems value="#{spielManagementView.spielInput.hours}" var="theHour" itemValue="#{theHour}"/>
                 </h:selectOneMenu>
@@ -32,32 +32,45 @@
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>
                 <h:commandButton value="Speichern" action="#{spielManagementView.saveGame}">
-                    <f:ajax execute="spielTableau" render="spielTableau, spielManagementForm:spielOverviewTable"/>
+                    <f:ajax execute="createSpielPanel" render="createSpielPanel, spielManagementForm:spielOverviewTable"/>
                 </h:commandButton>
             </h:panelGroup>
+
             <p>
-                <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
-                             columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
-                    <h:column>
-                        #{oneSpiel.zeit}
-                    </h:column>
-                    <h:column id="spielHomeTeam">
-                        #{oneSpiel.homeTeam.name}
-                    </h:column>
-                    <h:column id="spielAwayTeam">
-                        #{oneSpiel.awayTeam.name}
-                    </h:column>
-                    <h:column>
-                        <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreHomeTeam}"/>
-                        :
-                        <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreAwayTeam}"/>
-                    </h:column>
-                    <h:column>
-                        <h:commandButton value="Save" action="#{spielManagementView.saveResult(oneSpiel)}">
-                            <f:ajax execute="spielManagementForm:spielOverviewTable" render="spielManagementForm:spielOverviewTable"/>
-                        </h:commandButton>
-                    </h:column>
-                </h:dataTable>
+                <h:panelGroup layout="block" styleClass="sideBySide">
+                    <h:panelGroup id="spielTableuat" layout="block">
+                        <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
+                                     columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
+                            <h:column>
+                                #{oneSpiel.zeit}
+                            </h:column>
+                            <h:column id="spielHomeTeam">
+                                #{oneSpiel.homeTeam.name}
+                            </h:column>
+                            <h:column id="spielAwayTeam">
+                                #{oneSpiel.awayTeam.name}
+                            </h:column>
+                            <h:column>
+                                <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreHomeTeam}"/>
+                                :
+                                <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreAwayTeam}"/>
+                            </h:column>
+                            <h:column>
+                                <h:commandButton value="Save" action="#{spielManagementView.saveResult(oneSpiel)}">
+                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="spielManagementForm:spielOverviewTable"/>
+                                </h:commandButton>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup styleClass="gruppeTabelle" layout="block">
+                        <h:dataTable value="#{spielManagementView.standings}" var="teamRank" rowClasses="even, odd">
+                            <h:column>#{teamRank.rank}</h:column>
+                            <h:column>#{teamRank.team.name}</h:column>
+                            <h:column>#{teamRank.plusGoals}:#{teamRank.minusGoals}</h:column>
+                            <h:column>#{teamRank.points}</h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </h:panelGroup>
             </p>
         </h:form>
     </ui:define>
