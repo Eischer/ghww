@@ -15,7 +15,6 @@
                 <h:commandLink value="Gruppe B" action="#{spielManagementView.setTeamsDependingOnGroup('B')}">
                     <f:ajax execute="@form" render="@form"/>
                 </h:commandLink>
-                <input type="hidden" name="currentGruppe" id="currentGruppe" value="#{spielManagementView.gruppe}"/>
             </p>
             <h:panelGroup id="createSpielPanel" layout="block">
                 <h:selectOneMenu value="#{spielManagementView.spielInput.hour}">

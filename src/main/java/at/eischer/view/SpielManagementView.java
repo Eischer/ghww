@@ -57,13 +57,15 @@ public class SpielManagementView {
 
         List<Spiel> allSpieleForGroup = spielService.getAllSpielePerGruppe(this.gruppe);
         for (Spiel spiel : allSpieleForGroup) {
-            TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
-            teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam());
-            standingsAsMap.put(spiel.getHomeTeam().getId(), teamRankForHomeTeam);
+            if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
+                TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
+                teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam());
+                standingsAsMap.put(spiel.getHomeTeam().getId(), teamRankForHomeTeam);
 
-            TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
-            teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam());
-            standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
+                TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
+                teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam());
+                standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
+            }
         }
         return new ArrayList<>(standingsAsMap.values());
     }
@@ -124,6 +126,11 @@ public class SpielManagementView {
 
     public void setTeamsDepending(String gruppe) {
         this.gruppe = gruppe;
+    }
+
+    public String setTeamsDependingAndRedirectToPage(String gruppe) {
+        this.gruppe = gruppe;
+        return "spielManagement.xhtml";
     }
 
     public List<Team> getTeamPerGruppe() {
