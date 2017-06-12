@@ -20,11 +20,9 @@
                 <p:menuitem value="Seidl-Wertung" url="/admin/seidlWertung.xhtml"/>
                 <p:submenu label="Spiel Management" icon="ui-icon-contact">
                     <p:menuitem value="Gruppeneinteilung" url="/admin/gruppenManagement.xhtml"/>
-                    <p:menuitem value="Gruppe A" action="/admin/spielManagement.xhtml">
-                            <f:param name="currentGruppe" value="A"/>
+                    <p:menuitem value="Gruppe A" url="/admin/spielManagement.xhtml?currentGruppe=A">
                     </p:menuitem>
-                    <p:menuitem value="Gruppe B" action="/admin/spielManagement.xhtml">
-                            <f:param name="currentGruppe" value="B"/>
+                    <p:menuitem value="Gruppe B" url="/admin/spielManagement.xhtml?currentGruppe=B">
                     </p:menuitem>
                 </p:submenu>
                 <p:menuitem value="Logout" action="#{currentUser.logout}"/>

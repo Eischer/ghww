@@ -124,15 +124,6 @@ public class SpielManagementView {
         this.gruppe = gruppe;
     }
 
-    public void setTeamsDepending(String gruppe) {
-        this.gruppe = gruppe;
-    }
-
-    public String setTeamsDependingAndRedirectToPage(String gruppe) {
-        this.gruppe = gruppe;
-        return "spielManagement.xhtml";
-    }
-
     public List<Team> getTeamPerGruppe() {
         return teamPerGruppe;
     }
