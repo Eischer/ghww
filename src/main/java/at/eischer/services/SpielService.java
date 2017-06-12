@@ -15,4 +15,8 @@ public class SpielService extends Repository {
         allSpielePerGruppe.setParameter("gruppe", gruppe);
         return allSpielePerGruppe.getResultList();
     }
+
+    public void removeSpiel(Spiel spiel) {
+        entityManager.remove(entityManager.contains(spiel) ? spiel : entityManager.merge(spiel));
+    }
 }

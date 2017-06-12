@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,17 @@ public class SpielManagementView {
         }
 
         List<Spiel> allSpieleForGroup = spielService.getAllSpielePerGruppe(this.gruppe);
+        collectDataFromSpiele(standingsAsMap, allSpieleForGroup);
+        return calculateStandings(standingsAsMap, allSpieleForGroup);
+    }
+
+    private List<TeamRank> calculateStandings(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForGroup) {
+        List<TeamRank> sortedByPoints = new ArrayList<>(standingsAsMap.values());
+        sortedByPoints.sort(Comparator.comparingInt(TeamRank::getPoints).reversed());
+        return sortedByPoints;
+    }
+
+    private void collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForGroup) {
         for (Spiel spiel : allSpieleForGroup) {
             if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
                 TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
@@ -67,7 +79,6 @@ public class SpielManagementView {
                 standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
             }
         }
-        return new ArrayList<>(standingsAsMap.values());
     }
 
     private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore) {
@@ -81,22 +92,19 @@ public class SpielManagementView {
         return teamRank;
     }
 
-    public void setTeamsDependingOnGroup (String gruppe) {
-        this.gruppe = gruppe;
-        this.teamPerGruppe = teamService.findTeamsForGruppe(this.gruppe);
+    public void saveGame() {
+        LocalTime zeit = LocalTime.of(spielInput.getHour(), spielInput.getMinute());
+        spielService.save(new Spiel(zeit, this.gruppe, spielInput.getHomeTeam(), spielInput.getAwayTeam()));
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
     }
 
-    public String saveGame() {
-        LocalTime zeit = LocalTime.of(spielInput.getHour(), spielInput.getMinute());
-        spielService.save(new Spiel(zeit, this.gruppe, spielInput.getHomeTeam(), spielInput.getAwayTeam()));
-        return "/spielManagement?faces-redirect=true";
-
+    public void saveResult(Spiel spiel) {
+        spielService.update(spiel);
     }
 
-    public Object saveResult(Spiel spiel) {
-        spielService.update(spiel);
-        return "/spielManagement?faces-redirect=true";
+    public void deleteSpiel(Spiel spiel) {
+        spielService.removeSpiel(spiel);
+        this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
     }
 
     public Team getTeamById(Long teamId) {
