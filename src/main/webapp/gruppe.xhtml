@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<ui:composition template="templates/publicTemplate.xhtml">
+    <ui:define name="metaInfoForHead">
+        <meta http-equiv="refresh" content="20;login.xhtml"/>
+    </ui:define>
+    <ui:define name="content">
+        <h1>Gruppe #{spielManagementView.gruppe}</h1>
+        <p>
+            <h:panelGroup layout="block" styleClass="sideBySide">
+                <h:panelGroup id="spielTableuat" layout="block">
+                    <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
+                                 columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
+                        <h:column>
+                            #{oneSpiel.zeit}
+                        </h:column>
+                        <h:column id="spielHomeTeam">
+                            #{oneSpiel.homeTeam.name}
+                        </h:column>
+                        <h:column id="spielAwayTeam">
+                            #{oneSpiel.awayTeam.name}
+                        </h:column>
+                        <h:column>
+                            #{oneSpiel.toreHomeTeam} : #{oneSpiel.toreAwayTeam}
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <h:panelGroup styleClass="gruppeTabelle" layout="block">
+                    <h:dataTable value="#{spielManagementView.standings}" var="teamRank" rowClasses="even, odd">
+                        <h:column>#{teamRank.rank}</h:column>
+                        <h:column>#{teamRank.team.name}</h:column>
+                        <h:column>#{teamRank.plusGoals}:#{teamRank.minusGoals}</h:column>
+                        <h:column>#{teamRank.points}</h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:panelGroup>
+        </p>
+    </ui:define>
+</ui:composition>
+</html>
