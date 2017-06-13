@@ -30,6 +30,7 @@
             <p>
                 <h:panelGroup layout="block" styleClass="sideBySide">
                     <h:panelGroup id="spielTableuat" layout="block">
+                        <h:outputText value="Es wurden noch keine Spiele angelegt!" rendered="#{empty spielManagementView.spielePerGruppe}" />
                         <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
                                      columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
                             <h:column>

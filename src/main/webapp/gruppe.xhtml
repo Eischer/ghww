@@ -13,6 +13,7 @@
         <p>
             <h:panelGroup layout="block" styleClass="sideBySide">
                 <h:panelGroup id="spielTableuat" layout="block">
+                    <h:outputText value="Es wurden noch keine Spiele angelegt!" rendered="#{empty spielManagementView.spielePerGruppe}" />
                     <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
                                  columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
                         <h:column>
@@ -25,13 +26,13 @@
                             #{oneSpiel.awayTeam.name}
                         </h:column>
                         <h:column>
-                            #{oneSpiel.toreHomeTeam} : #{oneSpiel.toreAwayTeam}
+                            #{oneSpiel.toreHomeTeam==null?'-':oneSpiel.toreHomeTeam} : #{oneSpiel.toreAwayTeam==null?'-':oneSpiel.toreAwayTeam}
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <h:panelGroup styleClass="gruppeTabelle" layout="block">
                     <h:dataTable value="#{spielManagementView.standings}" var="teamRank" rowClasses="even, odd">
-                        <h:column>#{teamRank.rank}</h:column>
+                        <h:column>#{teamRank.rank}. </h:column>
                         <h:column>#{teamRank.team.name}</h:column>
                         <h:column>#{teamRank.plusGoals}:#{teamRank.minusGoals}</h:column>
                         <h:column>#{teamRank.points}</h:column>
