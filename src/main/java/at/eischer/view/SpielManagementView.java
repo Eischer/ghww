@@ -71,23 +71,28 @@ public class SpielManagementView {
         for (Spiel spiel : allSpieleForGroup) {
             if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
                 TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
-                teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam());
+                TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
+
+                teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam(), teamRankForAwayTeam.team);
                 standingsAsMap.put(spiel.getHomeTeam().getId(), teamRankForHomeTeam);
 
-                TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
-                teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam());
+                teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam(), teamRankForHomeTeam.team);
                 standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
             }
         }
     }
 
-    private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore) {
+    private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore, Team opponent) {
         teamRank.plusGoals += ownTore;
         teamRank.minusGoals += foreignTore;
         if (ownTore > foreignTore) {
             teamRank.points += 3;
+            teamRank.wins.put(opponent.getId(), opponent);
         } else if (ownTore == foreignTore) {
             teamRank.points++;
+            teamRank.draws.put(opponent.getId(), opponent);
+        } else {
+            teamRank.loss.put(opponent.getId(), opponent);
         }
         return teamRank;
     }
@@ -111,7 +116,7 @@ public class SpielManagementView {
         if (teamId == null) {
             throw new IllegalArgumentException("no id");
         } else {
-            for(Team team : teamPerGruppe) {
+            for (Team team : teamPerGruppe) {
                 if (teamId.equals(team.getId())) {
                     return team;
                 }
