@@ -13,6 +13,8 @@
                 <h:inputText id="teamName" styleClass="tabStopLike" value="#{teamView.teamViewBean.teamName}"/>
                 <h:outputLabel for="teamLogo" value="Logo: "/>
                 <h:inputFile id="teamLogo" styleClass="tabStopLike" value="#{teamView.teamViewBean.logo}"/>
+                <h:outputLabel for="participate" value="Seidlwertung"/>
+                <h:selectBooleanCheckbox id="participate" value="#{teamView.teamViewBean.participateOnSeidlWertung}"/>
                 <h:commandButton value="Team anlegen" action="#{teamView.saveTeam}"/>
             </p>
             <p>

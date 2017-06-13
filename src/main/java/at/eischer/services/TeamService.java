@@ -17,6 +17,12 @@ public class TeamService extends Repository implements Serializable{
         return allTeams.getResultList();
     }
 
+
+    public List<Team> findAllteamsWhichParticipateOnSeidlWertung() {
+        TypedQuery<Team> allTeams = entityManager.createNamedQuery("Team.findAllWhichParticipateOnSeidlWertung", Team.class);
+        return allTeams.getResultList();
+    }
+
     public Team findTeamById(long id) {
         return entityManager.find(Team.class, id);
     }

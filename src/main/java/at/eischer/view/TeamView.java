@@ -40,30 +40,32 @@ public class TeamView {
 
     @PostConstruct
     public void init() {
-        allTeams = teamService.findAllteams();
-        beerCountForTeamId = new HashMap<>();
-
-        ranking = new ArrayList<>();
+        this.allTeams = teamService.findAllteams();
+        this.beerCountForTeamId = new HashMap<>();
+        this.ranking = new ArrayList<>();
+        this.teamViewBean.setParticipateOnSeidlWertung(true);
 
         int currentRank = 1;
         int rankCounter = 1;
-        for (Team team : teamService.findAllteamsOrderBySeiderl()) {
-            if (ranking.isEmpty()) {
-                ranking.add(new SeiderlRanking(currentRank, team));
-            } else {
-                if (ranking.get(ranking.size() - 1).getTeam().getSeiderlCounter() == team.getSeiderlCounter()) {
-                    ranking.add(new SeiderlRanking(currentRank, team));
+        for (Team team : this.teamService.findAllteamsOrderBySeiderl()) {
+            if (team.isParticipateOnSeidlWertung()) {
+                if (this.ranking.isEmpty()) {
+                    this.ranking.add(new SeiderlRanking(currentRank, team));
                 } else {
-                    currentRank = rankCounter;
-                    ranking.add(new SeiderlRanking(currentRank, team));
+                    if (this.ranking.get(ranking.size() - 1).getTeam().getSeiderlCounter() == team.getSeiderlCounter()) {
+                        this.ranking.add(new SeiderlRanking(currentRank, team));
+                    } else {
+                        currentRank = rankCounter;
+                        this.ranking.add(new SeiderlRanking(currentRank, team));
+                    }
                 }
+                rankCounter++;
             }
-            rankCounter++;
         }
     }
 
     public String saveTeam() {
-        teamViewBean.saveTeam();
+        this.teamViewBean.saveTeam();
         return "/teams?faces-redirect=true";
     }
 
@@ -71,11 +73,11 @@ public class TeamView {
         if (checkIfTimeIsValid()) {
             String tIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
             long tId = Long.parseLong(tIdString);
-            Team teamToRefreshSeidl = teamService.findTeamById(tId);
+            Team teamToRefreshSeidl = this.teamService.findTeamById(tId);
             if (teamToRefreshSeidl != null) {
-                teamService.incrementSeiderl(teamToRefreshSeidl.getId(), beerCountForTeamId.get(teamToRefreshSeidl.getId()));
-                allTeams = teamService.findAllteams();
-                beerCountForTeamId.put(teamToRefreshSeidl.getId(), 1);
+                this.teamService.incrementSeiderl(teamToRefreshSeidl.getId(), this.beerCountForTeamId.get(teamToRefreshSeidl.getId()));
+                this.allTeams = this.teamService.findAllteams();
+                this.beerCountForTeamId.put(teamToRefreshSeidl.getId(), 1);
             }
         }
     }
@@ -84,11 +86,11 @@ public class TeamView {
         if (checkIfTimeIsValid()) {
             String tIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
             long tId = Long.parseLong(tIdString);
-            Team teamToRefreshSeidl = teamService.findTeamById(tId);
+            Team teamToRefreshSeidl = this.teamService.findTeamById(tId);
             if (teamToRefreshSeidl != null) {
-                teamService.decrementSeiderl(teamToRefreshSeidl.getId(), beerCountForTeamId.get(teamToRefreshSeidl.getId()));
-                allTeams = teamService.findAllteams();
-                beerCountForTeamId.put(teamToRefreshSeidl.getId(), 1);
+                this.teamService.decrementSeiderl(teamToRefreshSeidl.getId(), this.beerCountForTeamId.get(teamToRefreshSeidl.getId()));
+                this.allTeams = teamService.findAllteams();
+                this.beerCountForTeamId.put(teamToRefreshSeidl.getId(), 1);
             }
         }
     }
@@ -98,11 +100,11 @@ public class TeamView {
         if (checkIfTimeIsValid()) {
             String tIdString = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
             long tId = Long.parseLong(tIdString);
-            Team teamToRefreshKruegl = teamService.findTeamById(tId);
+            Team teamToRefreshKruegl = this.teamService.findTeamById(tId);
             if (teamToRefreshKruegl != null) {
-                teamService.incrementSeiderl(teamToRefreshKruegl.getId(), beerCountForTeamId.get(teamToRefreshKruegl.getId()) * 1.5F);
-                allTeams = teamService.findAllteams();
-                beerCountForTeamId.put(teamToRefreshKruegl.getId(), 1);
+                this.teamService.incrementSeiderl(teamToRefreshKruegl.getId(), this.beerCountForTeamId.get(teamToRefreshKruegl.getId()) * 1.5F);
+                this.allTeams = teamService.findAllteams();
+                this.beerCountForTeamId.put(teamToRefreshKruegl.getId(), 1);
             }
         }
     }
@@ -124,13 +126,13 @@ public class TeamView {
         String teamToRemovId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("tid");
         try {
             long tid = Long.parseLong(teamToRemovId);
-            Team teamToRemove = teamService.findTeamById(tid);
+            Team teamToRemove = this.teamService.findTeamById(tid);
             if (teamToRemove != null) {
                 if (teamToRemove.getLogoPath() != null) {
                     Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
                     Files.delete(pathToLogo);
                 }
-                teamService.removeTeam(teamToRemove);
+                this.teamService.removeTeam(teamToRemove);
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
@@ -143,9 +145,14 @@ public class TeamView {
 
     // GETTER - SETTER Section
 
+    public List<Team> getAllTeamsWhichParticipateOnSeidlWertung() {
+        this.allTeams = this.teamService.findAllteamsWhichParticipateOnSeidlWertung();
+        return this.allTeams;
+    }
+
     public List<Team> getAllTeams() {
-        this.allTeams = teamService.findAllteams();
-        return allTeams;
+        this.allTeams = this.teamService.findAllteams();
+        return this.allTeams;
     }
 
     public void setAllTeams(List<Team> allTeams) {
@@ -153,12 +160,12 @@ public class TeamView {
     }
 
     public String getLogo(long teamId) {
-        Team team = teamService.findTeamById(teamId);
+        Team team = this.teamService.findTeamById(teamId);
         return "/logos/" + team.getLogoPath();
     }
 
     public TeamViewBean getTeamViewBean() {
-        return teamViewBean;
+        return this.teamViewBean;
     }
 
     public void setTeamViewBean(TeamViewBean teamViewBean) {
@@ -166,7 +173,7 @@ public class TeamView {
     }
 
     public List<SeiderlRanking> getRanking() {
-        return ranking;
+        return this.ranking;
     }
 
     public void setRanking(List<SeiderlRanking> ranking) {
@@ -174,7 +181,7 @@ public class TeamView {
     }
 
     public Map<Long, Integer> getBeerCount() {
-        return beerCountForTeamId;
+        return this.beerCountForTeamId;
     }
 
     public void setBeerCount(Map<Long, Integer> beerCount) {

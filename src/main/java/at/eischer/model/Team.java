@@ -6,6 +6,7 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t ORDER BY t.name"),
+        @NamedQuery(name = "Team.findAllWhichParticipateOnSeidlWertung", query = "SELECT t FROM Team t WHERE t.participateOnSeidlWertung = true ORDER BY t.name"),
         @NamedQuery(name = "Team.findForGruppe", query = "SELECT t from Team t WHERE t.gruppe = :gruppe"),
         @NamedQuery(name = "Team.findAllOrderBySeiderl", query = "SELECT t FROM Team t ORDER BY t.seiderlCounter DESC"),
         @NamedQuery(name = "Team.getMaxSeiderlCount", query = "SELECT MAX (t.seiderlCounter) FROM Team t"),
@@ -23,6 +24,8 @@ public class Team {
     private float seiderlCounter;
 
     private String gruppe;
+
+    private boolean participateOnSeidlWertung;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
     private List<SeiderlHistory> history;
@@ -99,4 +102,11 @@ public class Team {
         this.awaySpiele = awaySpiele;
     }
 
+    public boolean isParticipateOnSeidlWertung() {
+        return participateOnSeidlWertung;
+    }
+
+    public void setParticipateOnSeidlWertung(boolean participateOnSeidlWertung) {
+        this.participateOnSeidlWertung = participateOnSeidlWertung;
+    }
 }

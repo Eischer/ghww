@@ -4,6 +4,7 @@ import at.eischer.model.Team;
 import at.eischer.services.TeamService;
 import org.apache.commons.io.FilenameUtils;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.servlet.http.Part;
@@ -21,6 +22,8 @@ public class TeamViewBean{
 
     private Part logo;
 
+    private boolean participateOnSeidlWertung;
+
     @Inject
     private TeamService teamService;
 
@@ -28,6 +31,7 @@ public class TeamViewBean{
         Team team = new Team();
         team.setName(this.teamName);
         team.setSeiderlCounter(0);
+        team.setParticipateOnSeidlWertung(this.participateOnSeidlWertung);
         try {
             if (logo != null) {
                 Path folder = Paths.get(System.getProperty("jboss.server.data.dir") + "/logos");
@@ -47,6 +51,7 @@ public class TeamViewBean{
             e.printStackTrace();
         }
         teamService.save(team);
+        this.participateOnSeidlWertung = true;
     }
 
     public void setTeamName(String teamName) {
@@ -63,5 +68,13 @@ public class TeamViewBean{
 
     public void setLogo(Part logo) {
         this.logo = logo;
+    }
+
+    public boolean isParticipateOnSeidlWertung() {
+        return participateOnSeidlWertung;
+    }
+
+    public void setParticipateOnSeidlWertung(boolean participateOnSeidlWertung) {
+        this.participateOnSeidlWertung = participateOnSeidlWertung;
     }
 }
