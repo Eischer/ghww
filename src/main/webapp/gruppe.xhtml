@@ -2,19 +2,20 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="templates/publicTemplate.xhtml">
-    <ui:define name="metaInfoForHead">
-        <meta http-equiv="refresh" content="20;login.xhtml"/>
-    </ui:define>
+    <!--<ui:define name="metaInfoForHead">-->
+        <!--<meta http-equiv="refresh" content="20;login.xhtml"/>-->
+    <!--</ui:define>-->
     <ui:define name="content">
         <h1>Gruppe #{spielManagementView.gruppe}</h1>
         <p>
             <h:panelGroup layout="block" styleClass="sideBySide">
                 <h:panelGroup id="spielTableuat" layout="block">
                     <h2>Gruppe #{spielManagementView.gruppe} - Spiele</h2>
-                    <h:outputText value="Es wurden noch keine Spiele angelegt!" rendered="#{empty spielManagementView.spielePerGruppe}" />
+                    <h:outputText value="Spielplan und Spielzeiten folgen" rendered="#{empty spielManagementView.spielePerGruppe}" />
                     <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
                                  columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
                         <h:column>
@@ -34,7 +35,11 @@
                 <h:panelGroup styleClass="gruppeTabelle" layout="block">
                     <h2>Gruppe #{spielManagementView.gruppe} - Aktuelle Tabelle</h2>
                     <h:dataTable value="#{spielManagementView.standings}" var="teamRank" rowClasses="even, odd">
-                        <h:column>#{teamRank.rank}. </h:column>
+                        <!--<h:column>#{teamRank.rank}. </h:column>-->
+                        <h:column headerClass="logoCol">
+                            <f:facet name="header">Logo</f:facet>
+                            <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt=""/>
+                        </h:column>
                         <h:column>#{teamRank.team.name}</h:column>
                         <h:column>#{teamRank.plusGoals}:#{teamRank.minusGoals}</h:column>
                         <h:column>#{teamRank.points}</h:column>
