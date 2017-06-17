@@ -48,12 +48,17 @@
                                 <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreAwayTeam}"/>
                             </h:column>
                             <h:column>
-                                <h:commandButton value="Save" action="#{spielManagementView.saveResult(oneSpiel)}">
+                                <h:commandButton value="Speichern" action="#{spielManagementView.saveResult(oneSpiel)}">
                                     <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
                                 </h:commandButton>
                             </h:column>
                             <h:column>
-                                <h:commandButton value="Delete" action="#{spielManagementView.deleteSpiel(oneSpiel)}">
+                                <h:commandButton value="Ergebnis löschen" action="#{spielManagementView.deleteResult    (oneSpiel)}">
+                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
+                                </h:commandButton>
+                            </h:column>
+                            <h:column>
+                                <h:commandButton value="Spiel löschen" action="#{spielManagementView.deleteSpiel(oneSpiel)}">
                                     <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
                                 </h:commandButton>
                             </h:column>

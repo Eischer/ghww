@@ -103,13 +103,22 @@ public class SpielManagementView {
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
     }
 
-    public void saveResult(Spiel spiel) {
-        spielService.update(spiel);
-    }
-
     public void deleteSpiel(Spiel spiel) {
         spielService.removeSpiel(spiel);
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
+        this.standings = calculateStandings();
+    }
+
+    public void saveResult(Spiel spiel) {
+        spielService.update(spiel);
+        this.standings = calculateStandings();
+    }
+
+    public void deleteResult(Spiel spiel) {
+        spiel.setToreHomeTeam(null);
+        spiel.setToreAwayTeam(null);
+        spielService.update(spiel);
+        this.standings = calculateStandings();
     }
 
     public Team getTeamById(Long teamId) {

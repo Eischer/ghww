@@ -11,7 +11,6 @@
         <p>
             <h:panelGroup layout="block" styleClass="sideBySide">
                 <h:panelGroup id="spielTableuat" layout="block">
-                    <h2>Gruppe #{spielManagementView.gruppe} - Spiele</h2>
                     <h:outputText value="Spielplan und Spielzeiten folgen" rendered="#{empty spielManagementView.spielePerGruppe}" />
                     <h:dataTable id="spielOverviewTable" value="#{spielManagementView.spielePerGruppe}" var="oneSpiel"
                                  columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
@@ -30,11 +29,9 @@
                     </h:dataTable>
                 </h:panelGroup>
                 <h:panelGroup styleClass="gruppeTabelle" layout="block">
-                    <h2>Gruppe #{spielManagementView.gruppe} - Aktuelle Tabelle</h2>
                     <h:dataTable value="#{spielManagementView.standings}" var="teamRank" rowClasses="even, odd">
                         <!--<h:column>#{teamRank.rank}. </h:column>-->
                         <h:column headerClass="logoCol">
-                            <f:facet name="header">Logo</f:facet>
                             <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt=""/>
                         </h:column>
                         <h:column>#{teamRank.team.name}</h:column>
