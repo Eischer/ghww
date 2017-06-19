@@ -58,17 +58,75 @@ public class SpielManagementView {
 
         List<Spiel> allSpieleForGroup = spielService.getAllSpielePerGruppe(this.gruppe);
         collectDataFromSpiele(standingsAsMap, allSpieleForGroup);
-        return calculateStandings(standingsAsMap, allSpieleForGroup);
+        return calculateStandings(standingsAsMap);
     }
 
-    private List<TeamRank> calculateStandings(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForGroup) {
+    private List<TeamRank> calculateStandings(Map<Long, TeamRank> standingsAsMap) {
         List<TeamRank> sortedByPoints = new ArrayList<>(standingsAsMap.values());
         sortedByPoints.sort(Comparator.comparingInt(TeamRank::getPoints).reversed());
+
+        sortedByPoints.sort((o1, o2) -> {
+            if (o1.getPoints() < o2.getPoints()) {
+                return 1;
+            } else if (o1.getPoints() > o2.getPoints()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+
+        List<List<TeamRank>> equalTeams = new ArrayList<>();
+        int rankCounter = 1;
+        int counter = 1;
+        int lastPoints = -1;
+        for (TeamRank oneTeam : sortedByPoints) {
+            if (oneTeam.getPoints() == lastPoints) {
+                oneTeam.rank = rankCounter;
+                equalTeams.get(equalTeams.size() - 1).add(oneTeam);
+            } else {
+                List<TeamRank> newEqualityList = new ArrayList<>();
+                oneTeam.rank = counter;
+                newEqualityList.add(oneTeam);
+                equalTeams.add(newEqualityList);
+                lastPoints = oneTeam.getPoints();
+            }
+            counter++;
+        }
+
+
+        for (List<TeamRank> listOfEqualTeams : equalTeams) {
+            listOfEqualTeams.sort((o1, o2) -> {
+                if (o1.getPoints() < o2.getPoints()) {
+                    return 1;
+                } else if (o1.getPoints() > o2.getPoints()) {
+                    return -1;
+                } else {
+                    if (o1.getPlusGoals() - o1.getMinusGoals() < o2.getPlusGoals() - o2.getMinusGoals()) {
+                        return 1;
+                    } else if (o1.getPlusGoals() - o1.getMinusGoals() > o2.getPlusGoals() - o2.getMinusGoals()) {
+                        return -1;
+                    } else {
+                        if (o1.getPlusGoals() < o2.getPlusGoals()) {
+                            return 1;
+                        } else if (o1.getPlusGoals() > o2.getPlusGoals()) {
+                            return -1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            });
+        }
+
         return sortedByPoints;
     }
 
-    private void collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForGroup) {
-        for (Spiel spiel : allSpieleForGroup) {
+    /**
+     * Normally these method will collect the Data for a group, gut if multiple Teams have the same Points t
+     */
+    private void collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForCalculation) {
+        for (Spiel spiel : allSpieleForCalculation) {
             if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
                 TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
                 TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
