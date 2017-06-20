@@ -16,7 +16,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Named
@@ -60,7 +59,7 @@ public class SpielManagementView {
         }
 
         List<Spiel> allSpieleForGroup = spielService.getAllSpielePerGruppe(this.gruppe);
-        collectDataFromSpiele(standingsAsMap, allSpieleForGroup);
+        standingsAsMap = collectDataFromSpiele(standingsAsMap, allSpieleForGroup);
         return calculateStandings(standingsAsMap);
     }
 
@@ -68,10 +67,63 @@ public class SpielManagementView {
         List<TeamRank> sortedByPoints = new ArrayList<>(standingsAsMap.values());
         sortedByPoints.sort(Comparator.comparingInt(TeamRank::getPoints).reversed());
 
-        List<List<TeamRank>> equalTeams = new ArrayList<>();
+        List<List<TeamRank>> equalTeams = getEqualTeamsAsListsAndSetDistingTeamsToResult(sortedByPoints);
+
+        for (List<TeamRank> listOfEqualTeams : equalTeams) {
+            int currentRank = listOfEqualTeams.get(0).rank;
+            Map<Long, TeamRank> subgroup = new HashMap<>();
+            for (TeamRank oneTeam : listOfEqualTeams) {
+                subgroup.put(oneTeam.getTeam().getId(), new TeamRank(oneTeam.getTeam()));
+            }
+
+            List<Team> subGroupTeams = listOfEqualTeams.stream().map(TeamRank::getTeam).collect(Collectors.toList());
+            List<Spiel> allSpielOfTeams = spielService.getAllSpieleWithTeams(subGroupTeams);
+            subgroup = collectDataFromSpiele(subgroup, allSpielOfTeams);
+
+            listOfEqualTeams = new ArrayList<>(subgroup.values());
+
+            listOfEqualTeams = sortTeamSubListByPointsAndGoals(listOfEqualTeams);
+
+            int startIndex = currentRank-1;
+            for (int i=startIndex; i<(startIndex + listOfEqualTeams.size()); i++) {
+                long teamId = listOfEqualTeams.get(i-startIndex).getTeam().getId();
+                this.result[i] = standingsAsMap.get(teamId);
+            }
+        }
+
+        return this.result;
+    }
+
+    private List<TeamRank> sortTeamSubListByPointsAndGoals(List<TeamRank> listOfEqualTeams) {
+        listOfEqualTeams.sort((o1, o2) -> {
+            if (o1.getPoints() < o2.getPoints()) {
+                return 1;
+            } else if (o1.getPoints() > o2.getPoints()) {
+                return -1;
+            } else {
+                if (o1.getPlusGoals() - o1.getMinusGoals() < o2.getPlusGoals() - o2.getMinusGoals()) {
+                    return 1;
+                } else if (o1.getPlusGoals() - o1.getMinusGoals() > o2.getPlusGoals() - o2.getMinusGoals()) {
+                    return -1;
+                } else {
+                    if (o1.getPlusGoals() < o2.getPlusGoals()) {
+                        return 1;
+                    } else if (o1.getPlusGoals() > o2.getPlusGoals()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        });
+        return listOfEqualTeams;
+    }
+
+    private List<List<TeamRank>> getEqualTeamsAsListsAndSetDistingTeamsToResult(List<TeamRank> sortedByPoints) {
         int counter = 0;
         int teamRank = 1;
         int lastPoints = -1;
+        List<List<TeamRank>> equalTeams = new ArrayList<>();
         for (int i=0; i<sortedByPoints.size(); i++) {
             if (sortedByPoints.get(i).getPoints() == lastPoints) {
                 sortedByPoints.get(i).rank = teamRank;
@@ -89,58 +141,13 @@ public class SpielManagementView {
             }
             counter++;
         }
-
-
-
-        for (List<TeamRank> listOfEqualTeams : equalTeams) {
-            int currentRank = listOfEqualTeams.get(0).rank;
-            Map<Long, TeamRank> subgroup = new HashMap<>();
-            for (TeamRank oneTeam : listOfEqualTeams) {
-                subgroup.put(oneTeam.getTeam().getId(), new TeamRank(oneTeam.getTeam()));
-            }
-
-            List<Team> subGroupTeams = listOfEqualTeams.stream().map(TeamRank::getTeam).collect(Collectors.toList());
-            List<Spiel> allSpielOfTeams = spielService.getAllSpieleWithTeams(subGroupTeams);
-            collectDataFromSpiele(subgroup, allSpielOfTeams);
-
-            listOfEqualTeams = new ArrayList<>(subgroup.values());
-
-            listOfEqualTeams.sort((o1, o2) -> {
-                if (o1.getPoints() < o2.getPoints()) {
-                    return 1;
-                } else if (o1.getPoints() > o2.getPoints()) {
-                    return -1;
-                } else {
-                    if (o1.getPlusGoals() - o1.getMinusGoals() < o2.getPlusGoals() - o2.getMinusGoals()) {
-                        return 1;
-                    } else if (o1.getPlusGoals() - o1.getMinusGoals() > o2.getPlusGoals() - o2.getMinusGoals()) {
-                        return -1;
-                    } else {
-                        if (o1.getPlusGoals() < o2.getPlusGoals()) {
-                            return 1;
-                        } else if (o1.getPlusGoals() > o2.getPlusGoals()) {
-                            return -1;
-                        } else {
-                            return 0;
-                        }
-                    }
-                }
-            });
-
-            int startIndex = currentRank-1;
-            for (int i=startIndex; i<(startIndex + listOfEqualTeams.size()); i++) {
-                long teamId = listOfEqualTeams.get(i-startIndex).getTeam().getId();
-                this.result[i] = standingsAsMap.get(teamId);
-            }
-        }
-
-        return this.result;
+        return equalTeams;
     }
 
     /**
      * Normally these method will collect the Data for a group, but if multiple Teams have the same Points t
      */
-    private void collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForCalculation) {
+    private Map<Long, TeamRank> collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForCalculation) {
         for (Spiel spiel : allSpieleForCalculation) {
             if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
                 TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
@@ -153,6 +160,7 @@ public class SpielManagementView {
                 standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
             }
         }
+        return standingsAsMap;
     }
 
     private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore, Team opponent) {
