@@ -16,6 +16,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Named
 @RequestScoped
@@ -29,13 +31,13 @@ public class SpielManagementView {
 
     private SpielInput spielInput;
 
-    private List<TeamRank> standings;
-
     @Inject
     private SpielService spielService;
 
     @Inject
     private TeamService teamService;
+
+    private TeamRank[] result;
 
     @PostConstruct
     public void init() {
@@ -46,10 +48,11 @@ public class SpielManagementView {
         }
         this.teamPerGruppe = teamService.findTeamsForGruppe(this.gruppe);
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
-        this.standings = calculateStandings();
+        result = new TeamRank[teamPerGruppe.size()];
+        this.result = calculateStandings();
     }
 
-    private List<TeamRank> calculateStandings() {
+    private TeamRank[] calculateStandings() {
         List<Team> allTeamsForGroup = teamService.findTeamsForGruppe(this.gruppe);
         Map<Long, TeamRank> standingsAsMap = new HashMap<>();
         for (Team team : allTeamsForGroup) {
@@ -61,41 +64,47 @@ public class SpielManagementView {
         return calculateStandings(standingsAsMap);
     }
 
-    private List<TeamRank> calculateStandings(Map<Long, TeamRank> standingsAsMap) {
+    private TeamRank[] calculateStandings(Map<Long, TeamRank> standingsAsMap) {
         List<TeamRank> sortedByPoints = new ArrayList<>(standingsAsMap.values());
         sortedByPoints.sort(Comparator.comparingInt(TeamRank::getPoints).reversed());
 
-        sortedByPoints.sort((o1, o2) -> {
-            if (o1.getPoints() < o2.getPoints()) {
-                return 1;
-            } else if (o1.getPoints() > o2.getPoints()) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
-
-
         List<List<TeamRank>> equalTeams = new ArrayList<>();
-        int rankCounter = 1;
-        int counter = 1;
+        int counter = 0;
+        int teamRank = 1;
         int lastPoints = -1;
-        for (TeamRank oneTeam : sortedByPoints) {
-            if (oneTeam.getPoints() == lastPoints) {
-                oneTeam.rank = rankCounter;
-                equalTeams.get(equalTeams.size() - 1).add(oneTeam);
+        for (int i=0; i<sortedByPoints.size(); i++) {
+            if (sortedByPoints.get(i).getPoints() == lastPoints) {
+                sortedByPoints.get(i).rank = teamRank;
+                equalTeams.get(equalTeams.size() - 1).add(sortedByPoints.get(i));
             } else {
                 List<TeamRank> newEqualityList = new ArrayList<>();
-                oneTeam.rank = counter;
-                newEqualityList.add(oneTeam);
+                teamRank = counter + 1;
+                sortedByPoints.get(i).rank = teamRank;
+                newEqualityList.add(sortedByPoints.get(i));
                 equalTeams.add(newEqualityList);
-                lastPoints = oneTeam.getPoints();
+                lastPoints = sortedByPoints.get(i).getPoints();
+                if (i == sortedByPoints.size()-1 || sortedByPoints.get(i).getPoints() != sortedByPoints.get(i+1).getPoints()) {
+                    result[counter] = sortedByPoints.get(i);
+                }
             }
             counter++;
         }
 
 
+
         for (List<TeamRank> listOfEqualTeams : equalTeams) {
+            int currentRank = listOfEqualTeams.get(0).rank;
+            Map<Long, TeamRank> subgroup = new HashMap<>();
+            for (TeamRank oneTeam : listOfEqualTeams) {
+                subgroup.put(oneTeam.getTeam().getId(), new TeamRank(oneTeam.getTeam()));
+            }
+
+            List<Team> subGroupTeams = listOfEqualTeams.stream().map(TeamRank::getTeam).collect(Collectors.toList());
+            List<Spiel> allSpielOfTeams = spielService.getAllSpieleWithTeams(subGroupTeams);
+            collectDataFromSpiele(subgroup, allSpielOfTeams);
+
+            listOfEqualTeams = new ArrayList<>(subgroup.values());
+
             listOfEqualTeams.sort((o1, o2) -> {
                 if (o1.getPoints() < o2.getPoints()) {
                     return 1;
@@ -117,13 +126,19 @@ public class SpielManagementView {
                     }
                 }
             });
+
+            int startIndex = currentRank-1;
+            for (int i=startIndex; i<(startIndex + listOfEqualTeams.size()); i++) {
+                long teamId = listOfEqualTeams.get(i-startIndex).getTeam().getId();
+                this.result[i] = standingsAsMap.get(teamId);
+            }
         }
 
-        return sortedByPoints;
+        return this.result;
     }
 
     /**
-     * Normally these method will collect the Data for a group, gut if multiple Teams have the same Points t
+     * Normally these method will collect the Data for a group, but if multiple Teams have the same Points t
      */
     private void collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForCalculation) {
         for (Spiel spiel : allSpieleForCalculation) {
@@ -164,19 +179,20 @@ public class SpielManagementView {
     public void deleteSpiel(Spiel spiel) {
         spielService.removeSpiel(spiel);
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
-        this.standings = calculateStandings();
+        this.result = calculateStandings();
     }
 
     public void saveResult(Spiel spiel) {
         spielService.update(spiel);
-        this.standings = calculateStandings();
+        this.result = calculateStandings();
     }
 
     public void deleteResult(Spiel spiel) {
         spiel.setToreHomeTeam(null);
         spiel.setToreAwayTeam(null);
         spielService.update(spiel);
-        this.standings = calculateStandings();
+        this.result = calculateStandings();
+        this.result = calculateStandings();
     }
 
     public Team getTeamById(Long teamId) {
@@ -220,11 +236,11 @@ public class SpielManagementView {
         this.spielePerGruppe = spielePerGruppe;
     }
 
-    public List<TeamRank> getStandings() {
-        return standings;
+    public TeamRank[] getResult() {
+        return result;
     }
 
-    public void setStandings(List<TeamRank> standings) {
-        this.standings = standings;
+    public void setResult(TeamRank[] result) {
+        this.result = result;
     }
 }

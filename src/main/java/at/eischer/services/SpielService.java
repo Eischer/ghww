@@ -2,6 +2,8 @@ package at.eischer.services;
 
 import at.eischer.dao.Repository;
 import at.eischer.model.Spiel;
+import at.eischer.model.Team;
+import at.eischer.view.TeamRank;
 
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
@@ -18,5 +20,11 @@ public class SpielService extends Repository {
 
     public void removeSpiel(Spiel spiel) {
         entityManager.remove(entityManager.contains(spiel) ? spiel : entityManager.merge(spiel));
+    }
+
+    public List<Spiel> getAllSpieleWithTeams(List<Team> listOfEqualTeams) {
+        TypedQuery<Spiel> allSpieleOfTeams = entityManager.createNamedQuery("Spiel.getSpieleForTeams", Spiel.class);
+        allSpieleOfTeams.setParameter("teamList1", listOfEqualTeams).setParameter("teamList2", listOfEqualTeams);
+        return allSpieleOfTeams.getResultList();
     }
 }

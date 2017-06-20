@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@NamedQuery(name = "Spiel.getSpielePerGruppe", query = "SELECT s FROM Spiel s WHERE s.gruppe = :gruppe")
+@NamedQueries ({
+    @NamedQuery(name = "Spiel.getSpielePerGruppe", query = "SELECT s FROM Spiel s WHERE s.gruppe = :gruppe"),
+    @NamedQuery(name = "Spiel.getSpieleForTeams", query = "SELECT s FROM Spiel s WHERE s.homeTeam IN :teamList1 AND s.awayTeam IN :teamList2")
+})
 public class Spiel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
