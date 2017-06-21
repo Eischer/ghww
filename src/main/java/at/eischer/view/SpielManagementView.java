@@ -14,8 +14,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Named
@@ -47,7 +49,7 @@ public class SpielManagementView {
         }
         this.teamPerGruppe = teamService.findTeamsForGruppe(this.gruppe);
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
-        result = new TeamRank[teamPerGruppe.size()];
+        this.result = new TeamRank[teamPerGruppe.size()];
         this.result = calculateStandings();
     }
 
@@ -82,19 +84,28 @@ public class SpielManagementView {
 
             listOfEqualTeams = new ArrayList<>(subgroup.values());
 
-            listOfEqualTeams = sortTeamSubListByPointsAndGoals(listOfEqualTeams);
+            Set<TeamRank> stillEqualTeams = sortTeamSubListByPointsAndGoals(listOfEqualTeams);
+            listOfEqualTeams.removeAll(stillEqualTeams);
 
             int startIndex = currentRank-1;
             for (int i=startIndex; i<(startIndex + listOfEqualTeams.size()); i++) {
                 long teamId = listOfEqualTeams.get(i-startIndex).getTeam().getId();
+                standingsAsMap.get(teamId).rank = currentRank++;
                 this.result[i] = standingsAsMap.get(teamId);
             }
+
+            lastTryForRankingWithTotalGoals(sortedByPoints, stillEqualTeams);
         }
 
         return this.result;
     }
 
-    private List<TeamRank> sortTeamSubListByPointsAndGoals(List<TeamRank> listOfEqualTeams) {
+    private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints, Set<TeamRank> stillEqualTeams) {
+        Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
+    }
+
+    private Set<TeamRank> sortTeamSubListByPointsAndGoals(List<TeamRank> listOfEqualTeams) {
+        Set<TeamRank> stillEqualTeams = new HashSet<>();
         listOfEqualTeams.sort((o1, o2) -> {
             if (o1.getPoints() < o2.getPoints()) {
                 return 1;
@@ -111,12 +122,14 @@ public class SpielManagementView {
                     } else if (o1.getPlusGoals() > o2.getPlusGoals()) {
                         return -1;
                     } else {
+                        stillEqualTeams.add(o1);
+                        stillEqualTeams.add(o2);
                         return 0;
                     }
                 }
             }
         });
-        return listOfEqualTeams;
+        return stillEqualTeams;
     }
 
     private List<List<TeamRank>> getEqualTeamsAsListsAndSetDistingTeamsToResult(List<TeamRank> sortedByPoints) {
@@ -187,11 +200,13 @@ public class SpielManagementView {
     public void deleteSpiel(Spiel spiel) {
         spielService.removeSpiel(spiel);
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
+        this.result = new TeamRank[teamPerGruppe.size()];
         this.result = calculateStandings();
     }
 
     public void saveResult(Spiel spiel) {
         spielService.update(spiel);
+        this.result = new TeamRank[teamPerGruppe.size()];
         this.result = calculateStandings();
     }
 
@@ -199,7 +214,7 @@ public class SpielManagementView {
         spiel.setToreHomeTeam(null);
         spiel.setToreAwayTeam(null);
         spielService.update(spiel);
-        this.result = calculateStandings();
+        this.result = new TeamRank[teamPerGruppe.size()];
         this.result = calculateStandings();
     }
 
