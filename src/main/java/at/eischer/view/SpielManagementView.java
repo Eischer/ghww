@@ -103,26 +103,38 @@ public class SpielManagementView implements Serializable {
 
     private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints, Set<TeamRank> stillEqualTeams) {
         Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
-        sortedByPoints.removeAll(atLastStillEqualTeams);
-
-        //ACHTUNG was wenn keine Teams in liste?
-
-        List<TeamRank> lastRanking = new ArrayList<>();
-        for(TeamRank absoluteteamRank : sortedByPoints) {
-            for (TeamRank teamToSet : stillEqualTeams) {
-                if (absoluteteamRank.getTeam().getId() == teamToSet.getTeam().getId()) {
-                    lastRanking.add(absoluteteamRank);
+        int i = 0;
+        for (TeamRank teamRank : sortedByPoints) {
+            if (!alreadyInResult(teamRank.getTeam().getId())) {
+                if(!inLastStillEqualTeams(teamRank.getTeam().getId(), atLastStillEqualTeams)) {
+                    this.result[i] = teamRank;
+                } else {
+                    teamRank.equal = true;
+                    this.result[i] = teamRank;
                 }
             }
-        }
-
-        for (int i = 0; i<this.result.length; i++) {
-            if (this.result[i] == null) {
-                this.result[i] = lastRanking.get(0);
-                lastRanking.remove(0);
-            }
+            i++;
         }
     }
+
+    private boolean inLastStillEqualTeams(long id, Set<TeamRank> atLastStillEqualTeams) {
+        for (TeamRank lastStillEqualTeam : atLastStillEqualTeams) {
+            if (lastStillEqualTeam.getTeam().getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean alreadyInResult(long id) {
+        for (TeamRank resultTeamRank : result) {
+            if (resultTeamRank != null && resultTeamRank.getTeam().getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private Set<TeamRank> sortTeamSubListByPointsAndGoals(List<TeamRank> listOfEqualTeams) {
         Set<TeamRank> stillEqualTeams = new HashSet<>();
@@ -186,27 +198,23 @@ public class SpielManagementView implements Serializable {
                 TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
                 TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
 
-                teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam(), teamRankForAwayTeam.team);
+                teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam());
                 standingsAsMap.put(spiel.getHomeTeam().getId(), teamRankForHomeTeam);
 
-                teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam(), teamRankForHomeTeam.team);
+                teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam());
                 standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
             }
         }
         return standingsAsMap;
     }
 
-    private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore, Team opponent) {
+    private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore) {
         teamRank.plusGoals += ownTore;
         teamRank.minusGoals += foreignTore;
         if (ownTore > foreignTore) {
             teamRank.points += 3;
-            teamRank.wins.put(opponent.getId(), opponent);
         } else if (ownTore == foreignTore) {
             teamRank.points++;
-            teamRank.draws.put(opponent.getId(), opponent);
-        } else {
-            teamRank.loss.put(opponent.getId(), opponent);
         }
         return teamRank;
     }
