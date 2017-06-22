@@ -95,13 +95,13 @@ public class SpielManagementView implements Serializable {
                 this.result[i] = standingsAsMap.get(teamId);
             }
 
-            lastTryForRankingWithTotalGoals(sortedByPoints, stillEqualTeams);
+            lastTryForRankingWithTotalGoals(sortedByPoints);
         }
 
         return this.result;
     }
 
-    private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints, Set<TeamRank> stillEqualTeams) {
+    private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints) {
         Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
         int i = 0;
         for (TeamRank teamRank : sortedByPoints) {
@@ -195,28 +195,36 @@ public class SpielManagementView implements Serializable {
     private Map<Long, TeamRank> collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForCalculation) {
         for (Spiel spiel : allSpieleForCalculation) {
             if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
-                TeamRank teamRankForHomeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
-                TeamRank teamRankForAwayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
-
-                teamRankForHomeTeam = addResultToTeamRank(teamRankForHomeTeam, spiel.getToreHomeTeam(), spiel.getToreAwayTeam());
-                standingsAsMap.put(spiel.getHomeTeam().getId(), teamRankForHomeTeam);
-
-                teamRankForAwayTeam = addResultToTeamRank(teamRankForAwayTeam, spiel.getToreAwayTeam(), spiel.getToreHomeTeam());
-                standingsAsMap.put(spiel.getAwayTeam().getId(), teamRankForAwayTeam);
+                TeamRank homeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
+                TeamRank awayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
+                if (spiel.getToreHomeTeam() > spiel.getToreAwayTeam()) {
+                    homeTeam.points += 3;
+                    setTore(spiel, homeTeam, awayTeam);
+                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
+                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
+                } else if (spiel.getToreHomeTeam().intValue() == spiel.getToreAwayTeam().intValue()) {
+                    homeTeam.points++;
+                    awayTeam.points++;
+                    setTore(spiel, homeTeam, awayTeam);
+                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
+                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
+                } else {
+                    awayTeam.points += 3;
+                    setTore(spiel, homeTeam, awayTeam);
+                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
+                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
+                }
+                return standingsAsMap;
             }
         }
         return standingsAsMap;
     }
 
-    private TeamRank addResultToTeamRank(TeamRank teamRank, int ownTore, int foreignTore) {
-        teamRank.plusGoals += ownTore;
-        teamRank.minusGoals += foreignTore;
-        if (ownTore > foreignTore) {
-            teamRank.points += 3;
-        } else if (ownTore == foreignTore) {
-            teamRank.points++;
-        }
-        return teamRank;
+    private void setTore(Spiel spiel, TeamRank homeTeam, TeamRank awayTeam) {
+        homeTeam.plusGoals += spiel.getToreHomeTeam();
+        homeTeam.minusGoals += spiel.getToreAwayTeam();
+        awayTeam.plusGoals += spiel.getToreAwayTeam();
+        awayTeam.minusGoals += spiel.getToreHomeTeam();
     }
 
     public void saveGame() {
