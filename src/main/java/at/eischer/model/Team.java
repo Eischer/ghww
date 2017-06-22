@@ -1,6 +1,7 @@
 package at.eischer.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.List;
         @NamedQuery(name = "Team.incrementSeidlCount", query = "UPDATE Team t SET t.seiderlCounter=t.seiderlCounter + :seidlCount WHERE t.id = :teamId"),
         @NamedQuery(name = "Team.decrementSeidlCount", query = "UPDATE Team t SET t.seiderlCounter=t.seiderlCounter - :seidlCount WHERE t.id = :teamId")
 })
-public class Team {
+public class Team implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

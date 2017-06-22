@@ -6,10 +6,11 @@ import at.eischer.services.SpielService;
 import at.eischer.services.TeamService;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,8 +22,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Named
-@RequestScoped
-public class SpielManagementView {
+@ViewScoped
+public class SpielManagementView implements Serializable {
 
     private String gruppe;
 
@@ -87,7 +88,7 @@ public class SpielManagementView {
             Set<TeamRank> stillEqualTeams = sortTeamSubListByPointsAndGoals(listOfEqualTeams);
             listOfEqualTeams.removeAll(stillEqualTeams);
 
-            int startIndex = currentRank-1;
+            int startIndex = currentRank - 1;
             for (int i=startIndex; i<(startIndex + listOfEqualTeams.size()); i++) {
                 long teamId = listOfEqualTeams.get(i-startIndex).getTeam().getId();
                 standingsAsMap.get(teamId).rank = currentRank++;
@@ -102,6 +103,20 @@ public class SpielManagementView {
 
     private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints, Set<TeamRank> stillEqualTeams) {
         Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
+        sortedByPoints.removeAll(atLastStillEqualTeams);
+
+        //ACHTUNG was wenn keine Teams in liste?
+
+        List<TeamRank> lastRanking = new ArrayList<>();
+        for(TeamRank absoluteteamRank : sortedByPoints) {
+            for (TeamRank teamToSet : stillEqualTeams) {
+                if (absoluteteamRank.getTeam().getId() == teamToSet.getTeam().getId()) {
+                    lastRanking.add(absoluteteamRank);
+                }
+            }
+        }
+
+
     }
 
     private Set<TeamRank> sortTeamSubListByPointsAndGoals(List<TeamRank> listOfEqualTeams) {

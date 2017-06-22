@@ -22,7 +22,7 @@
                 <h:selectOneMenu id="awayTeam" value="#{spielManagementView.spielInput.awayTeam}" converter="teamConverter">
                     <f:selectItems value="#{spielManagementView.teamPerGruppe}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>
-                <h:commandButton value="Speichern" action="#{spielManagementView.saveGame}">
+                <h:commandButton value="Speichern" action="#{spielManagementView.saveGame()}">
                     <f:ajax execute="createSpielPanel" render="@form"/>
                 </h:commandButton>
             </h:panelGroup>
