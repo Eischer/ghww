@@ -116,7 +116,12 @@ public class SpielManagementView implements Serializable {
             }
         }
 
-
+        for (int i = 0; i<this.result.length; i++) {
+            if (this.result[i] == null) {
+                this.result[i] = lastRanking.get(0);
+                lastRanking.remove(0);
+            }
+        }
     }
 
     private Set<TeamRank> sortTeamSubListByPointsAndGoals(List<TeamRank> listOfEqualTeams) {
