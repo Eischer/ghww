@@ -161,7 +161,10 @@ public class TeamView {
 
     public String getLogo(long teamId) {
         Team team = this.teamService.findTeamById(teamId);
-        return "/logos/" + team.getLogoPath();
+        if (team != null) {
+            return "/logos/" + team.getLogoPath();
+        }
+        return "";
     }
 
     public TeamViewBean getTeamViewBean() {
