@@ -66,6 +66,44 @@ public class SpielManagementView implements Serializable {
         return calculateStandings(standingsAsMap);
     }
 
+    /**
+     * Normally these method will collect the Data for a group, but if multiple Teams have the same Points t
+     */
+    private Map<Long, TeamRank> collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForCalculation) {
+        for (Spiel spiel : allSpieleForCalculation) {
+            if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
+                TeamRank homeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
+                TeamRank awayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
+                if (spiel.getToreHomeTeam() > spiel.getToreAwayTeam()) {
+                    homeTeam.points += 3;
+                    setTore(spiel, homeTeam, awayTeam);
+                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
+                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
+                } else if (spiel.getToreHomeTeam().intValue() == spiel.getToreAwayTeam().intValue()) {
+                    homeTeam.points++;
+                    awayTeam.points++;
+                    setTore(spiel, homeTeam, awayTeam);
+                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
+                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
+                } else {
+                    awayTeam.points += 3;
+                    setTore(spiel, homeTeam, awayTeam);
+                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
+                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
+                }
+                return standingsAsMap;
+            }
+        }
+        return standingsAsMap;
+    }
+
+    private void setTore(Spiel spiel, TeamRank homeTeam, TeamRank awayTeam) {
+        homeTeam.plusGoals += spiel.getToreHomeTeam();
+        homeTeam.minusGoals += spiel.getToreAwayTeam();
+        awayTeam.plusGoals += spiel.getToreAwayTeam();
+        awayTeam.minusGoals += spiel.getToreHomeTeam();
+    }
+
     private TeamRank[] calculateStandings(Map<Long, TeamRank> standingsAsMap) {
         List<TeamRank> sortedByPoints = new ArrayList<>(standingsAsMap.values());
         sortedByPoints.sort(Comparator.comparingInt(TeamRank::getPoints).reversed());
@@ -187,44 +225,6 @@ public class SpielManagementView implements Serializable {
             counter++;
         }
         return equalTeams;
-    }
-
-    /**
-     * Normally these method will collect the Data for a group, but if multiple Teams have the same Points t
-     */
-    private Map<Long, TeamRank> collectDataFromSpiele(Map<Long, TeamRank> standingsAsMap, List<Spiel> allSpieleForCalculation) {
-        for (Spiel spiel : allSpieleForCalculation) {
-            if (spiel.getToreHomeTeam() != null && spiel.getToreAwayTeam() != null) {
-                TeamRank homeTeam = standingsAsMap.get(spiel.getHomeTeam().getId());
-                TeamRank awayTeam = standingsAsMap.get(spiel.getAwayTeam().getId());
-                if (spiel.getToreHomeTeam() > spiel.getToreAwayTeam()) {
-                    homeTeam.points += 3;
-                    setTore(spiel, homeTeam, awayTeam);
-                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
-                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
-                } else if (spiel.getToreHomeTeam().intValue() == spiel.getToreAwayTeam().intValue()) {
-                    homeTeam.points++;
-                    awayTeam.points++;
-                    setTore(spiel, homeTeam, awayTeam);
-                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
-                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
-                } else {
-                    awayTeam.points += 3;
-                    setTore(spiel, homeTeam, awayTeam);
-                    standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
-                    standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
-                }
-                return standingsAsMap;
-            }
-        }
-        return standingsAsMap;
-    }
-
-    private void setTore(Spiel spiel, TeamRank homeTeam, TeamRank awayTeam) {
-        homeTeam.plusGoals += spiel.getToreHomeTeam();
-        homeTeam.minusGoals += spiel.getToreAwayTeam();
-        awayTeam.plusGoals += spiel.getToreAwayTeam();
-        awayTeam.minusGoals += spiel.getToreHomeTeam();
     }
 
     public void saveGame() {
