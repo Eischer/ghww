@@ -107,6 +107,10 @@ h1{
     color: green;
 }
 
+.boldText {
+    font-weight: bold;
+}
+
 .logoImg{
     height: 50px;
     width: 50px;
@@ -158,5 +162,4 @@ h1{
     height: 15px;
     background-color: green;
     display: flex;
-
 }

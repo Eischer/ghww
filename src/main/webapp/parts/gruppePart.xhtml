@@ -11,10 +11,10 @@
                         #{oneSpiel.zeit}
                     </h:column>
                     <h:column id="spielHomeTeam">
-                        #{oneSpiel.homeTeam.name}
+                        <h:outputText styleClass="#{oneSpiel.toreHomeTeam > oneSpiel.toreAwayTeam ? 'boldText':''}" value="#{oneSpiel.homeTeam.name}"/>
                     </h:column>
                     <h:column id="spielAwayTeam">
-                        #{oneSpiel.awayTeam.name}
+                        <h:outputText styleClass="#{oneSpiel.toreAwayTeam > oneSpiel.toreHomeTeam ? 'boldText':''}" value="#{oneSpiel.awayTeam.name}"/>
                     </h:column>
                     <h:column>
                         #{oneSpiel.toreHomeTeam==null?'-':oneSpiel.toreHomeTeam} : #{oneSpiel.toreAwayTeam==null?'-':oneSpiel.toreAwayTeam}
