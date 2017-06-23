@@ -143,3 +143,20 @@ h1{
 .leftMargin {
     margin-left: 1em;
 }
+
+.leftPadding {
+    padding-left: 30px;
+}
+
+#myProgress {
+    width: 100%;
+    background-color: grey;
+    display: flex;
+}
+#myBar {
+    width: 1%;
+    height: 15px;
+    background-color: green;
+    display: flex;
+
+}
