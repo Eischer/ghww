@@ -91,7 +91,6 @@ public class SpielManagementView implements Serializable {
                     standingsAsMap.put(homeTeam.getTeam().getId(), homeTeam);
                     standingsAsMap.put(awayTeam.getTeam().getId(), awayTeam);
                 }
-                return standingsAsMap;
             }
         }
         return standingsAsMap;
@@ -142,17 +141,37 @@ public class SpielManagementView implements Serializable {
     private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints) {
         Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
         int i = 0;
+        int rankCounter = 1;
+        TeamRank previousTeamRank = null;
         for (TeamRank teamRank : sortedByPoints) {
             if (!alreadyInResult(teamRank.getTeam().getId())) {
                 if(!inLastStillEqualTeams(teamRank.getTeam().getId(), atLastStillEqualTeams)) {
+                    rankCounter = i + 1;
+                    teamRank.rank = rankCounter++;
                     this.result[i] = teamRank;
                 } else {
                     teamRank.equal = true;
+                    if (previousTeamRank == null || isEqual(previousTeamRank, teamRank)) {
+                        teamRank.rank = rankCounter;
+                    } else {
+                        rankCounter = i + 1;
+                        teamRank.rank = rankCounter;
+                    }
                     this.result[i] = teamRank;
+                    previousTeamRank = teamRank;
                 }
+            } else {
+                rankCounter = i + 2;
             }
             i++;
         }
+    }
+
+    private boolean isEqual(TeamRank previousTeamRank, TeamRank teamRank) {
+        return previousTeamRank.getPoints() == teamRank.getPoints() &&
+            previousTeamRank.getPlusGoals() - previousTeamRank.getMinusGoals() == teamRank.getPlusGoals() - teamRank.getMinusGoals() &&
+            previousTeamRank.getPlusGoals() == teamRank.getPlusGoals();
+
     }
 
     private boolean inLastStillEqualTeams(long id, Set<TeamRank> atLastStillEqualTeams) {
