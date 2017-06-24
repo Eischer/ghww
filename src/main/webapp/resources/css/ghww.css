@@ -64,6 +64,7 @@ table#login{
 
 /* Seiderl Management page */
 .button  {
+    -webkit-appearance: none;
     height: 50px;
     width: 50px;
 }
