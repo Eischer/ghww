@@ -1,6 +1,7 @@
 package at.eischer.services;
 
 import at.eischer.dao.Repository;
+import at.eischer.model.FinalSpiel;
 import at.eischer.model.Spiel;
 import at.eischer.model.Team;
 import at.eischer.view.TeamRank;
@@ -32,5 +33,10 @@ public class SpielService extends Repository {
         TypedQuery<Long> spielCountForTeam = entityManager.createNamedQuery("Spiel.participateOnSpiele", Long.class);
         spielCountForTeam.setParameter("team", team);
         return spielCountForTeam.getSingleResult() > 0;
+    }
+
+    public List<FinalSpiel> getAllFinalSpiele() {
+        TypedQuery<FinalSpiel> allFinalSpiele = entityManager.createNamedQuery("FinalSpiel.getAllFinalSpiele", FinalSpiel.class);
+        return allFinalSpiele.getResultList();
     }
 }
