@@ -7,6 +7,7 @@ import at.eischer.model.Team;
 import at.eischer.view.TeamRank;
 
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Typed;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -27,6 +28,11 @@ public class SpielService extends Repository {
         TypedQuery<Spiel> allSpieleOfTeams = entityManager.createNamedQuery("Spiel.getSpieleForTeams", Spiel.class);
         allSpieleOfTeams.setParameter("teamList1", listOfEqualTeams).setParameter("teamList2", listOfEqualTeams);
         return allSpieleOfTeams.getResultList();
+    }
+
+    public List<FinalSpiel> getAllFinalSpiele() {
+        TypedQuery<FinalSpiel> allFinalSpiele = entityManager.createNamedQuery("FinalSpiel.getAllFinalSpiele", FinalSpiel.class);
+        return allFinalSpiele.getResultList();
     }
 
     public boolean participateOnSpiel(Team team) {
