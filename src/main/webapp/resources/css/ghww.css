@@ -62,14 +62,14 @@ table#login{
     padding-bottom: 50px;
 }
 
-/* Seiderl Management page */
+/* Seidl Management page */
 .button  {
     -webkit-appearance: none;
     height: 50px;
     width: 50px;
 }
 
-/* SeiderWertung page */
+/* SeidlWertung page */
 div#containerDiv {
     white-space: nowrap;
 }
