@@ -1,6 +1,7 @@
 package at.eischer.view;
 
 import at.eischer.model.Team;
+import at.eischer.services.SpielService;
 import at.eischer.services.TeamService;
 
 import javax.annotation.PostConstruct;
@@ -18,9 +19,16 @@ public class GroupManagementView {
     @Inject
     TeamService teamService;
 
+    @Inject
+    SpielService spielService;
+
     @PostConstruct
     public void init() {
         allTeams = teamService.findAllteams();
+    }
+
+    public boolean participateOnSpiel(Team team) {
+        return spielService.participateOnSpiel(team);
     }
 
     public List<Team> getAllTeams() {

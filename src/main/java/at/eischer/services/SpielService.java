@@ -27,4 +27,10 @@ public class SpielService extends Repository {
         allSpieleOfTeams.setParameter("teamList1", listOfEqualTeams).setParameter("teamList2", listOfEqualTeams);
         return allSpieleOfTeams.getResultList();
     }
+
+    public boolean participateOnSpiel(Team team) {
+        TypedQuery<Long> spielCountForTeam = entityManager.createNamedQuery("Spiel.participateOnSpiele", Long.class);
+        spielCountForTeam.setParameter("team", team);
+        return spielCountForTeam.getSingleResult() > 0;
+    }
 }

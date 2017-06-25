@@ -6,7 +6,8 @@ import java.time.LocalTime;
 @Entity
 @NamedQueries ({
     @NamedQuery(name = "Spiel.getSpielePerGruppe", query = "SELECT s FROM Spiel s WHERE s.gruppe = :gruppe"),
-    @NamedQuery(name = "Spiel.getSpieleForTeams", query = "SELECT s FROM Spiel s WHERE s.homeTeam IN :teamList1 AND s.awayTeam IN :teamList2")
+    @NamedQuery(name = "Spiel.getSpieleForTeams", query = "SELECT s FROM Spiel s WHERE s.homeTeam IN :teamList1 AND s.awayTeam IN :teamList2"),
+    @NamedQuery(name = "Spiel.participateOnSpiele", query = "SELECT COUNT(s) FROM Spiel s WHERE s.homeTeam = :team OR s.awayTeam =:team")
 })
 public class Spiel {
     @Id

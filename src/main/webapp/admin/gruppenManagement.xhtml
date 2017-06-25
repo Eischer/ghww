@@ -20,7 +20,7 @@
                         #{oneTeam.name}
                     </h:column>
                     <h:column>
-                        <h:selectOneRadio value="#{oneTeam.gruppe}">
+                        <h:selectOneRadio value="#{oneTeam.gruppe}" disabled="#{groupManagementView.participateOnSpiel(oneTeam)}">
                             <f:selectItem itemValue="A" itemLabel="Gruppe A"/>
                             <f:selectItem itemValue="B" itemLabel="Gruppe B"/>
                         </h:selectOneRadio>
