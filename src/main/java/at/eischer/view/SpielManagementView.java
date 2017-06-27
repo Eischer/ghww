@@ -110,58 +110,58 @@ public class SpielManagementView implements Serializable {
         List<List<TeamRank>> equalTeams = getEqualTeamsAsListsAndSetDistingTeamsToResult(sortedByPoints);
 
         for (List<TeamRank> listOfEqualTeams : equalTeams) {
-            int currentRank = listOfEqualTeams.get(0).rank;
-            Map<Long, TeamRank> subgroup = new HashMap<>();
-            for (TeamRank oneTeam : listOfEqualTeams) {
-                subgroup.put(oneTeam.getTeam().getId(), new TeamRank(oneTeam.getTeam()));
+            if (listOfEqualTeams.size() > 1) {
+                int currentRank = listOfEqualTeams.get(0).rank;
+                Map<Long, TeamRank> subgroup = new HashMap<>();
+                for (TeamRank oneTeam : listOfEqualTeams) {
+                    subgroup.put(oneTeam.getTeam().getId(), new TeamRank(oneTeam.getTeam()));
+                }
+
+                List<Team> subGroupTeams = listOfEqualTeams.stream().map(TeamRank::getTeam).collect(Collectors.toList());
+                List<Spiel> allSpielOfTeams = spielService.getAllSpieleWithTeams(subGroupTeams);
+                subgroup = collectDataFromSpiele(subgroup, allSpielOfTeams);
+
+                listOfEqualTeams = new ArrayList<>(subgroup.values());
+
+                Set<TeamRank> stillEqualTeams = sortTeamSubListByPointsAndGoals(listOfEqualTeams);
+
+                int startIndex = currentRank - 1;
+                for (int i = startIndex; i < (startIndex + listOfEqualTeams.size()); i++) {
+                    // Wenn Team nun bereits eine eindeutige Platzierung hat (also nicht im Set stillEqualsTeams ist
+                    if (!stillEqualTeams.contains(listOfEqualTeams.get(i - startIndex))) {
+                        long teamId = listOfEqualTeams.get(i - startIndex).getTeam().getId();
+                        standingsAsMap.get(teamId).rank = currentRank++;
+                        this.result[i] = standingsAsMap.get(teamId);
+                    }
+                }
+                lastTryForRankingWithTotalGoals(sortedByPoints, stillEqualTeams);
             }
-
-            List<Team> subGroupTeams = listOfEqualTeams.stream().map(TeamRank::getTeam).collect(Collectors.toList());
-            List<Spiel> allSpielOfTeams = spielService.getAllSpieleWithTeams(subGroupTeams);
-            subgroup = collectDataFromSpiele(subgroup, allSpielOfTeams);
-
-            listOfEqualTeams = new ArrayList<>(subgroup.values());
-
-            Set<TeamRank> stillEqualTeams = sortTeamSubListByPointsAndGoals(listOfEqualTeams);
-            listOfEqualTeams.removeAll(stillEqualTeams);
-
-            int startIndex = currentRank - 1;
-            for (int i=startIndex; i<(startIndex + listOfEqualTeams.size()); i++) {
-                long teamId = listOfEqualTeams.get(i-startIndex).getTeam().getId();
-                standingsAsMap.get(teamId).rank = currentRank++;
-                this.result[i] = standingsAsMap.get(teamId);
-            }
-
-            lastTryForRankingWithTotalGoals(sortedByPoints);
         }
 
         return this.result;
     }
 
-    private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints) {
+    private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints, Set<TeamRank> teamsWhichStillNeedRanking) {
         Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
         int i = 0;
         int rankCounter = 1;
         TeamRank previousTeamRank = null;
+
         for (TeamRank teamRank : sortedByPoints) {
-            if (!alreadyInResult(teamRank.getTeam().getId())) {
-                if(!inLastStillEqualTeams(teamRank.getTeam().getId(), atLastStillEqualTeams)) {
-                    rankCounter = i + 1;
-                    teamRank.rank = rankCounter++;
-                    this.result[i] = teamRank;
-                } else {
-                    teamRank.equal = true;
-                    if (previousTeamRank == null || isEqual(previousTeamRank, teamRank)) {
-                        teamRank.rank = rankCounter;
-                    } else {
-                        rankCounter = i + 1;
-                        teamRank.rank = rankCounter;
-                    }
-                    this.result[i] = teamRank;
-                    previousTeamRank = teamRank;
-                }
+            if (!inLastStillEqualTeams(teamRank.getTeam().getId(), atLastStillEqualTeams)) {
+                rankCounter = i + 1;
+                teamRank.rank = rankCounter++;
+                this.result[i] = teamRank;
             } else {
-                rankCounter = i + 2;
+                teamRank.equal = true;
+                if (previousTeamRank == null || isEqual(previousTeamRank, teamRank)) {
+                    teamRank.rank = rankCounter;
+                } else {
+                    rankCounter = i + 1;
+                    teamRank.rank = rankCounter;
+                }
+                this.result[i] = teamRank;
+                previousTeamRank = teamRank;
             }
             i++;
         }
@@ -169,8 +169,8 @@ public class SpielManagementView implements Serializable {
 
     private boolean isEqual(TeamRank previousTeamRank, TeamRank teamRank) {
         return previousTeamRank.getPoints() == teamRank.getPoints() &&
-            previousTeamRank.getPlusGoals() - previousTeamRank.getMinusGoals() == teamRank.getPlusGoals() - teamRank.getMinusGoals() &&
-            previousTeamRank.getPlusGoals() == teamRank.getPlusGoals();
+                previousTeamRank.getPlusGoals() - previousTeamRank.getMinusGoals() == teamRank.getPlusGoals() - teamRank.getMinusGoals() &&
+                previousTeamRank.getPlusGoals() == teamRank.getPlusGoals();
 
     }
 
@@ -226,7 +226,7 @@ public class SpielManagementView implements Serializable {
         int teamRank = 1;
         int lastPoints = -1;
         List<List<TeamRank>> equalTeams = new ArrayList<>();
-        for (int i=0; i<sortedByPoints.size(); i++) {
+        for (int i = 0; i < sortedByPoints.size(); i++) {
             if (sortedByPoints.get(i).getPoints() == lastPoints) {
                 sortedByPoints.get(i).rank = teamRank;
                 equalTeams.get(equalTeams.size() - 1).add(sortedByPoints.get(i));
@@ -237,7 +237,7 @@ public class SpielManagementView implements Serializable {
                 newEqualityList.add(sortedByPoints.get(i));
                 equalTeams.add(newEqualityList);
                 lastPoints = sortedByPoints.get(i).getPoints();
-                if (i == sortedByPoints.size()-1 || sortedByPoints.get(i).getPoints() != sortedByPoints.get(i+1).getPoints()) {
+                if (i == sortedByPoints.size() - 1 || sortedByPoints.get(i).getPoints() != sortedByPoints.get(i + 1).getPoints()) {
                     result[counter] = sortedByPoints.get(i);
                 }
             }
