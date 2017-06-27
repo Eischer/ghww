@@ -144,8 +144,9 @@ public class SpielManagementView implements Serializable {
     private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints, Set<TeamRank> teamsWhichStillNeedRanking) {
         Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
         int i = 0;
-        int rankCounter = 1;
         TeamRank previousTeamRank = null;
+
+        int rankCounter = getFirstFreeTableRank();
 
         for (TeamRank teamRank : sortedByPoints) {
             if (!inLastStillEqualTeams(teamRank.getTeam().getId(), atLastStillEqualTeams)) {
@@ -165,6 +166,15 @@ public class SpielManagementView implements Serializable {
             }
             i++;
         }
+    }
+
+    private int getFirstFreeTableRank() {
+        for (int i = 0; i<result.length; i++) {
+            if (result[i]==null) {
+                return i;
+            }
+        }
+        throw new RuntimeException("Das hätte nicht passieren dürfen");
     }
 
     private boolean isEqual(TeamRank previousTeamRank, TeamRank teamRank) {
