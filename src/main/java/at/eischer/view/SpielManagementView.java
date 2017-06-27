@@ -130,7 +130,7 @@ public class SpielManagementView implements Serializable {
                     // Wenn Team nun bereits eine eindeutige Platzierung hat (also nicht im Set stillEqualsTeams ist
                     if (!stillEqualTeams.contains(listOfEqualTeams.get(i - startIndex))) {
                         long teamId = listOfEqualTeams.get(i - startIndex).getTeam().getId();
-                        standingsAsMap.get(teamId).rank = currentRank++;
+                        standingsAsMap.get(teamId).rank = i;
                         this.result[i] = standingsAsMap.get(teamId);
                     }
                 }
@@ -164,7 +164,8 @@ public class SpielManagementView implements Serializable {
                     if (previousTeamRank != null && !sortTeamSubListByPointsAndGoals(twoTeams).isEmpty()) {
                         teamRank.rank = rankCounter;
                     } else {
-                        teamRank.rank = ++rankCounter;
+                        rankCounter = i + 1;
+                        teamRank.rank = rankCounter;
                         previousTeamRank = teamRank;
                     }
                     this.result[i] = teamRank;
