@@ -134,7 +134,9 @@ public class SpielManagementView implements Serializable {
                         this.result[i] = standingsAsMap.get(teamId);
                     }
                 }
-                lastTryForRankingWithTotalGoals(sortedByPoints, stillEqualTeams);
+                if (!stillEqualTeams.isEmpty()) {
+                    lastTryForRankingWithTotalGoals(sortedByPoints, stillEqualTeams);
+                }
             }
         }
 
@@ -143,29 +145,42 @@ public class SpielManagementView implements Serializable {
 
     private void lastTryForRankingWithTotalGoals(List<TeamRank> sortedByPoints, Set<TeamRank> teamsWhichStillNeedRanking) {
         Set<TeamRank> atLastStillEqualTeams = sortTeamSubListByPointsAndGoals(sortedByPoints);
-        int i = 0;
-        TeamRank previousTeamRank = null;
 
         int rankCounter = getFirstFreeTableRank();
+        int i = rankCounter;
 
+        TeamRank previousTeamRank = null;
         for (TeamRank teamRank : sortedByPoints) {
-            if (!inLastStillEqualTeams(teamRank.getTeam().getId(), atLastStillEqualTeams)) {
-                rankCounter = i + 1;
-                teamRank.rank = rankCounter++;
-                this.result[i] = teamRank;
-            } else {
-                teamRank.equal = true;
-                if (previousTeamRank == null || isEqual(previousTeamRank, teamRank)) {
-                    teamRank.rank = rankCounter;
+            if (teamNeedsRanking(teamRank, teamsWhichStillNeedRanking)) {
+                if (!inLastStillEqualTeams(teamRank.getTeam().getId(), atLastStillEqualTeams)) {
+                    teamRank.rank = ++rankCounter;
+                    this.result[i] = teamRank;
                 } else {
-                    rankCounter = i + 1;
-                    teamRank.rank = rankCounter;
+                    teamRank.equal = true;
+                    ArrayList<TeamRank> twoTeams = new ArrayList<>();
+                    twoTeams.add(previousTeamRank);
+                    twoTeams.add(teamRank);
+                    // Wenn es schon ein vorheriges Team gab check ob das current Team auch equal zu previous ist
+                    if (previousTeamRank != null && !sortTeamSubListByPointsAndGoals(twoTeams).isEmpty()) {
+                        teamRank.rank = rankCounter;
+                    } else {
+                        teamRank.rank = ++rankCounter;
+                        previousTeamRank = teamRank;
+                    }
+                    this.result[i] = teamRank;
                 }
-                this.result[i] = teamRank;
-                previousTeamRank = teamRank;
+                i++;
             }
-            i++;
         }
+    }
+
+    private boolean teamNeedsRanking(TeamRank teamRank, Set<TeamRank> teamsWhichStillNeedRanking) {
+        for (TeamRank currentTeamRank : teamsWhichStillNeedRanking) {
+            if (currentTeamRank.getTeam().getId() == teamRank.getTeam().getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private int getFirstFreeTableRank() {
@@ -177,13 +192,6 @@ public class SpielManagementView implements Serializable {
         throw new RuntimeException("Das hätte nicht passieren dürfen");
     }
 
-    private boolean isEqual(TeamRank previousTeamRank, TeamRank teamRank) {
-        return previousTeamRank.getPoints() == teamRank.getPoints() &&
-                previousTeamRank.getPlusGoals() - previousTeamRank.getMinusGoals() == teamRank.getPlusGoals() - teamRank.getMinusGoals() &&
-                previousTeamRank.getPlusGoals() == teamRank.getPlusGoals();
-
-    }
-
     private boolean inLastStillEqualTeams(long id, Set<TeamRank> atLastStillEqualTeams) {
         for (TeamRank lastStillEqualTeam : atLastStillEqualTeams) {
             if (lastStillEqualTeam.getTeam().getId() == id) {
@@ -192,16 +200,6 @@ public class SpielManagementView implements Serializable {
         }
         return false;
     }
-
-    private boolean alreadyInResult(long id) {
-        for (TeamRank resultTeamRank : result) {
-            if (resultTeamRank != null && resultTeamRank.getTeam().getId() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     private Set<TeamRank> sortTeamSubListByPointsAndGoals(List<TeamRank> listOfEqualTeams) {
         Set<TeamRank> stillEqualTeams = new HashSet<>();
