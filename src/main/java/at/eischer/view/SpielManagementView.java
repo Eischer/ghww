@@ -130,7 +130,7 @@ public class SpielManagementView implements Serializable {
                     // Wenn Team nun bereits eine eindeutige Platzierung hat (also nicht im Set stillEqualsTeams ist
                     if (!stillEqualTeams.contains(listOfEqualTeams.get(i - startIndex))) {
                         long teamId = listOfEqualTeams.get(i - startIndex).getTeam().getId();
-                        standingsAsMap.get(teamId).rank = i;
+                        standingsAsMap.get(teamId).rank = i + 1;
                         this.result[i] = standingsAsMap.get(teamId);
                     }
                 }
