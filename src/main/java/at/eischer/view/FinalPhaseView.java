@@ -1,21 +1,19 @@
 package at.eischer.view;
 
 import at.eischer.model.FinalSpiel;
-import at.eischer.model.Spiel;
 import at.eischer.model.Team;
 import at.eischer.services.SpielService;
 import at.eischer.services.TeamService;
 
 import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.time.LocalTime;
 import java.util.*;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class FinalPhaseView implements Serializable {
 
     private String gruppe;
@@ -39,25 +37,27 @@ public class FinalPhaseView implements Serializable {
         this.allTeams = teamService.findAllteams();
     }
 
-    public void saveGame() {
-        LocalTime zeit = LocalTime.of(spielInput.getHour(), spielInput.getMinute());
-        spielService.save(new Spiel(zeit, this.gruppe, spielInput.getHomeTeam(), spielInput.getAwayTeam()));
-        this.allFinalSpiele = spielService.getAllFinalSpiele();
+    public void saveResult(FinalSpiel finalSpiel) {
+        spielService.update(finalSpiel);
     }
 
-    public void deleteSpiel(Spiel spiel) {
-        spielService.removeSpiel(spiel);
-        this.allFinalSpiele = spielService.getAllFinalSpiele();
+    public void deleteResult(FinalSpiel finalSpiel) {
+        finalSpiel.setToreHomeTeam(null);
+        finalSpiel.setToreAwayTeam(null);
+        spielService.update(finalSpiel);
     }
 
-    public void saveResult(Spiel spiel) {
-        spielService.update(spiel);
-    }
-
-    public void deleteResult(Spiel spiel) {
-        spiel.setToreHomeTeam(null);
-        spiel.setToreAwayTeam(null);
-        spielService.update(spiel);
+    public Team getTeamById(Long teamId) {
+        if (teamId == null) {
+            throw new IllegalArgumentException("no id");
+        } else {
+            for (Team team : this.allTeams) {
+                if (teamId.equals(team.getId())) {
+                    return team;
+                }
+            }
+            return null;
+        }
     }
 
     public SpielInput getSpielInput() {

@@ -19,6 +19,10 @@ public class SpielInput {
 
     private List<Integer> minutes;
 
+    private String spielDescription;
+
+    private List<String> allSpielDescriptions;
+
     public SpielInput () {
         this.hours = new ArrayList<>();
         for (int i=0; i<24; i++) {
@@ -28,6 +32,15 @@ public class SpielInput {
         for (int i=0; i<60; i++) {
             this.minutes.add(i);
         }
+        this.allSpielDescriptions = new ArrayList<>();
+        this.allSpielDescriptions.add("Spiel um Platz 11");
+        this.allSpielDescriptions.add("Spiel um Platz 9");
+        this.allSpielDescriptions.add("Spiel um Platz 7");
+        this.allSpielDescriptions.add("Spiel um Platz 5");
+        this.allSpielDescriptions.add("Spiel um Platz 3 (Kleines Finale)");
+        this.allSpielDescriptions.add("Spiel um Platz 1 (Finale)");
+        this.allSpielDescriptions.add("Kreuzspiel 1");
+        this.allSpielDescriptions.add("Kreuzspiel 2");
     }
 
     public int getHour() {
@@ -68,5 +81,21 @@ public class SpielInput {
 
     public void setAwayTeam(Team awayTeam) {
         this.awayTeam = awayTeam;
+    }
+
+    public String getSpielDescription() {
+        return spielDescription;
+    }
+
+    public void setSpielDescription(String spielDescription) {
+        this.spielDescription = spielDescription;
+    }
+
+    public List<String> getAllSpielDescriptions() {
+        return allSpielDescriptions;
+    }
+
+    public void setAllSpielDescriptions(List<String> allSpielDescriptions) {
+        this.allSpielDescriptions = allSpielDescriptions;
     }
 }

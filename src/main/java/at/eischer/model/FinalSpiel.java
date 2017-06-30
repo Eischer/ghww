@@ -4,14 +4,20 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@NamedQuery(name = "FinalSpiel.getAllFinalSpiele", query = "SELECT fs FROM FinalSpiel fs")
-public class FinalSpiel {
+@NamedQuery(name = "FinalSpiel.getAllFinalSpiele", query = "SELECT fs FROM FinalSpiel fs order by fs.ordering")
+public class FinalSpiel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private LocalTime zeit;
+    private int hour;
+
+    private int minute;
+
+    private Integer ordering;
+
+    private String indicator;
 
     @ManyToOne
     @JoinColumn(name = "awayTeamFk")
@@ -21,9 +27,18 @@ public class FinalSpiel {
     @JoinColumn(name = "homeTeamFk")
     private Team awayTeam;
 
-    private int toreHomeTeam;
+    private Integer toreHomeTeam;
 
-    private int toreAwayTeam;
+    private Integer toreAwayTeam;
+
+    public FinalSpiel() {
+
+    }
+
+    public FinalSpiel(int ordering, String indicator) {
+        this.ordering = ordering;
+        this.indicator = indicator;
+    }
 
     public long getId() {
         return id;
@@ -31,14 +46,6 @@ public class FinalSpiel {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public LocalTime getZeit() {
-        return zeit;
-    }
-
-    public void setZeit(LocalTime zeit) {
-        this.zeit = zeit;
     }
 
     public Team getHomeTeam() {
@@ -57,20 +64,51 @@ public class FinalSpiel {
         this.awayTeam = awayTeam;
     }
 
-    public int getToreHomeTeam() {
+    public Integer getToreHomeTeam() {
         return toreHomeTeam;
     }
 
-    public void setToreHomeTeam(int toreHomeTeam) {
+    public void setToreHomeTeam(Integer toreHomeTeam) {
         this.toreHomeTeam = toreHomeTeam;
     }
 
-    public int getToreAwayTeam() {
+    public Integer getToreAwayTeam() {
         return toreAwayTeam;
     }
 
-    public void setToreAwayTeam(int toreAwayTeam) {
+    public void setToreAwayTeam(Integer toreAwayTeam) {
         this.toreAwayTeam = toreAwayTeam;
     }
 
+    public String getIndicator() {
+        return indicator;
+    }
+
+    public void setIndicator(String indicator) {
+        this.indicator = indicator;
+    }
+
+    public Integer getOrdering() {
+        return ordering;
+    }
+
+    public void setOrdering(Integer order) {
+        this.ordering = order;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour (int hour) {
+        this.hour = hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
 }

@@ -8,64 +8,49 @@
     <ui:define name="content">
         <h:form id="spielManagementForm">
             <h1>Spiele - Finalphase</h1>
-            <h:panelGroup id="createSpielPanel" layout="block">
-                <h:selectOneMenu value="#{finalPhaseView.spielInput.hour}">
-                    <f:selectItems value="#{finalPhaseView.spielInput.hours}" var="theHour" itemValue="#{theHour}"/>
-                </h:selectOneMenu>
-                :
-                <h:selectOneMenu value="#{finalPhaseView.spielInput.minute}">
-                    <f:selectItems value="#{finalPhaseView.spielInput.minutes}" var="theMinute" itemValue="#{theMinute}"/>
-                </h:selectOneMenu>
-                <h:selectOneMenu id="homeTeam" value="#{finalPhaseView.spielInput.homeTeam}" converter="teamConverter">
-                    <f:selectItems value="#{finalPhaseView.allTeams}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
-                </h:selectOneMenu>
-                <h:selectOneMenu id="awayTeam" value="#{finalPhaseView.spielInput.awayTeam}" converter="teamConverter">
-                    <f:selectItems value="#{finalPhaseView.allTeams}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
-                </h:selectOneMenu>
-                <h:commandButton value="Speichern" action="#{finalPhaseView.saveGame()}">
-                    <f:ajax execute="createSpielPanel" render="@form"/>
-                </h:commandButton>
-            </h:panelGroup>
-
-            <p>
-                <h:panelGroup layout="block" styleClass="sideBySide">
-                    <h:panelGroup id="spielTableuat" layout="block">
-                        <h:outputText value="Es wurden noch keine Spiele angelegt!" rendered="#{empty finalPhaseView.allFinalSpiele}" />
-                        <h:dataTable id="spielOverviewTable" value="#{finalPhaseView.allFinalSpiele}" var="oneSpiel"
-                                     columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
-                            <h:column>
-                                #{oneSpiel.zeit}
-                            </h:column>
-                            <h:column id="spielHomeTeam">
-                                #{oneSpiel.homeTeam.name}
-                            </h:column>
-                            <h:column id="spielAwayTeam">
-                                #{oneSpiel.awayTeam.name}
-                            </h:column>
-                            <h:column>
-                                <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreHomeTeam}"/>
-                                :
-                                <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneSpiel.toreAwayTeam}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton value="Speichern" action="#{finalPhaseView.saveResult(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
-                                </h:commandButton>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton value="Ergebnis löschen" action="#{finalPhaseView.deleteResult(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
-                                </h:commandButton>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton value="Spiel löschen" action="#{finalPhaseView.deleteSpiel(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
-                                </h:commandButton>
-                            </h:column>
-                        </h:dataTable>
-                    </h:panelGroup>
+            <h:panelGroup layout="block" styleClass="sideBySide">
+                <h:panelGroup id="spielTableuat" layout="block">
+                    <h:dataTable id="spielOverviewTable" value="#{finalPhaseView.allFinalSpiele}" var="oneFinalSpiel"
+                                 columnClasses="boldText" rowClasses="even, odd">
+                        <h:column>
+                            #{oneFinalSpiel.indicator}
+                        </h:column>
+                        <h:column>
+                            <h:selectOneMenu value="#{oneFinalSpiel.hour}">
+                                <f:selectItems value="#{finalPhaseView.spielInput.hours}" var="theHour" itemValue="#{theHour}"/>
+                            </h:selectOneMenu>
+                        </h:column>
+                        <h:column>
+                            <h:selectOneMenu value="#{oneFinalSpiel.minute}">
+                                <f:selectItems value="#{finalPhaseView.spielInput.minutes}" var="theMinute" itemValue="#{theMinute}"/>
+                            </h:selectOneMenu>
+                        </h:column>
+                        <h:column>
+                            <h:selectOneMenu value="#{oneFinalSpiel.homeTeam}">
+                                <f:selectItems value="#{finalPhaseView.allTeams}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
+                            </h:selectOneMenu>
+                        </h:column>
+                        <!--<h:column>-->
+                            <!--<h:selectOneMenu id="awayTeam" value="#{oneFinalSpiel.awayTeam}">-->
+                                <!--<f:selectItems value="#{finalPhaseView.allTeams}" var="secondTeam" itemValue="#{oneFinalSpiel.awayTeam}" itemLabel="#{secondTeam.name}"/>-->
+                            <!--</h:selectOneMenu>-->
+                        <!--</h:column>-->
+                        <h:column>
+                            <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneFinalSpiel.toreHomeTeam}"/>
+                            :
+                            <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneFinalSpiel.toreAwayTeam}"/>
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="Speichern" action="#{finalPhaseView.saveResult(oneFinalSpiel)}">
+                            </h:commandButton>
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="Ergebnis löschen" action="#{finalPhaseView.deleteResult(oneFinalSpiel)}">
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
                 </h:panelGroup>
-            </p>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 </ui:composition>
