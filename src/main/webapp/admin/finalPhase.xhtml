@@ -26,7 +26,7 @@
                             </h:selectOneMenu>
                         </h:column>
                         <h:column>
-                            <h:selectOneMenu value="#{oneFinalSpiel.homeTeam}">
+                            <h:selectOneMenu value="#{finalPhaseView.myTeam}" converter="teamConverterForFinalPhase">
                                 <f:selectItems value="#{finalPhaseView.allTeams}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                             </h:selectOneMenu>
                         </h:column>

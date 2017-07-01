@@ -24,6 +24,16 @@ public class FinalPhaseView implements Serializable {
 
     private SpielInput spielInput;
 
+    public Team getMyTeam() {
+        return myTeam;
+    }
+
+    public void setMyTeam(Team myTeam) {
+        this.myTeam = myTeam;
+    }
+
+    private Team myTeam;
+
     @Inject
     TeamService teamService;
 
