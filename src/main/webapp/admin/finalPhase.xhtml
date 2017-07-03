@@ -16,25 +16,25 @@
                             #{oneFinalSpiel.indicator}
                         </h:column>
                         <h:column>
-                            <h:selectOneMenu value="#{oneFinalSpiel.hour}">
+                            <h:selectOneMenu value="#{finalPhaseView.spielInput.hour}">
                                 <f:selectItems value="#{finalPhaseView.spielInput.hours}" var="theHour" itemValue="#{theHour}"/>
                             </h:selectOneMenu>
                         </h:column>
                         <h:column>
-                            <h:selectOneMenu value="#{oneFinalSpiel.minute}">
+                            <h:selectOneMenu value="#{finalPhaseView.spielInput.minute}">
                                 <f:selectItems value="#{finalPhaseView.spielInput.minutes}" var="theMinute" itemValue="#{theMinute}"/>
                             </h:selectOneMenu>
                         </h:column>
                         <h:column>
-                            <h:selectOneMenu value="#{finalPhaseView.myTeam}" converter="teamConverterForFinalPhase">
+                            <h:selectOneMenu value="#{finalPhaseView.spielInput.homeTeam}" converter="teamConverterForFinalPhase">
                                 <f:selectItems value="#{finalPhaseView.allTeams}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                             </h:selectOneMenu>
                         </h:column>
-                        <!--<h:column>-->
-                            <!--<h:selectOneMenu id="awayTeam" value="#{oneFinalSpiel.awayTeam}">-->
-                                <!--<f:selectItems value="#{finalPhaseView.allTeams}" var="secondTeam" itemValue="#{oneFinalSpiel.awayTeam}" itemLabel="#{secondTeam.name}"/>-->
-                            <!--</h:selectOneMenu>-->
-                        <!--</h:column>-->
+                        <h:column>
+                            <h:selectOneMenu value="#{finalPhaseView.spielInput.awayTeam}" converter="teamConverterForFinalPhase">
+                                <f:selectItems value="#{finalPhaseView.allTeams}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
+                            </h:selectOneMenu>
+                        </h:column>
                         <h:column>
                             <h:inputText styleClass="twoDigits" maxlength="2" value="#{oneFinalSpiel.toreHomeTeam}"/>
                             :

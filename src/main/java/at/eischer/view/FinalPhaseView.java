@@ -24,6 +24,8 @@ public class FinalPhaseView implements Serializable {
 
     private SpielInput spielInput;
 
+    private Team myTeam;
+
     public Team getMyTeam() {
         return myTeam;
     }
@@ -31,8 +33,6 @@ public class FinalPhaseView implements Serializable {
     public void setMyTeam(Team myTeam) {
         this.myTeam = myTeam;
     }
-
-    private Team myTeam;
 
     @Inject
     TeamService teamService;
@@ -48,6 +48,10 @@ public class FinalPhaseView implements Serializable {
     }
 
     public void saveResult(FinalSpiel finalSpiel) {
+        finalSpiel.setHomeTeam(spielInput.getHomeTeam());
+        finalSpiel.setAwayTeam(spielInput.getAwayTeam());
+        finalSpiel.setHour(spielInput.getHour());
+        finalSpiel.setMinute(spielInput.getMinute());
         spielService.update(finalSpiel);
     }
 
