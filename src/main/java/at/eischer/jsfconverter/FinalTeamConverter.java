@@ -11,8 +11,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(value = "teamConverterForFinalPhase")
-public class TeamConverterForFinalSpielView implements Converter {
+@FacesConverter(value = "finaTeamConverter")
+public class FinalTeamConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String teamId) {
         ValueExpression vex =

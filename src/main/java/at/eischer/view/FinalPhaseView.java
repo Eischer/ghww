@@ -24,16 +24,6 @@ public class FinalPhaseView implements Serializable {
 
     private SpielInput spielInput;
 
-    private Team myTeam;
-
-    public Team getMyTeam() {
-        return myTeam;
-    }
-
-    public void setMyTeam(Team myTeam) {
-        this.myTeam = myTeam;
-    }
-
     @Inject
     TeamService teamService;
 
@@ -47,11 +37,16 @@ public class FinalPhaseView implements Serializable {
         this.allTeams = teamService.findAllteams();
     }
 
-    public void saveResult(FinalSpiel finalSpiel) {
-        finalSpiel.setHomeTeam(spielInput.getHomeTeam());
-        finalSpiel.setAwayTeam(spielInput.getAwayTeam());
+    public void saveFinalSpiel() {
+        FinalSpiel finalSpiel = new FinalSpiel();
         finalSpiel.setHour(spielInput.getHour());
         finalSpiel.setMinute(spielInput.getMinute());
+        finalSpiel.setHomeTeam(spielInput.getHomeTeam());
+        finalSpiel.setAwayTeam(spielInput.getAwayTeam());
+        spielService.save(finalSpiel);
+    }
+
+    public void saveResult(FinalSpiel finalSpiel) {
         spielService.update(finalSpiel);
     }
 
@@ -59,6 +54,10 @@ public class FinalPhaseView implements Serializable {
         finalSpiel.setToreHomeTeam(null);
         finalSpiel.setToreAwayTeam(null);
         spielService.update(finalSpiel);
+    }
+
+    public void deleteSpiel(FinalSpiel finalSpiel) {
+        spielService.removeFianlSpiel(finalSpiel);
     }
 
     public Team getTeamById(Long teamId) {

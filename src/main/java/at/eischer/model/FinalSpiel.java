@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-@NamedQuery(name = "FinalSpiel.getAllFinalSpiele", query = "SELECT fs FROM FinalSpiel fs order by fs.ordering")
+@NamedQueries({
+        @NamedQuery(name = "FinalSpiel.getAllFinalSpiele", query = "SELECT fs FROM FinalSpiel fs order by fs.ordering"),
+        @NamedQuery(name = "FinalSpiel.getFinalSpielById", query = "SELECT fs FROM FinalSpiel fs where fs.id = :id")
+})
 public class FinalSpiel{
 
     @Id
@@ -32,12 +35,6 @@ public class FinalSpiel{
     private Integer toreAwayTeam;
 
     public FinalSpiel() {
-
-    }
-
-    public FinalSpiel(int ordering, String indicator) {
-        this.ordering = ordering;
-        this.indicator = indicator;
     }
 
     public long getId() {
