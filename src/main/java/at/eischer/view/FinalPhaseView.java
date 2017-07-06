@@ -31,11 +31,14 @@ public class FinalPhaseView implements Serializable {
     @Inject
     private SpielService spielService;
 
+    private List<TeamRank> result;
+
     @PostConstruct
     public void init() {
         spielInput = new SpielInput();
         this.allFinalSpiele = spielService.getAllFinalSpiele();
         this.allTeams = teamService.findAllteams();
+        this.result = new ArrayList<>();
     }
 
     public void saveFinalSpiel() {
@@ -89,6 +92,19 @@ public class FinalPhaseView implements Serializable {
     }
 
     public List<FinalSpiel> getAllFinalSpiele() {
+        if (this.allFinalSpiele.isEmpty()) {
+            this.allFinalSpiele.add(new FinalSpiel("Kreuzspiel 1", LocalTime.of(14, 25)));
+            this.allFinalSpiele.add(new FinalSpiel("Kreuzspiel 2", LocalTime.of(14, 25)));
+            this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 11", LocalTime.of(14, 45)));
+            this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 9", LocalTime.of(14, 45)));
+            this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 7", LocalTime.of(15, 10)));
+            this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 5", LocalTime.of(15, 10)));
+            this.allFinalSpiele.add(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
+            this.allFinalSpiele.add(new FinalSpiel("Finale", LocalTime.of(16, 0)));
+        } else if (this.allFinalSpiele.size() == 6) {
+            this.allFinalSpiele.add(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
+            this.allFinalSpiele.add(new FinalSpiel("Finale", LocalTime.of(16, 0)));
+        }
         return this.allFinalSpiele;
     }
 
@@ -102,5 +118,45 @@ public class FinalPhaseView implements Serializable {
 
     public void setAllTeams(List<Team> allTeams) {
         this.allTeams = allTeams;
+    }
+
+    public List<TeamRank> getResult() {
+        this.result = new ArrayList<>();
+        for (FinalSpiel finalSpiel : this.allFinalSpiele) {
+            switch (finalSpiel.getIndicator()) {
+                case "Spiel um Platz 11":
+                    calculateRank(finalSpiel, 11);
+                    break;
+                case "Spiel um Platz 9":
+                    calculateRank(finalSpiel, 9);
+                    break;
+                case "Spiel um Platz 7":
+                    calculateRank(finalSpiel, 7);
+                    break;
+                case "Spiel um Platz 5":
+                    calculateRank(finalSpiel, 5);
+                    break;
+                case "Kleines Finale":
+                    calculateRank(finalSpiel, 3);
+                    break;
+                case "Finale":
+                    calculateRank(finalSpiel, 1);
+                    break;
+            }
+        }
+        this.result.sort(Comparator.comparingInt(tr -> tr.rank));
+        return this.result;
+    }
+
+    private void calculateRank(FinalSpiel finalSpiel, int rank) {
+        if (finalSpiel.getToreAwayTeam() != null && finalSpiel.getToreHomeTeam() != null) {
+            if (finalSpiel.getToreHomeTeam() < finalSpiel.getToreAwayTeam()) {
+                this.result.add(new TeamRank(finalSpiel.getHomeTeam(), rank + 1));
+                this.result.add(new TeamRank(finalSpiel.getAwayTeam(), rank));
+            } else {
+                this.result.add(new TeamRank(finalSpiel.getAwayTeam(), rank + 1));
+                this.result.add(new TeamRank(finalSpiel.getHomeTeam(), rank));
+            }
+        }
     }
 }

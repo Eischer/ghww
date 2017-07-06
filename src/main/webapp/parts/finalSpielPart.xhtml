@@ -1,0 +1,37 @@
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h1>Final-Phase</h1>
+    <p>
+        <h:panelGroup layout="block" styleClass="sideBySide">
+            <h:panelGroup id="spielTableuat" layout="block">
+                <h:dataTable id="spielOverviewTable" value="#{finalPhaseView.allFinalSpiele}" var="finalSpiel"
+                             columnClasses="timeCol, teamNameCol, teamNameCol, teamNameCol" rowClasses="even, odd">
+                    <h:column>
+                        #{finalSpiel.zeit}
+                    </h:column>
+                    <h:column>
+                        #{finalSpiel.indicator}
+                    </h:column>
+                    <h:column id="spielHomeTeam">
+                        <h:outputText styleClass="#{finalSpiel.toreHomeTeam > finalSpiel.toreAwayTeam ? 'boldText':''}" value="#{finalSpiel.homeTeam.name}"/>
+                    </h:column>
+                    <h:column id="spielAwayTeam">
+                        <h:outputText styleClass="#{finalSpiel.toreAwayTeam > finalSpiel.toreHomeTeam ? 'boldText':''}" value="#{finalSpiel.awayTeam.name}"/>
+                    </h:column>
+                    <h:column>
+                        #{finalSpiel.toreHomeTeam==null?'-':finalSpiel.toreHomeTeam} : #{finalSpiel.toreAwayTeam==null?'-':finalSpiel.toreAwayTeam}
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+            <h:panelGroup styleClass="gruppeTabelle" layout="block">
+                <h:dataTable value="#{finalPhaseView.result}" var="teamRank" rowClasses="even, odd">
+                    <h:column>#{teamRank.rank}. </h:column>
+                    <h:column headerClass="logoCol">
+                        <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt=""/>
+                    </h:column>
+                    <h:column>#{teamRank.team.name}</h:column>
+                </h:dataTable>
+            </h:panelGroup>
+        </h:panelGroup>
+    </p>
+</ui:composition>

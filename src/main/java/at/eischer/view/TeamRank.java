@@ -19,6 +19,15 @@ public class TeamRank {
         this.equal = false;
     }
 
+    public TeamRank (Team team, int rank) {
+        this.team = team;
+        this.rank = rank;
+        this.plusGoals = 0;
+        this.minusGoals = 0;
+        this.points = 0;
+        this.equal = false;
+    }
+
     public int getRank() {
         return rank;
     }

@@ -33,6 +33,11 @@ public class FinalSpiel{
     public FinalSpiel() {
     }
 
+    public FinalSpiel(String indicator, LocalTime zeit) {
+        this.indicator = indicator;
+        this.zeit = zeit;
+    }
+
     public long getId() {
         return id;
     }

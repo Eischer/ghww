@@ -12,21 +12,29 @@
 </h:head>
 
 <h:body>
-    <div id="menu">
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            move();
+        });
+    </script>
+    <h:outputScript library="js" name="progressBar.js"/>
+
+    <div id="myProgress" class="sideBySide">
+        <div id="myBar"/>
+    </div>
+    <h:panelGroup layout="block" styleClass="sideBySide, floatLeft">
         <h:form>
-            <p:menubar style="width: 480px; height: 40px;" styleClass="ghwwBGColor">
+            <p:menubar style="width: 300px; height: 40px;" styleClass="ghwwBGColor">
                 <p:menuitem>
                     <h:link outcome="/seidlWertung.xhmtl">
                         <h:graphicImage url="/resources/grasshoppers-westwien.png" class="headerLogo" alt=""/>
                     </h:link>
                 </p:menuitem>
-                <p:menuitem value="Seidl-Wertung" url="/seidlWertung.xhtml"/>
-                <p:menuitem value="Gruppe A" url="/gruppe.xhtml?currentGruppe=A"/>
-                <p:menuitem value="Gruppe B" url="/gruppe.xhtml?currentGruppe=B"/>
-                <p:menuitem value="Final-Phase" url="/finalSpiel.xhtml"/>
+                <p:menuitem value="Seidl-Wertung" url="/switchFinal/seidlWertungSwitch.xhtml"/>
+                <p:menuitem value="Final-Phase" url="/switchFinal/finalSpiel.xhtml"/>
             </p:menubar>
         </h:form>
-    </div>
+    </h:panelGroup>
     <div id="content">
         <ui:insert name="content"/>
     </div>
