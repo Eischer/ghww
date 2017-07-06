@@ -10,6 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.*;
 
 @Named
@@ -39,11 +40,12 @@ public class FinalPhaseView implements Serializable {
 
     public void saveFinalSpiel() {
         FinalSpiel finalSpiel = new FinalSpiel();
-        finalSpiel.setHour(spielInput.getHour());
-        finalSpiel.setMinute(spielInput.getMinute());
+        finalSpiel.setIndicator(spielInput.getSpielDescription());
+        finalSpiel.setZeit(LocalTime.of(spielInput.getHour(), spielInput.getMinute()));
         finalSpiel.setHomeTeam(spielInput.getHomeTeam());
         finalSpiel.setAwayTeam(spielInput.getAwayTeam());
         spielService.save(finalSpiel);
+        this.allFinalSpiele = spielService.getAllFinalSpiele();
     }
 
     public void saveResult(FinalSpiel finalSpiel) {
@@ -58,6 +60,7 @@ public class FinalPhaseView implements Serializable {
 
     public void deleteSpiel(FinalSpiel finalSpiel) {
         spielService.removeFianlSpiel(finalSpiel);
+        this.allFinalSpiele = spielService.getAllFinalSpiele();
     }
 
     public Team getTeamById(Long teamId) {

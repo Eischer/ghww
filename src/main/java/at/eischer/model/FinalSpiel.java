@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "FinalSpiel.getAllFinalSpiele", query = "SELECT fs FROM FinalSpiel fs order by fs.ordering"),
+        @NamedQuery(name = "FinalSpiel.getAllFinalSpiele", query = "SELECT fs FROM FinalSpiel fs order by fs.zeit ASC"),
         @NamedQuery(name = "FinalSpiel.getFinalSpielById", query = "SELECT fs FROM FinalSpiel fs where fs.id = :id")
 })
 public class FinalSpiel{
@@ -14,11 +14,7 @@ public class FinalSpiel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int hour;
-
-    private int minute;
-
-    private Integer ordering;
+    private LocalTime zeit;
 
     private String indicator;
 
@@ -85,27 +81,11 @@ public class FinalSpiel{
         this.indicator = indicator;
     }
 
-    public Integer getOrdering() {
-        return ordering;
+    public LocalTime getZeit() {
+        return zeit;
     }
 
-    public void setOrdering(Integer order) {
-        this.ordering = order;
-    }
-
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour (int hour) {
-        this.hour = hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
+    public void setZeit(LocalTime zeit) {
+        this.zeit = zeit;
     }
 }

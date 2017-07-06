@@ -9,6 +9,9 @@
         <h:form id="spielManagementForm">
             <h1>Spiele - Finalphase</h1>
             <h:panelGroup id="createSpielPanel" layout="block">
+                <h:selectOneMenu value="#{finalPhaseView.spielInput.spielDescription}">
+                    <f:selectItems value="#{finalPhaseView.spielInput.allSpielDescriptions}"/>
+                </h:selectOneMenu>
                 <h:selectOneMenu value="#{finalPhaseView.spielInput.hour}">
                     <f:selectItems value="#{finalPhaseView.spielInput.hours}" var="theHour" itemValue="#{theHour}"/>
                 </h:selectOneMenu>
@@ -23,7 +26,7 @@
                     <f:selectItems value="#{finalPhaseView.allTeams}" var="oneTeam" itemValue="#{oneTeam}" itemLabel="#{oneTeam.name}"/>
                 </h:selectOneMenu>
                 <h:commandButton value="Speichern" action="#{finalPhaseView.saveFinalSpiel()}">
-                    <f:ajax execute="createSpielPanel" render="@form"/>
+                    <f:ajax execute="@form" render="@form"/>
                 </h:commandButton>
             </h:panelGroup>
 
@@ -32,9 +35,12 @@
                     <h:panelGroup id="spielTableuat" layout="block">
                         <h:outputText value="Es wurden noch keine Spiele angelegt!" rendered="#{empty finalPhaseView.allFinalSpiele}" />
                         <h:dataTable id="spielOverviewTable" value="#{finalPhaseView.allFinalSpiele}" var="oneSpiel"
-                                     columnClasses="timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
+                                     columnClasses="teamNameCol, timeCol, teamNameCol, teamNameCol" rowClasses="even, odd">
                             <h:column>
-                                #{oneSpiel.hour}:#{oneSpiel.minute}
+                                #{oneSpiel.indicator}
+                            </h:column>
+                            <h:column>
+                                #{oneSpiel.zeit}
                             </h:column>
                             <h:column id="spielHomeTeam">
                                 #{oneSpiel.homeTeam.name}
