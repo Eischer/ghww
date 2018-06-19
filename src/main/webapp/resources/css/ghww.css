@@ -86,10 +86,6 @@ div#chartDiv {
 }
 
 /* SpielManagement */
-.twoDigits {
-    width: 2ch;
-}
-
 .sideBySide {
     display: flex;
 }
@@ -140,6 +136,16 @@ h1{
 .ghwwBGColor {
     background-color: lightgreen;
 }
+
+.twoDigits {
+    width: 2ch;
+}
+
+.fourDigits {
+    width: 4ch;
+}
+
+.fourDigits.tabStopLike{}
 
 .tabStopLike {
     margin-right: 3em;

@@ -1,0 +1,18 @@
+<ui:composition xmlns:ui ="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h1>Gaberln Highscore</h1>
+    <p>
+        <h:dataTable id="gaberlnHighscore" value="#{gaberlnItemViewBean.allGaberlnItems}" var="oneGaberlItem"
+                     columnClasses="teamNameCol, seiderlCountCol" rowClasses="even, odd">
+            <h:column>
+                <f:facet name="header">Teilnehmer</f:facet>
+                #{oneGaberlItem.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Anzahl</f:facet>
+                #{oneGaberlItem.gaberlnCounter}
+            </h:column>
+        </h:dataTable>
+    </p>
+</ui:composition>
