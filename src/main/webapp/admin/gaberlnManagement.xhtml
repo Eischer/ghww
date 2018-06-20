@@ -17,20 +17,35 @@
                 <h:commandButton value="Zu Hishscore hinzufügen" action="#{gaberlnItemViewBean.saveGaberlScore}"/>
             </p>
             <p>
-                <h:dataTable id="gaberlnHighscore" value="#{gaberlnItemViewBean.allGaberlnItems}" var="oneGaberlItem"
-                             columnClasses="teamNameCol, seiderlCountCol" rowClasses="even, odd">
-                    <h:column>
-                        <f:facet name="header">Teilnehmer</f:facet>
-                        #{oneGaberlItem.name}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Anzahl</f:facet>
-                        #{oneGaberlItem.gaberlnCounter}
-                    </h:column>
-                    <h:column>
-                        <h:commandButton value="Löschen" action="#{gaberlnItemViewBean.removeGaberlnItem(oneGaberlItem)}"/>
-                    </h:column>
-                </h:dataTable>
+                <h:panelGroup layout="block" styleClass="sideBySide">
+                    <h:panelGroup layout="block">
+                        <h:dataTable id="gaberlnHighscore" value="#{gaberlnItemViewBean.allGaberlnItems}" var="oneGaberlItem"
+                                     headerClass="left" columnClasses="seiderlCountCol, teamNameCol, seiderlCountCol" rowClasses="even, odd">
+                            <h:column>
+                                #{oneGaberlItem.rank}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Top-10 Teilnehmer</f:facet>
+                                #{oneGaberlItem.name}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Anzahl</f:facet>
+                                #{oneGaberlItem.gaberlnCounter}
+                            </h:column>
+                            <h:column>
+                                <h:commandButton value="Löschen" action="#{gaberlnItemViewBean.removeGaberlnItem(oneGaberlItem)}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="jackpot">
+                        <p>
+                            <h:outputLabel for="jackpot" value="Derzeit im Jackpot"/>
+                        </p>
+                        <p>
+                            <h:outputText id="jackpot" value="#{gaberlnItemViewBean.jackpot}"/>
+                        </p>
+                    </h:panelGroup>
+                </h:panelGroup>
             </p>
         </h:form>
     </ui:define>

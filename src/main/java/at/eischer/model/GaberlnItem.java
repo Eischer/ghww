@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
 
 @Entity
 @NamedQueries(value = {
@@ -21,6 +22,9 @@ public class GaberlnItem {
     private String name;
 
     private int gaberlnCounter;
+
+    @Transient
+    private int rank;
 
     public long getId() {
         return id;
@@ -44,5 +48,13 @@ public class GaberlnItem {
 
     public void setGaberlnCounter(int gaberlcounter) {
         this.gaberlnCounter = gaberlcounter;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

@@ -39,6 +39,10 @@ public class GaberlnItemViewBean {
         return "/admin/gaberlnManagement?faces-redirect=true";
     }
 
+    public String getJackpot() {
+        return gaberlnItemService.getJackpot() + " €";
+    }
+
     public String removeGaberlnItem(GaberlnItem gaberlnItem) {
         gaberlnItemService.remove(gaberlnItem);
         return "/admin/gaberlnManagement?faces-redirect=true";
@@ -63,6 +67,9 @@ public class GaberlnItemViewBean {
     }
 
     public List<GaberlnItem> getAllGaberlnItems() {
+        for (int i = 0 ; i < allGaberlnItems.size(); i++) {
+            allGaberlnItems.get(i).setRank(i+1);
+        }
         return allGaberlnItems.subList(0,Math.min(allGaberlnItems.size(), 10));
     }
 

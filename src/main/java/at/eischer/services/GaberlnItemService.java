@@ -12,4 +12,8 @@ public class GaberlnItemService extends Repository {
     public List<GaberlnItem> findAll () {
         return entityManager.createNamedQuery("GaberlnItem.allGaberlnItems", GaberlnItem.class).getResultList();
     }
+
+    public Long getJackpot() {
+        return entityManager.createNamedQuery("GaberlnItem.calculateJackpot", Long.class).getSingleResult();
+    }
 }

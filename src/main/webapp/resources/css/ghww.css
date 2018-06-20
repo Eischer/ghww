@@ -159,6 +159,16 @@ h1{
     padding-left: 30px;
 }
 
+.jackpot {
+    margin: 0px 50px;
+    padding: 60px;
+    font-weight: bolder;
+    font-size: x-large;
+    border: thick gold dotted;
+    color: red;
+    text-align: center;
+}
+
 #myProgress {
     width: 100%;
     background-color: grey;
