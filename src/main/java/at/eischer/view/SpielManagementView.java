@@ -262,7 +262,7 @@ public class SpielManagementView implements Serializable {
     }
 
     public void deleteSpiel(Spiel spiel) {
-        spielService.removeSpiel(spiel);
+        spielService.remove(spiel);
         this.spielePerGruppe = spielService.getAllSpielePerGruppe(this.gruppe);
         this.result = new TeamRank[teamPerGruppe.size()];
         this.result = calculateStandings();

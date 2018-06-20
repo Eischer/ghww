@@ -12,8 +12,4 @@ public class GaberlnItemService extends Repository {
     public List<GaberlnItem> findAll () {
         return entityManager.createNamedQuery("GaberlnItem.allGaberlnItems", GaberlnItem.class).getResultList();
     }
-
-    public void remove(GaberlnItem gaberlnItem) {
-        entityManager.remove(entityManager.contains(gaberlnItem) ? gaberlnItem : entityManager.merge(gaberlnItem));
-    }
 }

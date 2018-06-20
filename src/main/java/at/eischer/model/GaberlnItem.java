@@ -8,7 +8,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQueries(@NamedQuery(name ="GaberlnItem.allGaberlnItems", query = "SELECT g FROM GaberlnItem g ORDER BY g.gaberlnCounter DESC"))
+@NamedQueries(value = {
+        @NamedQuery(name ="GaberlnItem.allGaberlnItems", query = "SELECT g FROM GaberlnItem g ORDER BY g.gaberlnCounter DESC"),
+        @NamedQuery(name = "GaberlnItem.calculateJackpot", query = "Select COUNT(g) FROM GaberlnItem g")
+})
 public class GaberlnItem {
 
     @Id

@@ -18,4 +18,8 @@ public class Repository {
         entityManager.merge(object);
     }
 
+    public <T> void remove(T object) {
+        entityManager.remove(entityManager.contains(object) ? object : entityManager.merge(object));
+    }
+
 }

@@ -51,10 +51,6 @@ public class TeamService extends Repository implements Serializable{
         return (float) maxSeiderQuery.getSingleResult();
     }
 
-    public void removeTeam(Team teamToRemove) {
-        entityManager.remove(entityManager.contains(teamToRemove) ? teamToRemove : entityManager.merge(teamToRemove));
-    }
-
     public List<Team> findAllteamsOrderBySeiderl() {
         TypedQuery<Team> allTeams = entityManager.createNamedQuery("Team.findAllOrderBySeiderl", Team.class);
         return allTeams.getResultList();

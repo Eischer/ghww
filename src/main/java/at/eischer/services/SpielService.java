@@ -19,10 +19,6 @@ public class SpielService extends Repository {
         return allSpielePerGruppe.getResultList();
     }
 
-    public void removeSpiel(Spiel spiel) {
-        entityManager.remove(entityManager.contains(spiel) ? spiel : entityManager.merge(spiel));
-    }
-
     public void removeFianlSpiel(FinalSpiel finalSpiel) {
         entityManager.remove(entityManager.contains(finalSpiel) ? finalSpiel : entityManager.merge(finalSpiel));
     }

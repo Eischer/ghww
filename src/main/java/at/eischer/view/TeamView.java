@@ -132,7 +132,7 @@ public class TeamView {
                     Path pathToLogo = Paths.get(System.getProperty("jboss.server.data.dir"), "logos", teamToRemove.getLogoPath());
                     Files.delete(pathToLogo);
                 }
-                this.teamService.removeTeam(teamToRemove);
+                this.teamService.remove(teamToRemove);
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
