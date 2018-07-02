@@ -24,7 +24,7 @@
                 </h:dataTable>
             </h:panelGroup>
             <h:panelGroup styleClass="gruppeTabelle" layout="block">
-                <h:dataTable value="#{finalPhaseView.result}" var="teamRank" rowClasses="even, odd">
+                <h:dataTable value="#{finalPhaseView.finalPhaseResults}" var="teamRank" rowClasses="even, odd">
                     <h:column>#{teamRank.rank}. </h:column>
                     <h:column headerClass="logoCol">
                         <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt=""/>

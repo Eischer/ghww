@@ -3,12 +3,17 @@ package at.eischer.view;
 import at.eischer.model.Team;
 
 public class TeamRank {
-    int rank;
-    Team team;
-    int plusGoals;
-    int minusGoals;
-    int points;
-    boolean equal;
+    public int rank;
+
+    public Team team;
+
+    public int plusGoals;
+
+    public int minusGoals;
+
+    public int points;
+
+    public boolean equal;
 
     public TeamRank (Team team) {
         this.team = team;
@@ -23,6 +28,7 @@ public class TeamRank {
         this.team = team;
         this.rank = rank;
         this.plusGoals = 0;
+
         this.minusGoals = 0;
         this.points = 0;
         this.equal = false;

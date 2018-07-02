@@ -38,6 +38,12 @@ public class FinalSpiel{
         this.zeit = zeit;
     }
 
+    public FinalSpiel(String indicator, LocalTime zeit, Team homeTeam, Team awayTeam) {
+        this(indicator, zeit);
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+    }
+
     public long getId() {
         return id;
     }

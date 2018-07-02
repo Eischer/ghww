@@ -2,6 +2,7 @@ package at.eischer.view;
 
 import at.eischer.model.FinalSpiel;
 import at.eischer.model.Team;
+import at.eischer.services.RankCalculator;
 import at.eischer.services.SpielService;
 import at.eischer.services.TeamService;
 
@@ -17,6 +18,15 @@ import java.util.*;
 @RequestScoped
 public class FinalPhaseView implements Serializable {
 
+    @Inject
+    private TeamService teamService;
+
+    @Inject
+    private SpielService spielService;
+
+    @Inject
+    RankCalculator rankCalculator;
+
     private String gruppe;
 
     private List<FinalSpiel> allFinalSpiele;
@@ -25,20 +35,15 @@ public class FinalPhaseView implements Serializable {
 
     private SpielInput spielInput;
 
-    @Inject
-    TeamService teamService;
-
-    @Inject
-    private SpielService spielService;
-
-    private List<TeamRank> result;
+    private List<TeamRank> finalPhaseResults;
+    private Boolean bereitsSpielAngelegt;
 
     @PostConstruct
     public void init() {
         spielInput = new SpielInput();
         this.allFinalSpiele = spielService.getAllFinalSpiele();
         this.allTeams = teamService.findAllteams();
-        this.result = new ArrayList<>();
+        this.finalPhaseResults = new ArrayList<>();
     }
 
     public void saveFinalSpiel() {
@@ -101,9 +106,6 @@ public class FinalPhaseView implements Serializable {
             this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 5", LocalTime.of(15, 10)));
             this.allFinalSpiele.add(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
             this.allFinalSpiele.add(new FinalSpiel("Finale", LocalTime.of(16, 0)));
-        } else if (this.allFinalSpiele.size() == 6) {
-            this.allFinalSpiele.add(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
-            this.allFinalSpiele.add(new FinalSpiel("Finale", LocalTime.of(16, 0)));
         }
         return this.allFinalSpiele;
     }
@@ -120,8 +122,8 @@ public class FinalPhaseView implements Serializable {
         this.allTeams = allTeams;
     }
 
-    public List<TeamRank> getResult() {
-        this.result = new ArrayList<>();
+    public List<TeamRank> getFinalPhaseResults() {
+        this.finalPhaseResults = new ArrayList<>();
         for (FinalSpiel finalSpiel : this.allFinalSpiele) {
             switch (finalSpiel.getIndicator()) {
                 case "Spiel um Platz 11":
@@ -144,19 +146,40 @@ public class FinalPhaseView implements Serializable {
                     break;
             }
         }
-        this.result.sort(Comparator.comparingInt(tr -> tr.rank));
-        return this.result;
+        this.finalPhaseResults.sort(Comparator.comparingInt(tr -> tr.rank));
+        return this.finalPhaseResults;
     }
 
     private void calculateRank(FinalSpiel finalSpiel, int rank) {
         if (finalSpiel.getToreAwayTeam() != null && finalSpiel.getToreHomeTeam() != null) {
             if (finalSpiel.getToreHomeTeam() < finalSpiel.getToreAwayTeam()) {
-                this.result.add(new TeamRank(finalSpiel.getHomeTeam(), rank + 1));
-                this.result.add(new TeamRank(finalSpiel.getAwayTeam(), rank));
+                this.finalPhaseResults.add(new TeamRank(finalSpiel.getHomeTeam(), rank + 1));
+                this.finalPhaseResults.add(new TeamRank(finalSpiel.getAwayTeam(), rank));
             } else {
-                this.result.add(new TeamRank(finalSpiel.getAwayTeam(), rank + 1));
-                this.result.add(new TeamRank(finalSpiel.getHomeTeam(), rank));
+                this.finalPhaseResults.add(new TeamRank(finalSpiel.getAwayTeam(), rank + 1));
+                this.finalPhaseResults.add(new TeamRank(finalSpiel.getHomeTeam(), rank));
             }
         }
+    }
+
+    public void generateFinalPhase() {
+        if (teamService.findTeamsForGruppe("A").size() == 6 && teamService.findTeamsForGruppe("B").size() == 6) {
+            TeamRank[] groupAResult = rankCalculator.calculateStandings("A", new TeamRank[6]);
+            TeamRank[] groupBResult = rankCalculator.calculateStandings("B", new TeamRank[6]);
+
+            spielService.save(new FinalSpiel("Kreuzspiel 1 ", LocalTime.of(14, 45), groupAResult[0].getTeam(), groupBResult[1].getTeam()));
+            spielService.save(new FinalSpiel("Kreuzspiel 2 ", LocalTime.of(14, 45), groupAResult[1].getTeam(), groupBResult[0].getTeam()));
+            spielService.save(new FinalSpiel("Spiel um Platz 11", LocalTime.of(14, 45), groupAResult[5].getTeam(), groupBResult[5].getTeam()));
+            spielService.save(new FinalSpiel("Spiel um Platz 9", LocalTime.of(14, 45), groupAResult[4].getTeam(), groupBResult[4].getTeam()));
+            spielService.save(new FinalSpiel("Spiel um Platz 7", LocalTime.of(15, 10), groupAResult[3].getTeam(), groupBResult[3].getTeam()));
+            spielService.save(new FinalSpiel("Spiel um Platz 5", LocalTime.of(15, 10), groupAResult[2].getTeam(), groupBResult[2].getTeam()));
+            spielService.save(new FinalSpiel("Kleines Finale", LocalTime.of(15, 10)));
+            spielService.save(new FinalSpiel("Finale", LocalTime.of(15, 10)));
+        }
+        this.allFinalSpiele = spielService.getAllFinalSpiele();
+    }
+
+    public boolean keineFinalSpieleAngelegt() {
+        return spielService.getAllFinalSpiele().isEmpty();
     }
 }
