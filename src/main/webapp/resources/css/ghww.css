@@ -159,9 +159,15 @@ h1{
     padding-left: 30px;
 }
 
+.gaberlPlayerPhoto {
+    height: 160px;
+    width: 160px;
+}
+
 .jackpot {
     margin: 70px 50px;
     padding: 30px;
+    height: 50%;
     font-weight: bolder;
     font-size: x-large;
     border: thick gold dotted;

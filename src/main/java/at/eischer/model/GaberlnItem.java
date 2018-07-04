@@ -23,6 +23,8 @@ public class GaberlnItem {
 
     private int gaberlnCounter;
 
+    private String photoPath;
+
     @Transient
     private int rank;
 
@@ -56,5 +58,13 @@ public class GaberlnItem {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 }

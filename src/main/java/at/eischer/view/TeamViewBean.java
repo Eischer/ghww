@@ -1,19 +1,13 @@
 package at.eischer.view;
 
 import at.eischer.model.Team;
+import at.eischer.services.FileSaver;
 import at.eischer.services.TeamService;
-import org.apache.commons.io.FilenameUtils;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.servlet.http.Part;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @Dependent
 public class TeamViewBean{
@@ -27,28 +21,17 @@ public class TeamViewBean{
     @Inject
     private TeamService teamService;
 
+    @Inject
+    private FileSaver fileSaver;
+
     public void saveTeam () {
         Team team = new Team();
         team.setName(this.teamName);
         team.setSeiderlCounter(0);
         team.setParticipateOnSeidlWertung(this.participateOnSeidlWertung);
-        try {
-            if (logo != null) {
-                Path folder = Paths.get(System.getProperty("jboss.server.data.dir") + "/logos");
-                if (!folder.toFile().exists()) {
-                    Files.createDirectories(folder);
-                }
-                String filename = FilenameUtils.getBaseName(logo.getSubmittedFileName());
-                String extension = FilenameUtils.getExtension(logo.getSubmittedFileName());
-                Path filePath = Files.createTempFile(folder, filename + "-", "." + extension);
-
-                try (InputStream input = logo.getInputStream()) {
-                    Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
-                    team.setLogoPath(filePath.toString().substring(filePath.toString().lastIndexOf('/') + 1));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        Path filePath = fileSaver.saveFileAndReturnPath(this.logo, "/logos");
+        if (filePath != null) {
+            team.setLogoPath(filePath.toString().substring(filePath.toString().lastIndexOf('/') + 1));
         }
         teamService.save(team);
         this.participateOnSeidlWertung = true;

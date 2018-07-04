@@ -20,13 +20,23 @@
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
-            <h:panelGroup layout="block" styleClass="jackpot">
-                <p>
-                    <h:outputLabel for="jackpot" value="Derzeit im Jackpot"/>
-                </p>
-                <p>
-                    <h:outputText id="jackpot" value="#{gaberlnItemViewBean.jackpot}"/>
-                </p>
+            <h:panelGroup styleClass="jackpot">
+                <h:panelGroup layout="block">
+                    <p>
+                        <h:outputLabel for="gaberlPhoto" value="Derzeit in Führung"/>
+                    </p>
+                    <p>
+                        <img id="gaberlPhoto" class="gaberlPlayerPhoto" src="#{gaberlnItemViewBean.getPlayerPhotoPath()}"  alt=""/>
+                    </p>
+                </h:panelGroup>
+                <h:panelGroup layout="block">
+                    <p>
+                        <h:outputLabel for="jackpot" value="Derzeit im Jackpot"/>
+                    </p>
+                    <p>
+                        <h:outputText id="jackpot" value="#{gaberlnItemViewBean.jackpot}"/>
+                    </p>
+                </h:panelGroup>
             </h:panelGroup>
         </h:panelGroup>
     </p>
