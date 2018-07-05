@@ -1,7 +1,7 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h1>Gaberln Highscore</h1>
+    <h1>Gaberl - Challenge - Highscore</h1>
     <p>
         <h:panelGroup layout="block" styleClass="sideBySide">
             <h:panelGroup layout="block">
@@ -11,7 +11,7 @@
                         #{oneGaberlItem.rank}
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Top-10 Teilnehmer</f:facet>
+                        <f:facet name="header">Teilnehmer</f:facet>
                         #{oneGaberlItem.name}
                     </h:column>
                     <h:column>
@@ -23,10 +23,10 @@
             <h:panelGroup styleClass="jackpot">
                 <h:panelGroup layout="block">
                     <p>
-                        <h:outputLabel for="gaberlPhoto" value="Derzeit in Führung"/>
+                        <h:outputLabel value="Derzeit in Führung"/>
                     </p>
                     <p>
-                        <img id="gaberlPhoto" class="gaberlPlayerPhoto" src="#{gaberlnItemViewBean.getPlayerPhotoPath()}"  alt=""/>
+                        <img class="gaberlPlayerPhoto" src="#{gaberlnItemViewBean.getPlayerPhotoPath()}"  alt=""/>
                     </p>
                 </h:panelGroup>
                 <h:panelGroup layout="block">

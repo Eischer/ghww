@@ -63,7 +63,7 @@ public class GaberlnItemViewBean {
     public String getPlayerPhotoPath() {
         List<GaberlnItem> tempAllGaberlnItems = getAllGaberlnItems();
         if(tempAllGaberlnItems == null || tempAllGaberlnItems.isEmpty() || tempAllGaberlnItems.get(0).getPhotoPath() == null) {
-            return "";
+            return "/resources/anonymous.jpeg";
         } else {
             return "/gaberlnPlayerPhotos/" + tempAllGaberlnItems.get(0).getPhotoPath();
         }
@@ -79,11 +79,6 @@ public class GaberlnItemViewBean {
 
     public String getJackpot() {
         return gaberlnItemService.getJackpot() + " €";
-    }
-
-    public String removeGaberlnItem(GaberlnItem gaberlnItem) {
-        gaberlnItemService.remove(gaberlnItem);
-        return "/admin/gaberlnManagement?faces-redirect=true";
     }
 
     // GETTER - SETTER - SECTION

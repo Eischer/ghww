@@ -7,7 +7,7 @@
 
 <ui:composition template="../templates/adminTemplate.xhtml">
     <ui:define name="content">
-        <h1>Gaberln - Management</h1>
+        <h1>Gaberln - Challenge - Management</h1>
         <h:form id="gaberlManagementForm" enctype="multipart/form-data">
             <p>
                 <h:outputLabel for="spielerName" value="Spielername: "/>
@@ -26,7 +26,7 @@
                 </h:selectOneMenu>
                 <h:inputFile id="playerPhoto" label="Spielerfoto hochladen" styleClass="tabStopLike"
                              value="#{gaberlnItemViewBean.playerPhoto}"/>
-                <h:commandButton value="Zu Hishscore hinzufügen" action="#{gaberlnItemViewBean.savePlayerPhoto()}"/>
+                <h:commandButton value="Bild hochladen" action="#{gaberlnItemViewBean.savePlayerPhoto()}"/>
             </p>
             <p>
                 <h:panelGroup layout="block" styleClass="sideBySide">
@@ -46,16 +46,12 @@
                                 <f:facet name="header">Anzahl</f:facet>
                                 #{oneGaberlItem.gaberlnCounter}
                             </h:column>
-                            <h:column>
-                                <h:commandButton value="Löschen"
-                                                 action="#{gaberlnItemViewBean.removeGaberlnItem(oneGaberlItem)}"/>
-                            </h:column>
                         </h:dataTable>
                     </h:panelGroup>
                     <h:panelGroup styleClass="jackpot">
                         <h:panelGroup layout="block">
                             <p>
-                                <h:outputLabel for="gaberlPhoto" value="Derzeit in Führung"/>
+                                <h:outputLabel for="gaberlPhoto" value="In Führung"/>
                             </p>
                             <p>
                                 <img id="gaberlPhoto" class="gaberlPlayerPhoto" src="#{gaberlnItemViewBean.getPlayerPhotoPath()}"  alt=""/>
@@ -63,7 +59,7 @@
                         </h:panelGroup>
                         <h:panelGroup layout="block">
                             <p>
-                                <h:outputLabel for="jackpot" value="Derzeit im Jackpot"/>
+                                <h:outputLabel for="jackpot" value="Im Jackpot"/>
                             </p>
                             <p>
                                 <h:outputText id="jackpot" value="#{gaberlnItemViewBean.jackpot}"/>

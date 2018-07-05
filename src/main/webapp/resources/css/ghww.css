@@ -161,7 +161,7 @@ h1{
 
 .gaberlPlayerPhoto {
     height: 160px;
-    width: 160px;
+    width: auto;
 }
 
 .jackpot {
