@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Checks if the User is logged in and so authorized to access the admin area.
+ */
 @WebFilter(filterName = "AuthentificationFilter")
 public class AuthentificationFilter implements javax.servlet.Filter {
 
     @Inject
-    CurrentUser currentUser;
+    private CurrentUser currentUser;
 
     private static final String AJAX_REDIRECT_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             + "<partial-response><redirect url=\"%s\"></redirect></partial-response>";
@@ -50,7 +53,7 @@ public class AuthentificationFilter implements javax.servlet.Filter {
     }
 
     @Override
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config) {
         //Nothing to do here
     }
 
