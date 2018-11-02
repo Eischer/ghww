@@ -167,14 +167,14 @@ public class FinalPhaseView implements Serializable {
             TeamRank[] groupAResult = rankCalculator.calculateStandings("A", new TeamRank[6]);
             TeamRank[] groupBResult = rankCalculator.calculateStandings("B", new TeamRank[6]);
 
-            spielService.save(new FinalSpiel("Kreuzspiel 1 ", LocalTime.of(14, 45), groupAResult[0].getTeam(), groupBResult[1].getTeam()));
-            spielService.save(new FinalSpiel("Kreuzspiel 2 ", LocalTime.of(14, 45), groupAResult[1].getTeam(), groupBResult[0].getTeam()));
+            spielService.save(new FinalSpiel("Kreuzspiel 1 ", LocalTime.of(14, 25), groupAResult[0].getTeam(), groupBResult[1].getTeam()));
+            spielService.save(new FinalSpiel("Kreuzspiel 2 ", LocalTime.of(14, 25), groupAResult[1].getTeam(), groupBResult[0].getTeam()));
             spielService.save(new FinalSpiel("Spiel um Platz 11", LocalTime.of(14, 45), groupAResult[5].getTeam(), groupBResult[5].getTeam()));
             spielService.save(new FinalSpiel("Spiel um Platz 9", LocalTime.of(14, 45), groupAResult[4].getTeam(), groupBResult[4].getTeam()));
             spielService.save(new FinalSpiel("Spiel um Platz 7", LocalTime.of(15, 10), groupAResult[3].getTeam(), groupBResult[3].getTeam()));
             spielService.save(new FinalSpiel("Spiel um Platz 5", LocalTime.of(15, 10), groupAResult[2].getTeam(), groupBResult[2].getTeam()));
-            spielService.save(new FinalSpiel("Kleines Finale", LocalTime.of(15, 10)));
-            spielService.save(new FinalSpiel("Finale", LocalTime.of(15, 10)));
+            spielService.save(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
+            spielService.save(new FinalSpiel("Finale", LocalTime.of(16, 00)));
         }
         this.allFinalSpiele = spielService.getAllFinalSpiele();
     }

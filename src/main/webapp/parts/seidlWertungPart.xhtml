@@ -8,7 +8,7 @@
                 <h:dataTable id="seiderlTable" value="#{teamView.ranking}" var="teamRank" rowClasses="even, odd"
                              columnClasses="logoCol,seiderlCountCol, teamNameCol, seiderlCountCol">
                     <h:column headerClass="logoCol">
-                        <img src="#{teamView.getLogo(teamRank.team.id)}" class="logoCol" alt=""/>
+                        <img src="#{teamView.getLogo(teamRank.team.id)}" class="teamlogo" alt=""/>
                     </h:column>
                     <h:column>
                         #{teamRank.rank}.
@@ -23,7 +23,7 @@
             </h:form>
         </div>
         <div id="chartDiv">
-            <p:chart type="line" model="#{chartView.lineModel}" style="height: 550px;width: 950px;" rendered="#{chartView.lineModel!=null}"/>
+            <p:chart type="line" model="#{chartView.lineModel}" style="height: 550px;width: 875px;" rendered="#{chartView.lineModel!=null}"/>
         </div>
     </div>
 </ui:composition>

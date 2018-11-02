@@ -42,6 +42,11 @@ table {
     overflow: inherit;
 }
 
+.teamlogo {
+    width : 32px;
+    height : 32px;
+}
+
 /* Login Page */
 div#loginDiv{
     top: 10%;
