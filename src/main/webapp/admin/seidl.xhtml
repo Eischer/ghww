@@ -45,22 +45,22 @@
                     <f:facet name="header">Seidl</f:facet>
                     <h:commandButton class="button" value="+" action="#{teamView.incrementSeidl}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:param name="tid" value="#{oneTeam.id}"/>
-                        <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
+                        <f:ajax execute="@form" render="@form"/>
                     </h:commandButton>
                     <h:commandButton class="button" value="-" action="#{teamView.decrementSeidl}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:param name="tid" value="#{oneTeam.id}"/>
-                        <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
+                        <f:ajax execute="@form"  render="@form"/>
                     </h:commandButton>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Krügl</f:facet>
                     <h:commandButton class="button" value="+" action="#{teamView.incrementKruegerl}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:param name="tid" value="#{oneTeam.id}"/>
-                        <f:ajax execute="@form" render="seiderlManagementForm:seiderlTable"/>
+                        <f:ajax execute="@form" render="@form"/>
                     </h:commandButton>
                     <h:commandButton class="button" value="-" action="#{teamView.decrementKruegerl}" disabled="#{!teamView.checkIfTimeIsValid()}">
                         <f:param name="tid" value="#{oneTeam.id}"/>
-                        <f:ajax execute="@form"  render="seiderlManagementForm:seiderlTable"/>
+                        <f:ajax execute="@form"  render="@form"/>
                     </h:commandButton>
                 </h:column>
             </h:dataTable>

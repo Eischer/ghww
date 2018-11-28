@@ -34,7 +34,7 @@
                     <h:column>
                         <h:commandButton value="Löschen" action="#{teamView.remove()}">
                             <f:param name="tid" value="#{oneTeam.id}"/>
-                            <f:ajax render="teamManagementForm:teamTable"/>
+                            <f:ajax render="@form"/>
                         </h:commandButton>
                     </h:column>
                 </h:dataTable>
