@@ -68,18 +68,18 @@
                             </h:column>
                             <h:column>
                                 <h:commandButton value="Speichern" action="#{finalPhaseView.saveResult(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
+                                    <f:ajax execute="@form" render="@form"/>
                                 </h:commandButton>
                             </h:column>
                             <h:column>
                                 <h:commandButton value="Ergebnis löschen"
                                                  action="#{finalPhaseView.deleteResult(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
+                                    <f:ajax execute="@form" render="@form"/>
                                 </h:commandButton>
                             </h:column>
                             <h:column>
                                 <h:commandButton value="Spiel löschen" action="#{finalPhaseView.deleteSpiel(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
+                                    <f:ajax execute="@form" render="@form"/>
                                 </h:commandButton>
                             </h:column>
                         </h:dataTable>

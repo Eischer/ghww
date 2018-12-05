@@ -5,7 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../templates/adminTemplate.xhtml">
     <ui:define name="content">
-        <h:form id="spielManagementForm">
+        <h:form>
             <h1>Spiele - Gruppe #{spielManagementView.gruppe}</h1>
             <h:panelGroup id="createSpielPanel" layout="block">
                 <h:selectOneMenu value="#{spielManagementView.spielInput.hour}">
@@ -48,17 +48,17 @@
                             </h:column>
                             <h:column>
                                 <h:commandButton value="Speichern" action="#{spielManagementView.saveResult(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
+                                    <f:ajax execute="@form" render="@form"/>
                                 </h:commandButton>
                             </h:column>
                             <h:column>
                                 <h:commandButton value="Ergebnis löschen" action="#{spielManagementView.deleteResult(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
+                                    <f:ajax execute="@form" render="@form"/>
                                 </h:commandButton>
                             </h:column>
                             <h:column>
                                 <h:commandButton value="Spiel löschen" action="#{spielManagementView.deleteSpiel(oneSpiel)}">
-                                    <f:ajax execute="spielManagementForm:spielOverviewTable" render="@form"/>
+                                    <f:ajax execute="@form" render="@form"/>
                                 </h:commandButton>
                             </h:column>
                         </h:dataTable>
