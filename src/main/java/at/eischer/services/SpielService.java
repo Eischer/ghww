@@ -4,7 +4,6 @@ import at.eischer.dao.Repository;
 import at.eischer.model.FinalSpiel;
 import at.eischer.model.Spiel;
 import at.eischer.model.Team;
-import at.eischer.view.FinalPhaseView;
 
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
