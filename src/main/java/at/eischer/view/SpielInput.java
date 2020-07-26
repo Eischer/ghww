@@ -35,8 +35,8 @@ public class SpielInput {
         this.allSpielDescriptions = new ArrayList<>();
         this.allSpielDescriptions.add("Kreuzspiel 1");
         this.allSpielDescriptions.add("Kreuzspiel 2");
-        this.allSpielDescriptions.add("Spiel um Platz 11");
-        this.allSpielDescriptions.add("Spiel um Platz 9");
+//        this.allSpielDescriptions.add("Spiel um Platz 11");
+//        this.allSpielDescriptions.add("Spiel um Platz 9");
         this.allSpielDescriptions.add("Spiel um Platz 7");
         this.allSpielDescriptions.add("Spiel um Platz 5");
         this.allSpielDescriptions.add("Kleines Finale");
