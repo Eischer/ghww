@@ -104,8 +104,8 @@ public class FinalPhaseView implements Serializable {
 //            this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 9", LocalTime.of(14, 45)));
             this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 7", LocalTime.of(15, 10)));
             this.allFinalSpiele.add(new FinalSpiel("Spiel um Platz 5", LocalTime.of(15, 10)));
-            this.allFinalSpiele.add(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
-            this.allFinalSpiele.add(new FinalSpiel("Finale", LocalTime.of(16, 0)));
+//            this.allFinalSpiele.add(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
+//            this.allFinalSpiele.add(new FinalSpiel("Finale", LocalTime.of(16, 0)));
         }
         return this.allFinalSpiele;
     }
@@ -172,8 +172,8 @@ public class FinalPhaseView implements Serializable {
 //        spielService.save(new FinalSpiel("Spiel um Platz 9", LocalTime.of(14, 45), groupAResult[4].getTeam(), groupBResult[4].getTeam()));
         spielService.save(new FinalSpiel("Spiel um Platz 7", LocalTime.of(15, 10), groupAResult[3].getTeam(), groupBResult[3].getTeam()));
         spielService.save(new FinalSpiel("Spiel um Platz 5", LocalTime.of(15, 10), groupAResult[2].getTeam(), groupBResult[2].getTeam()));
-        spielService.save(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
-        spielService.save(new FinalSpiel("Finale", LocalTime.of(16, 00)));
+//        spielService.save(new FinalSpiel("Kleines Finale", LocalTime.of(15, 35)));
+//        spielService.save(new FinalSpiel("Finale", LocalTime.of(16, 00)));
         this.allFinalSpiele = spielService.getAllFinalSpiele();
     }
 
