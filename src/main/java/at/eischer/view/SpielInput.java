@@ -33,8 +33,10 @@ public class SpielInput {
             this.minutes.add(i);
         }
         this.allSpielDescriptions = new ArrayList<>();
-        this.allSpielDescriptions.add("Kreuzspiel 1");
-        this.allSpielDescriptions.add("Kreuzspiel 2");
+        this.allSpielDescriptions.add("Kreuzspiel A3/B4");
+        this.allSpielDescriptions.add("Kreuzspiel A4/B3");
+        this.allSpielDescriptions.add("Kreuzspiel A1/B2");
+        this.allSpielDescriptions.add("Kreuzspiel A2/B1");
 //        this.allSpielDescriptions.add("Spiel um Platz 11");
 //        this.allSpielDescriptions.add("Spiel um Platz 9");
         this.allSpielDescriptions.add("Spiel um Platz 7");
