@@ -1,8 +1,9 @@
 package at.eischer.dao;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
+import jakarta.ejb.Stateless;
 
 @Stateless
 public class Repository {

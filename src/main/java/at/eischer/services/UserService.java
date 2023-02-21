@@ -1,11 +1,11 @@
 package at.eischer.services;
 
 import at.eischer.model.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import jakarta.ejb.Stateless;
 import java.util.List;
 
 @Stateless

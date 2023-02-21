@@ -2,13 +2,15 @@ package at.eischer.services;
 
 import at.eischer.model.SeiderlHistory;
 import at.eischer.model.Team;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Stateless
 public class SeiderlHistoryService {
 
     @PersistenceContext

@@ -3,10 +3,10 @@ package at.eischer.services;
 import at.eischer.model.SeiderlHistory;
 import at.eischer.model.Team;
 
-import javax.ejb.Schedule;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.ejb.Schedule;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import java.util.List;
 
 @Named

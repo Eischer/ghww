@@ -3,9 +3,9 @@ package at.eischer.view;
 import at.eischer.services.UserService;
 import at.eischer.session.CurrentUser;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Named
 @RequestScoped

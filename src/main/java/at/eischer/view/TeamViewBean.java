@@ -4,9 +4,9 @@ import at.eischer.model.Team;
 import at.eischer.services.FileSaver;
 import at.eischer.services.TeamService;
 
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import javax.servlet.http.Part;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.Part;
 import java.nio.file.Path;
 
 @Dependent

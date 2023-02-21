@@ -3,7 +3,7 @@ package at.eischer.services;
 import at.eischer.dao.Repository;
 import at.eischer.model.GaberlnItem;
 
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 import java.util.List;
 
 @Stateless

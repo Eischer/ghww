@@ -2,10 +2,10 @@ package at.eischer.services;
 
 import at.eischer.dao.Repository;
 import at.eischer.model.Team;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
-import javax.ejb.Stateless;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import jakarta.ejb.Stateless;
 import java.io.Serializable;
 import java.util.List;
 

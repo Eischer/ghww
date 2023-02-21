@@ -4,8 +4,8 @@ import at.eischer.model.Spiel;
 import at.eischer.model.Team;
 import at.eischer.view.TeamRank;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;

@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
 <h:head>
     <ui:insert name="metaInfoForHead"/>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
@@ -13,12 +13,14 @@
 <h:body>
     <div id="menu">
         <h:form>
-            <p:menubar style="width: 650px; height: 40px;" styleClass="ghwwBGColor">
-                <p:menuitem>
+            <p:menubar style="width: 650px; height: 60px;" styleClass="ghwwBGColor">
+                <!--
+                <p:menuitem value="">
                     <h:link outcome="/seidlWertung.xhmtl">
-                        <h:graphicImage url="/resources/grasshoppers-westwien.jpeg" class="headerLogo" alt=""/>
+                        <h:graphicImage url="/resources/grasshoppers-westwien.jpeg" height="50px" alt=""/>
                     </h:link>
                 </p:menuitem>
+                -->
                 <p:menuitem value="Seidl-Wertung" url="/seidlWertung.xhtml"/>
                 <p:menuitem value="Gaberl - Challenge" url="/gaberln.xhtml"/>
                 <p:menuitem value="Gruppe A" url="/gruppe.xhtml?currentGruppe=A"/>

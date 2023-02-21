@@ -4,11 +4,11 @@ import at.eischer.model.GaberlnItem;
 import at.eischer.services.FileSaver;
 import at.eischer.services.GaberlnItemService;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.Part;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.http.Part;
 import java.nio.file.Path;
 import java.util.List;
 

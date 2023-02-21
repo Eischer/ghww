@@ -139,7 +139,7 @@ h1{
 }
 
 .ghwwBGColor {
-    background-color: lightgreen;
+    background: lightgreen !important;
 }
 
 .twoDigits {

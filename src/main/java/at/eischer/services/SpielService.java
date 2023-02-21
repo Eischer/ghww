@@ -4,9 +4,9 @@ import at.eischer.dao.Repository;
 import at.eischer.model.FinalSpiel;
 import at.eischer.model.Spiel;
 import at.eischer.model.Team;
+import jakarta.persistence.TypedQuery;
 
-import javax.ejb.Stateless;
-import javax.persistence.TypedQuery;
+import jakarta.ejb.Stateless;
 import java.util.List;
 
 @Stateless

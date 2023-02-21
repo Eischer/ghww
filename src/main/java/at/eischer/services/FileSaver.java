@@ -1,9 +1,9 @@
 package at.eischer.services;
 
-import org.apache.commons.io.FilenameUtils;
+import jakarta.ejb.Stateless;
+import jakarta.servlet.http.Part;
+import org.primefaces.shaded.commons.io.FilenameUtils;
 
-import javax.ejb.Stateless;
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;

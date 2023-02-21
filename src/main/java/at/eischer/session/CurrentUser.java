@@ -2,9 +2,9 @@ package at.eischer.session;
 
 import at.eischer.model.User;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Named;
 import java.io.Serializable;
 
 @Named

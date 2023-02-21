@@ -1,23 +1,19 @@
 package at.eischer.filter;
 
 import at.eischer.session.CurrentUser;
+import jakarta.inject.Inject;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.inject.Inject;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
  * Checks if the User is logged in and so authorized to access the admin area.
  */
 @WebFilter(filterName = "AuthentificationFilter")
-public class AuthentificationFilter implements javax.servlet.Filter {
+public class AuthentificationFilter implements jakarta.servlet.Filter {
 
     @Inject
     private CurrentUser currentUser;
@@ -48,8 +44,6 @@ public class AuthentificationFilter implements javax.servlet.Filter {
         } else {
             chain.doFilter(req, resp);
         }
-
-
     }
 
     @Override
