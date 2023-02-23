@@ -21,21 +21,23 @@
     <div id="myProgress" class="sideBySide">
         <div id="myBar"/>
     </div>
-    <h:panelGroup layout="block" styleClass="sideBySide, floatLeft">
-        <h:form>
-            <p:menubar style="width: 550px; height: 40px;" styleClass="ghwwBGColor">
-                <p:menuitem>
-                    <h:link outcome="/seidlWertung.xhmtl">
-                        <h:graphicImage url="/resources/grasshoppers-westwien.jpeg" class="headerLogo" alt=""/>
-                    </h:link>
-                </p:menuitem>
-                <p:menuitem value="Seidl-Wertung" url="/switch/seidlWertungSwitch.xhtml"/>
-                <p:menuitem value="Gruppe A" url="/switch/gruppeASwitch.xhtml?currentGruppe=A"/>
-                <p:menuitem value="Gruppe B" url="/switch/gruppeBSwitch.xhtml?currentGruppe=B"/>
-                <p:menuitem value="Gaberl - Challenge" url="/switch/gaberlnSwitch.xhtml"/>
-            </p:menubar>
-        </h:form>
-    </h:panelGroup>
+    <div class="sideBySide">
+        <div id="logo">
+            <h:link outcome="/seidlWertung.xhmtl">
+                <h:graphicImage url="/resources/grasshoppers-westwien.jpeg" height="60px" alt=""/>
+            </h:link>
+        </div>
+        <div id="menu">
+            <h:form>
+                <p:menubar style="width: 550px; height: 60px;" styleClass="ghwwBGColor">
+                    <p:menuitem value="Seidl-Wertung" url="/switch/seidlWertungSwitch.xhtml"/>
+                    <p:menuitem value="Gruppe A" url="/switch/gruppeASwitch.xhtml?currentGruppe=A"/>
+                    <p:menuitem value="Gruppe B" url="/switch/gruppeBSwitch.xhtml?currentGruppe=B"/>
+                    <p:menuitem value="Gaberl - Challenge" url="/switch/gaberlnSwitch.xhtml"/>
+                </p:menubar>
+            </h:form>
+        </div>
+    </div>
     <div id="content">
         <ui:insert name="content"/>
     </div>

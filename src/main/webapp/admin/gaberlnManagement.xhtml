@@ -29,7 +29,7 @@
             </p>
             <p>
                 <h:panelGroup layout="block" styleClass="sideBySide">
-                    <h:panelGroup layout="block">
+                    <h:panelGroup id="highscore" layout="block">
                         <h:dataTable id="gaberlnHighscore" value="#{gaberlnItemViewBean.allGaberlnItems}"
                                      var="oneGaberlItem"
                                      headerClass="left" columnClasses="seiderlCountCol, teamNameCol, seiderlCountCol"
@@ -47,8 +47,8 @@
                             </h:column>
                         </h:dataTable>
                     </h:panelGroup>
-                    <h:panelGroup styleClass="jackpot">
-                        <h:panelGroup layout="block">
+                    <h:panelGroup styleClass="jackpot" layout="block">
+                        <h:panelGroup id="player" layout="block">
                             <p>
                                 <h:outputLabel for="gaberlPhoto" value="In Führung"/>
                             </p>
@@ -56,7 +56,7 @@
                                 <img id="gaberlPhoto" class="gaberlPlayerPhoto" src="#{gaberlnItemViewBean.getPlayerPhotoPath()}"  alt=""/>
                             </p>
                         </h:panelGroup>
-                        <h:panelGroup layout="block">
+                        <h:panelGroup id="pot" layout="block">
                             <p>
                                 <h:outputLabel for="jackpot" value="Im Jackpot"/>
                             </p>

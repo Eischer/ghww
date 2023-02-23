@@ -11,23 +11,23 @@
 </h:head>
 
 <h:body>
-    <div id="menu">
-        <h:form>
-            <p:menubar style="width: 650px; height: 60px;" styleClass="ghwwBGColor">
-                <!--
-                <p:menuitem value="">
-                    <h:link outcome="/seidlWertung.xhmtl">
-                        <h:graphicImage url="/resources/grasshoppers-westwien.jpeg" height="50px" alt=""/>
-                    </h:link>
-                </p:menuitem>
-                -->
-                <p:menuitem value="Seidl-Wertung" url="/seidlWertung.xhtml"/>
-                <p:menuitem value="Gaberl - Challenge" url="/gaberln.xhtml"/>
-                <p:menuitem value="Gruppe A" url="/gruppe.xhtml?currentGruppe=A"/>
-                <p:menuitem value="Gruppe B" url="/gruppe.xhtml?currentGruppe=B"/>
-                <p:menuitem value="Final-Phase" url="/finalSpiel.xhtml"/>
-            </p:menubar>
-        </h:form>
+    <div class="sideBySide">
+        <div id="logo">
+            <h:link outcome="/seidlWertung.xhmtl">
+                <h:graphicImage url="/resources/grasshoppers-westwien.jpeg" height="60px" alt=""/>
+            </h:link>
+        </div>
+        <div id="menu">
+            <h:form>
+                <p:menubar style="width: 650px; height: 60px;" styleClass="ghwwBGColor">
+                    <p:menuitem value="Seidl-Wertung" url="/seidlWertung.xhtml"/>
+                    <p:menuitem value="Gaberl - Challenge" url="/gaberln.xhtml"/>
+                    <p:menuitem value="Gruppe A" url="/gruppe.xhtml?currentGruppe=A"/>
+                    <p:menuitem value="Gruppe B" url="/gruppe.xhtml?currentGruppe=B"/>
+                    <p:menuitem value="Final-Phase" url="/finalSpiel.xhtml"/>
+                </p:menubar>
+            </h:form>
+        </div>
     </div>
     <div id="content">
         <ui:insert name="content"/>
